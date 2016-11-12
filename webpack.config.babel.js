@@ -49,6 +49,12 @@ const config = {
     port: PORT,
     host: HOST,
     compress: true,
+    proxy: {
+      '/json': {
+        target: 'https://app.wesleyklop.nl/deluge',
+        changeOrigin: true,
+      },
+    },
   },
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),

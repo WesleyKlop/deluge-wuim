@@ -1,6 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Routes from './Routes'
+import Deluge from './api/Deluge'
+
+window.deluge = new Deluge()
 
 const appRoot = document.querySelector('#app')
 
