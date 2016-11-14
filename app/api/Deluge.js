@@ -1,4 +1,4 @@
-import { Auth, Daemon, WebUi } from './'
+import { Auth, Daemon, WebUi, Core } from './'
 
 /**
  * Deluge class with all accesible methods from the JSON api
@@ -7,11 +7,13 @@ class Deluge {
   /**
    * Deluge class constructor
    * @param {Auth=} auth
+   * @param {Core=} core
    * @param {Daemon=} daemon
    * @param {WebUi=} webui
    */
-  constructor(auth, daemon, webui) {
+  constructor(auth, core, daemon, webui) {
     this.auth = auth || new Auth(this)
+    this.core = core || new Core(this)
     this.daemon = daemon || new Daemon(this)
     this.webui = webui || new WebUi(this)
   }
