@@ -20,6 +20,15 @@ class Auth {
   }
 
   /**
+   * Alias for {@link Auth#deleteSession}
+   * @see Auth#deleteSession
+   * @returns {Promise.<bool>}
+   */
+  logout() {
+    return this.deleteSession()
+  }
+
+  /**
    *  Checks the sign in status on the server, resolves with true or false
    * @returns {Promise.<bool>} true if the user is logged in or false
    */
@@ -29,7 +38,7 @@ class Auth {
 
   /**
    * Sign out the current user
-   * @returns {Promise.<bool>} if the sign out was succesful
+   * @returns {Promise.<bool>} true if the sign out was succesful
    */
   deleteSession() {
     return this.deluge.call('auth.delete_session')
