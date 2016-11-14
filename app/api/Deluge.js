@@ -1,5 +1,26 @@
-export default class Deluge {
+import { Auth, Daemon, WebUi } from './'
+
+/**
+ * Deluge class with all accesible methods from the JSON api
+ */
+class Deluge {
+  /**
+   * Deluge class constructor
+   * @param {Auth=} auth
+   * @param {Daemon=} daemon
+   * @param {WebUi=} webui
+   */
+  constructor(auth, daemon, webui) {
+    this.auth = auth || new Auth(this)
+    this.daemon = daemon || new Daemon(this)
+    this.webui = webui || new WebUi(this)
+  }
+
   requestCounter = 0
+  log = {
+    response: false,
+    result: true,
+  }
 
   /**
    * Increment the request counter and return it
@@ -32,22 +53,22 @@ export default class Deluge {
         cache: 'no-cache',
         credentials: 'include',
       },
-    ).then(response => response.json())
-  }
-
-  /**
-   * Calls a method but also logs the result in the console
-   * @see Deluge.call
-   * @param {string} method the method to call
-   * @param {Array=} params the parameters
-   * @returns {Promise.<*>}
-   */
-  logCall(method, params = []) {
-    return this.call(method, params)
-      .then((response) => {
-        console.info(`${method}:`, response) // eslint-disable-line no-console
-        return response
-      })
+    ).then((response) => {
+      if (this.log.response === true) {
+        // eslint-disable-next-line no-console
+        console.info(response)
+      }
+      return response.json()
+    }).then(({ result, error }) => {
+      if (error) {
+        return Promise.reject(error)
+      }
+      if (this.log.result === true) {
+        // eslint-disable-next-line no-console
+        console.info(result)
+      }
+      return Promise.resolve(result)
+    })
   }
 
   /**
@@ -55,24 +76,17 @@ export default class Deluge {
    * @param {string=} command
    * @returns {Promise.<Array<string>>}
    */
-  findCommand(command) {
+  findCommand(command = '') {
+    const didLogResult = this.log.result
+    this.log.result = false
     return this.call('system.listMethods')
-      .then(response => response.result.filter(row => row.includes(command)))
-      .then(console.info.bind(console)) // eslint-disable-line no-console
-  }
-
-  /**
-   * Logs in on the server, resolves with true or rejects with the error object
-   * @param {string} password
-   * @returns {Promise.<*>}
-   */
-  login(password) {
-    return this.logCall('auth.login', [password])
-      .then(({ result, error }) => {
-        if (result === true) {
-          return Promise.resolve(true)
-        }
-        return Promise.reject(error)
+      .then(response => response.filter(row => row.includes(command)))
+      .then((matches) => {
+        console.info(matches) // eslint-disable-line no-console
+        this.log.result = didLogResult
+        return matches
       })
   }
 }
+
+export default Deluge
