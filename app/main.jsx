@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import Routes from './Routes'
 import Deluge from './api'
 
-window.deluge = new Deluge()
+window.deluge = new Deluge({ delugeLocation: 'https://app.wesleyklop.nl/deluge' })
 window.log = console.log.bind(console, 'Promise result:') // eslint-disable-line no-console
 
 const appRoot = document.querySelector('#app')

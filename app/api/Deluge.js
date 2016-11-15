@@ -4,14 +4,20 @@ import { Auth, Daemon, WebUi, Core } from './'
  * Deluge class with all accesible methods from the JSON api
  */
 class Deluge {
+  location = ''
+
   /**
    * Deluge class constructor
+   * @param {string=} delugeLocation
    * @param {Auth=} auth
    * @param {Core=} core
    * @param {Daemon=} daemon
    * @param {WebUi=} webui
    */
-  constructor(auth, core, daemon, webui) {
+  constructor({ delugeLocation = '', auth, core, daemon, webui }) {
+    if (delugeLocation.length > 1) {
+      this.location = delugeLocation.endsWith('/') ? delugeLocation.slice(0, -1) : delugeLocation
+    }
     this.auth = auth || new Auth(this)
     this.core = core || new Core(this)
     this.daemon = daemon || new Daemon(this)
@@ -42,7 +48,7 @@ class Deluge {
    */
   call(method, params = []) {
     return fetch(
-      'https://app.wesleyklop.nl/deluge/json', {
+      `${this.location}/json`, {
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/json',
