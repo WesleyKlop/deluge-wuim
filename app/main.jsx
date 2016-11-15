@@ -1,10 +1,11 @@
 import 'babel-polyfill'
 import React from 'react'
+import 'react-mdl/extra/material'
 import { render } from 'react-dom'
 import Routes from './Routes'
-import Deluge from './api'
+import './main.scss'
 
-window.deluge = new Deluge({ delugeLocation: '/api/' })
+// For debug reasons
 window.log = console.log.bind(console, 'Promise result:') // eslint-disable-line no-console
 
 const appRoot = document.querySelector('#app')

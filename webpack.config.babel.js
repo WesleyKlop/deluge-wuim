@@ -31,8 +31,8 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel',
       }, {
-        test: /\.scss$/,
-        exclude: /node_modules/,
+        test: /\.s?css$/,
+        include: /app/,
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
           'css?modules&importLoaders=1&localIdentName=[name]__[local]--[hash:base64:5]',

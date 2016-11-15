@@ -50,8 +50,10 @@ class Deluge {
     return fetch(
       `${this.location}/json`, {
         method: 'POST',
+        mode: 'cors',
         headers: new Headers({
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         }),
         body: JSON.stringify({
           id: this.getRequestCount(),
