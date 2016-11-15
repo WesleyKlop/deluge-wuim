@@ -50,9 +50,12 @@ const config = {
     host: HOST,
     compress: true,
     proxy: {
-      '/json': {
+      // Proxy calls like /api/json to https://app.wesleyklop.nl/deluge/json
+      '/api/**': {
         target: 'https://app.wesleyklop.nl/deluge',
         changeOrigin: true,
+        secure: true,
+        pathRewrite: { '^/api/': '' },
       },
     },
   },
