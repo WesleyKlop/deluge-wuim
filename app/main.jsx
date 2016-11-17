@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 import React from 'react'
 import 'react-mdl/extra/material'
+import 'react-mdl/extra/material.css'
 import { render } from 'react-dom'
 import Routes from './Routes'
 import './main.scss'

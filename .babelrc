@@ -4,8 +4,17 @@
     "react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
     "transform-class-properties",
     "transform-async-to-generator"
-  ]
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ],
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    }
+  }
 }

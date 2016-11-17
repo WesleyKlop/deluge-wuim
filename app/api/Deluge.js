@@ -1,4 +1,4 @@
-import { Auth, Daemon, WebUi, Core } from './'
+import { Auth, Daemon, WebUi, Core, Web } from './'
 
 /**
  * Deluge class with all accesible methods from the JSON api
@@ -13,8 +13,9 @@ class Deluge {
    * @param {Core=} core
    * @param {Daemon=} daemon
    * @param {WebUi=} webui
+   * @param {Web=} web
    */
-  constructor({ delugeLocation = '', auth, core, daemon, webui }) {
+  constructor({ delugeLocation = '', auth, core, daemon, webui, web }) {
     if (delugeLocation.length > 1) {
       this.location = delugeLocation.endsWith('/') ? delugeLocation.slice(0, -1) : delugeLocation
     }
@@ -22,6 +23,7 @@ class Deluge {
     this.core = core || new Core(this)
     this.daemon = daemon || new Daemon(this)
     this.webui = webui || new WebUi(this)
+    this.web = web || new Web(this)
   }
 
   requestCounter = 0

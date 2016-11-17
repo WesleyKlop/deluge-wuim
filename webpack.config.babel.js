@@ -31,7 +31,7 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel',
       }, {
-        test: /\.s?css$/,
+        test: /\.scss$/,
         include: /app/,
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
@@ -39,6 +39,20 @@ const config = {
           'postcss',
           'sass',
         ),
+      }, {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract(
+          'style?sourceMap',
+          'css',
+          'postcss',
+          'sass',
+        ),
+      }, {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ],
       },
     ],
   },
@@ -52,7 +66,7 @@ const config = {
     proxy: {
       // Proxy calls like /api/json to https://app.wesleyklop.nl/deluge/json
       '/api/**': {
-        target: 'https://app.wesleyklop.nl/deluge',
+        target: 'http://localhost:8112/',
         changeOrigin: true,
         secure: true,
         pathRewrite: { '^/api/': '' },
