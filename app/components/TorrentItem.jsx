@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import s from './TorrentItem.scss'
+import s from './TorrentItem.css'
 
 const TorrentItem = ({
   name, eta, label, ratio, state, progress, downloaded, size, complete,
@@ -10,9 +10,9 @@ const TorrentItem = ({
       <span
         className="mdl-list__item-text-body"
       >
-        {state}&nbsp;
-        •&nbsp;{complete ? `${(downloaded / 1048576).toFixed(2)}/${(size / 1048576).toFixed(2)}MB(${progress}%)` : `${progress}%` } {downloaded ? '' : `• ${eta}`}
-        •&nbsp;{ratio.toFixed(3)}&nbsp;{label && `• ${label}`}
+        {state} •&nbsp;
+        {!complete ? `${(downloaded / 1048576).toFixed(2)}/${(size / 1048576).toFixed(2)}MB(${progress}%)` : `${progress}%`}{downloaded ? null : `• ${eta}`}
+        &nbsp;• {ratio.toFixed(3)}{label && ` • ${label}`}
       </span>
     </div>
   </li>

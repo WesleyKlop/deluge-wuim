@@ -31,27 +31,28 @@ const config = {
         exclude: /node_modules/,
         loader: 'babel',
       }, {
-        test: /\.scss$/,
+        test: /\.css$/,
         include: /app/,
+        exclude: /node_modules/,
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
           'css?modules&importLoaders=1&localIdentName=[name]__[local]--[hash:base64:5]',
           'postcss',
-          'sass',
         ),
       }, {
         test: /\.css$/,
+        exclude: /app/,
+        include: /node_modules/,
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
           'css',
           'postcss',
-          'sass',
         ),
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loaders: [
           'file?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
         ],
       },
     ],

@@ -15,9 +15,15 @@ const AppNavigation = ({ hidePhone, hideDesktop }) => (
   </Navigation>
 )
 
+AppNavigation.propTypes = {
+  hidePhone: PropTypes.bool,
+  hideDesktop: PropTypes.bool,
+}
+
+
 const App = ({ children }) => (
   <Layout fixedHeader>
-    <Header title="Deluge Web">
+    <Header title="Deluge WUIM">
       <AppNavigation hidePhone />
       <Textfield
         value=""
@@ -28,7 +34,7 @@ const App = ({ children }) => (
         expandableIcon="search"
       />
     </Header>
-    <Drawer title="Deluge Web">
+    <Drawer title="Deluge WUIM">
       <AppNavigation hideDesktop />
     </Drawer>
     <Content>{children}</Content>

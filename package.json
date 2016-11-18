@@ -1,7 +1,7 @@
 {
-  "name": "deluge-web",
+  "name": "deluge-wuim",
   "version": "0.1.0",
-  "description": "A more up to date approach to the deluge web ui",
+  "description": "Deluge Web Ui IMproved ",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
     "lint:scripts": "eslint app/**/*.{js,jsx} --fix",

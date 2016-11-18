@@ -3,8 +3,8 @@ import React from 'react'
 import 'react-mdl/extra/material'
 import 'react-mdl/extra/material.css'
 import { render } from 'react-dom'
-import Routes from './Routes'
-import './main.scss'
+import Routes from './components/Routes'
+import './main.css'
 
 // For debug reasons
 window.log = console.log.bind(console, 'Promise result:') // eslint-disable-line no-console
@@ -19,8 +19,8 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
 
   // HMR
   if (module.hot) {
-    module.hot.accept('./Routes.jsx', () => {
-      const Routes = require('./Routes.jsx').default
+    module.hot.accept('./components/Routes', () => {
+      const Routes = require('./components/Routes').default
       render(<HMRContainer>{Routes}</HMRContainer>)
     })
   }

@@ -24,12 +24,16 @@ class Deluge {
     this.daemon = daemon || new Daemon(this)
     this.webui = webui || new WebUi(this)
     this.web = web || new Web(this)
+    if (this.log.exclude.length > 0) {
+      console.info(`[Deluge] Excluding calls to ${this.log.exclude.join(', ')}`)
+    }
   }
 
   requestCounter = 0
   log = {
     response: false,
     result: true,
+    exclude: ['web.update_ui'],
   }
 
   /**
@@ -66,18 +70,18 @@ class Deluge {
         credentials: 'include',
       },
     ).then((response) => {
-      if (this.log.response === true) {
+      if (this.log.response === true && !this.log.exclude.includes(method)) {
         // eslint-disable-next-line no-console
-        console.info(response)
+        console.info(`[${method}]`, response)
       }
       return response.json()
     }).then(({ result, error }) => {
       if (error) {
         return Promise.reject(error)
       }
-      if (this.log.result === true) {
+      if (this.log.result === true && !this.log.exclude.includes(method)) {
         // eslint-disable-next-line no-console
-        console.info(result)
+        console.info(`[${method}]`, result)
       }
       return Promise.resolve(result)
     })

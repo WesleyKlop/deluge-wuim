@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-import { AppContainer, HomeContainer, LoginContainer } from './containers'
+import { AppContainer, HomeContainer, LoginContainer } from '../containers'
 
 const Routes = (
   <Router history={browserHistory}>
