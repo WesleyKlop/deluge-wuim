@@ -19,6 +19,7 @@ class Deluge {
     if (delugeLocation.length > 1) {
       this.location = delugeLocation.endsWith('/') ? delugeLocation.slice(0, -1) : delugeLocation
     }
+
     this.auth = auth || new Auth(this)
     this.core = core || new Core(this)
     this.daemon = daemon || new Daemon(this)

@@ -29,5 +29,6 @@ There is a lot more that needs to happen still.
 * Preferences
 * Server info
 * Most `web.*` calls
+* Service worker
 
 What would be really cool but not something I can do as I haven't learned python (yet) is if the api could be rewritten to be a websocket and the login call would use credentials so I can use the credentials api :^)

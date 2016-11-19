@@ -25,13 +25,12 @@ class AppContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    this.deluge.auth.checkSession()
-      .then((resp) => {
-        if (resp === false) {
-          browserHistory.replace('/login')
-        }
-      })
+  async componentWillMount() {
+    if (await this.deluge.auth.checkSession() === false) {
+      browserHistory.push('/login')
+    } else if (await this.deluge.web.connected() === false) {
+      browserHistory.push('/connection')
+    }
   }
 
   render() {

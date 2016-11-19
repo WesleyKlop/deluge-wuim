@@ -5,9 +5,11 @@ import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import delugeLogo from '../assets/deluge.svg'
 
+/**
+ * LoginContainer Component
+ * @property {Deluge} context.deluge
+ */
 class LoginContainer extends Component {
-  static propTypes = {}
-
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
   }
@@ -33,11 +35,17 @@ class LoginContainer extends Component {
   }
 
   async tryLogin(password) {
-    if (await this.context.deluge.auth.login(password)) {
+    const { deluge } = this.context
+    if (await deluge.auth.login(password)) {
       if ('credentials' in navigator) {
         await this.saveCredentials(password)
       }
-      browserHistory.push('/')
+      // Go to home if we're connected or else route to the connection manager
+      if (await deluge.web.connected() === true) {
+        browserHistory.push('/')
+      } else {
+        browserHistory.push('/connection')
+      }
     } else {
       this.setState({ error: 'Invalid password' })
     }

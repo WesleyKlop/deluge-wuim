@@ -1,8 +1,11 @@
-/* eslint-disable global-require */
+const nested = require('postcss-nested')
+const flexbugsFixes = require('postcss-flexbugs-fixes')
+const cssnext = require('postcss-cssnext')
+
 module.exports = {
   plugins: [
-    require('postcss-nested'),
-    require('postcss-flexbugs-fixes'),
-    require('postcss-cssnext'),
+    nested,
+    flexbugsFixes,
+    cssnext,
   ],
 }
