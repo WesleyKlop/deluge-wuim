@@ -37,14 +37,15 @@ class TorrentContainer extends Component {
   }
 
   async updateTorrents() {
-    const { torrents } = await this.props.deluge.web.updateUi(['id', 'name', 'eta', 'label', 'ratio', 'state', 'download_rate', 'progress', 'total_done', 'total_wanted', 'upload_rate'], this.props.filter)
+    const { torrents } = await this.props.deluge.web.updateUi(['hash', 'name', 'eta', 'label', 'ratio', 'state', 'download_rate', 'progress', 'total_done', 'total_wanted', 'upload_rate'], this.props.filter)
     this.setState({ torrents: Object.values(torrents) })
   }
 
   renderTorrents() {
-    return this.state.torrents.map((row, i) => (
+    return this.state.torrents.map(row => (
       <TorrentItem
-        key={i}
+        key={row.hash}
+        hash={row.hash}
         name={row.name}
         eta={row.eta}
         label={row.label}
