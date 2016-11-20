@@ -7,9 +7,18 @@ class TorrentContainer extends Component {
   static propTypes = {
     deluge: PropTypes.instanceOf(Deluge).isRequired,
     filter: PropTypes.shape({
-      state: PropTypes.string,
-      label: PropTypes.string,
-      tracker_host: PropTypes.string,
+      state: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.string,
+      ]),
+      label: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.string,
+      ]),
+      tracker_host: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.string),
+        PropTypes.string,
+      ]),
     }),
   }
 

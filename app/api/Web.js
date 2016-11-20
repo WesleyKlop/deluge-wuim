@@ -15,7 +15,7 @@ class Web {
    * @returns {Promise.<null>}
    */
   connect(hostId) {
-    return this.deluge.call('web.connect', [hostId])
+    return this.deluge.call('web.connect', hostId)
   }
 
   /**
@@ -40,7 +40,7 @@ class Web {
    * @returns {Promise.<Object>}
    */
   updateUi(fields = [], filter) {
-    return this.deluge.call('web.update_ui', [fields, filter || {}])
+    return this.deluge.call('web.update_ui', fields, filter || {})
   }
 
   /**
@@ -72,7 +72,7 @@ class Web {
    * @returns {Promise.<HostWithVersion>}
    */
   getHostStatus(hostId) {
-    return this.deluge.call('web.get_host_status', [hostId])
+    return this.deluge.call('web.get_host_status', hostId)
       .then(([id, ip, port, status, version]) => ({ id, ip, port, status, version }))
   }
 
@@ -82,7 +82,7 @@ class Web {
    * @returns {Promise.<boolean>} if the removal was successful
    */
   removeHost(hostId) {
-    return this.deluge.call('web.remove_host', [hostId])
+    return this.deluge.call('web.remove_host', hostId)
   }
 
   /**
@@ -94,7 +94,7 @@ class Web {
    * @returns {Promise.<boolean>} true if the addition was successful
    */
   addHost(ip, port, username, password) {
-    return this.deluge.call('web.add_host', [ip, port, username, password])
+    return this.deluge.call('web.add_host', ip, port, username, password)
       .then(result => result[0])
   }
 }

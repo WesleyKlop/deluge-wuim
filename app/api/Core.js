@@ -56,7 +56,7 @@ class Core {
       // eslint-disable-next-line no-console
       console.warn('Calling getConfigValues with only one parameter, might as well use getConfigValue instead')
     }
-    return this.deluge.call('core.get_config_values', [keys])
+    return this.deluge.call('core.get_config_values', keys)
   }
 
   /**
@@ -129,7 +129,7 @@ class Core {
     if (!path || typeof path !== 'string') {
       throw new TypeError(`Expected parameter path of type string but got ${typeof path}`)
     }
-    return this.deluge.call('core.get_path_size', [path])
+    return this.deluge.call('core.get_path_size', path)
   }
 
   /**
@@ -146,7 +146,7 @@ class Core {
    * @returns {Promise.<Object>} an object with the specified keys
    */
   getSessionStatus(...keys) {
-    return this.deluge.call('core.get_session_status', [keys])
+    return this.deluge.call('core.get_session_status', keys)
   }
 
   /**
@@ -156,7 +156,7 @@ class Core {
    * @returns {Promise.<Object>} the object with the specified keys
    */
   getTorrentStatus(torrentId, keys = []) {
-    return this.deluge.call('core.get_torrent_status', [torrentId, keys])
+    return this.deluge.call('core.get_torrent_status', torrentId, keys)
   }
 
   /**
@@ -167,7 +167,7 @@ class Core {
    * @returns {Promise.<Object.<string, Object>>}
    */
   getTorrentsStatus(filterDict = {}, keys = []) {
-    return this.deluge.call('core.get_torrents_status', [filterDict, keys])
+    return this.deluge.call('core.get_torrents_status', filterDict, keys)
   }
 }
 

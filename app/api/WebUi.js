@@ -54,7 +54,7 @@ class WebUi {
       throw new Error(`Unexpected key in config object, allowed keys are: "${WebUi.CONFIG_KEYS.join('", "')}"`)
     }
 
-    return this.deluge.call('webui.set_config', [config])
+    return this.deluge.call('webui.set_config', config)
   }
 
   /**

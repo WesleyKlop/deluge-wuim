@@ -16,7 +16,7 @@ class Auth {
    * @returns {Promise.<bool>}
    */
   login(password) {
-    return this.deluge.call('auth.login', [password])
+    return this.deluge.call('auth.login', password)
   }
 
   /**
@@ -51,7 +51,7 @@ class Auth {
    * @returns {Promise.<bool>}
    */
   changePassword(currPass, newPass) {
-    return this.deluge.call('auth.change_password', [currPass, newPass])
+    return this.deluge.call('auth.change_password', currPass, newPass)
   }
 }
 

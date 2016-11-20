@@ -26,7 +26,7 @@ class Deluge {
     this.webui = webui || new WebUi(this)
     this.web = web || new Web(this)
     if (this.log.exclude.length > 0) {
-      console.info(`[Deluge] Excluding calls to ${this.log.exclude.join(', ')}`)
+      console.info(`[Deluge] Excluding calls to: ${this.log.exclude.join(', ')}`)
     }
   }
 
@@ -50,10 +50,10 @@ class Deluge {
    * Execute the given method property with optional params on
    * the server and return a promise with the Response
    * @param {string} method the method to call
-   * @param {Array=} params the optional parameters to send
+   * @param {...*} params the optional parameters to send
    * @returns {Promise.<*>}
    */
-  call(method, params = []) {
+  call(method, ...params) {
     return fetch(
       `${this.location}/json`, {
         method: 'POST',
