@@ -5,7 +5,11 @@
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
     "lint:scripts": "eslint app/**/*.{js,jsx} --fix",
-    "build": "NODE_ENV=production webpack -p --color --progress"
+    "lint:styles": "exit 0",
+    "lint": "yarn lint:scripts && yarn lint:styles",
+    "build": "NODE_ENV=production webpack -p --color --progress",
+    "preversion": "yarn lint",
+    "postversion": "git push --all"
   },
   "repository": {
     "url": "git@github.com:WesleyKlop/deluge-web.git",
