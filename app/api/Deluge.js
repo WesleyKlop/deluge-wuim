@@ -98,6 +98,7 @@ class Deluge {
     this.log.result = false
     return this.call('system.listMethods')
       .then(response => response.filter(row => row.includes(command)))
+      .then(matches => matches.sort((a, b) => a.localeCompare(b)))
       .then((matches) => {
         console.info(matches) // eslint-disable-line no-console
         this.log.result = didLogResult
