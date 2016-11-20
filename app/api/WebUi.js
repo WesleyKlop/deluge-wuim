@@ -67,18 +67,16 @@ class WebUi {
 
   /**
    * Start the web ui
-   * @returns {*}
    */
   start() {
-    return this.deluge.call('webui.start')
+    this.deluge.call('webui.start')
   }
 
   /**
    * Stop the web ui
-   * @returns {*}
    */
   stop() {
-    return this.deluge.call('webui.stop')
+    this.deluge.call('webui.stop')
   }
 }
 
