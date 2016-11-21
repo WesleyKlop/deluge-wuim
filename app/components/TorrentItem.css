@@ -1,13 +1,13 @@
-.torrentItem {
+.torrent-item {
   width: 100%;
   overflow: hidden;
 }
 
-.torrentName {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.torrent-name {
   width: 100%;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .container {

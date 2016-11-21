@@ -1,6 +1,7 @@
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import StyleLintPlugin from 'stylelint-webpack-plugin'
 
 const {
   PORT = 8080,
@@ -18,7 +19,8 @@ const config = {
   ],
   output: {
     path: BUILD_DIR,
-    filename: '[name].js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].bundle.js',
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -36,8 +38,9 @@ const config = {
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
-          'css?modules&importLoaders=1&localIdentName=[name]__[local]--[hash:base64:5]',
+          'css?camelCase&modules&importLoaders=1&localIdentName=[name]__[local]--[hash:base64:5]',
           'postcss',
+          'stylefmt?config=.stylelintrc',
         ),
       }, {
         test: /\.css$/,
@@ -46,7 +49,6 @@ const config = {
         loader: ExtractTextPlugin.extract(
           'style?sourceMap',
           'css',
-          'postcss',
         ),
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -64,15 +66,6 @@ const config = {
     port: PORT,
     host: HOST,
     compress: true,
-    proxy: {
-      // Proxy calls like /api/json to https://app.wesleyklop.nl/deluge/json
-      '/api/**': {
-        target: 'http://localhost:8112/',
-        changeOrigin: true,
-        secure: true,
-        pathRewrite: { '^/api/': '' },
-      },
-    },
   },
   plugins: [
     new Webpack.HotModuleReplacementPlugin(),
@@ -85,6 +78,10 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
     new ExtractTextPlugin('app.css'),
+    new StyleLintPlugin({
+      configFile: '.stylelintrc',
+      files: ['**/*.css'],
+    }),
   ],
 }
 

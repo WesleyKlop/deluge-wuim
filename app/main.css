@@ -1,6 +1,6 @@
-/* Global styles go in this file*/
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons|Roboto');
+/* Global styles go in this file */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Roboto");
 
-body {
+:root {
   background: #ecf0f1;
 }
