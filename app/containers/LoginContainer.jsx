@@ -37,7 +37,7 @@ class LoginContainer extends Component {
   async tryLogin(password) {
     const { deluge } = this.context
     if (await deluge.auth.login(password)) {
-      if ('credentials' in navigator) {
+      if ('credentials' in navigator && location.protocol.startsWith('https')) {
         await this.saveCredentials(password)
       }
       // Go to home if we're connected or else route to the connection manager

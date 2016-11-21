@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { List } from 'react-mdl'
+import Helmet from 'react-helmet'
 import Deluge from '../api/Deluge'
 import TorrentItem from '../components/TorrentItem'
 
@@ -24,6 +25,14 @@ class TorrentContainer extends Component {
 
   state = {
     torrents: [],
+    showSessionSpeed: false,
+    title: '',
+  }
+
+
+  async componentWillMount() {
+    const { show_session_speed } = await this.props.deluge.web.getConfig()
+    this.setState({ showSessionSpeed: show_session_speed })
   }
 
   componentDidMount() {
@@ -37,8 +46,20 @@ class TorrentContainer extends Component {
   }
 
   async updateTorrents() {
-    const { torrents } = await this.props.deluge.web.updateUi(['hash', 'name', 'eta', 'label', 'ratio', 'state', 'download_rate', 'progress', 'total_done', 'total_wanted', 'upload_rate'], this.props.filter)
-    this.setState({ torrents: Object.values(torrents) })
+    const {
+      torrents,
+      stats: {
+        download_rate: downloadRate,
+        upload_rate: uploadRate,
+      },
+    } = await this.props.deluge.web.updateUi(['hash', 'name', 'eta', 'label', 'ratio', 'state', 'download_rate', 'progress', 'total_done', 'total_wanted', 'upload_rate'], this.props.filter)
+    const nextState = { torrents: Object.values(torrents) }
+
+    if (this.state.showSessionSpeed === true) {
+      nextState.title = `${(downloadRate / 1024).toFixed(1)}K / ${(uploadRate / 1024).toFixed(1)}K`
+    }
+
+    this.setState(nextState)
   }
 
   renderTorrents() {
@@ -61,7 +82,12 @@ class TorrentContainer extends Component {
   }
 
   render() {
-    return (<List >{this.renderTorrents()}</List>)
+    return (
+      <div>
+        <Helmet title={this.state.title} />
+        <List>{this.renderTorrents()}</List>
+      </div>
+    )
   }
 }
 
