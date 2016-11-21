@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router'
 import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
+import { delugeLocation } from '../../settings.json'
 
 class AppContainer extends Component {
   static propTypes = {
@@ -17,7 +18,7 @@ class AppContainer extends Component {
   constructor() {
     super()
 
-    this.deluge = new Deluge({ delugeLocation: 'https://app.wesleyklop.nl/deluge/' })
+    this.deluge = new Deluge({ delugeLocation })
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this)
     this.showSnackbar = this.showSnackbar.bind(this)
