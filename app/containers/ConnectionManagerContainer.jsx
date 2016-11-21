@@ -1,8 +1,21 @@
 import React, { Component, PropTypes } from 'react'
-import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconButton } from 'react-mdl'
+import {
+  Card,
+  CardTitle,
+  List,
+  ListItem,
+  ListItemContent,
+  ListItemAction,
+  IconButton,
+  FABButton,
+  Icon,
+  Textfield,
+  Button,
+} from 'react-mdl'
 import { browserHistory } from 'react-router'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
+import s from './ConnectionManagerContainer.css'
 
 /**
  * ConnectionManagerContainer component
@@ -11,6 +24,7 @@ import Deluge from '../api/Deluge'
 class ConnectionManagerContainer extends Component {
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
+    showSnackbar: PropTypes.func,
   }
 
   constructor() {
@@ -19,19 +33,28 @@ class ConnectionManagerContainer extends Component {
     this.addDelugeVersions = this.addDelugeVersions.bind(this)
     this.handleActionClick = this.handleActionClick.bind(this)
     this.handleContentClick = this.handleContentClick.bind(this)
+    this.handleFABClick = this.handleFABClick.bind(this)
+    this.handleAddHostClick = this.handleAddHostClick.bind(this)
   }
 
   state = {
     hosts: [],
+    addHost: false,
   }
 
   async componentDidMount() {
-    this.getHosts().then(hosts => this.setState({ hosts }, this.addDelugeVersions))
+    this.updateHosts()
   }
 
   getHosts() {
     return this.context.deluge.web.getHosts()
   }
+
+  updateHosts() {
+    this.getHosts().then(hosts => this.setState({ hosts }, this.addDelugeVersions))
+  }
+
+  addHost = {}
 
   async addDelugeVersions() {
     const hosts = await Promise.all(
@@ -72,6 +95,31 @@ class ConnectionManagerContainer extends Component {
     console.info('Should update/remove this host:', host)
   }
 
+  handleFABClick() {
+    this.setState({ addHost: !this.state.addHost })
+  }
+
+  handleAddHostClick() {
+    if (this.state.addHost === false) return
+
+    const { hostRef, portRef, userRef, passRef } = this.addHost
+    const host = hostRef.value.trim()
+    const port = portRef.value.trim()
+    const user = userRef.value.trim()
+    const pass = passRef.value
+
+    this.context.deluge.web.addHost(host, port, user, pass)
+      .then((resp) => {
+        if (resp) {
+          this.context.showSnackbar(`Host ${host} succesfully added!`)
+        } else {
+          this.context.showSnackbar(`Error adding host ${host}`)
+        }
+        this.setState({ addHost: false })
+        this.updateHosts()
+      })
+  }
+
   renderHosts() {
     return this.state.hosts.map((host) => {
       const disabled = host.status === 'Offline'
@@ -101,13 +149,68 @@ class ConnectionManagerContainer extends Component {
     })
   }
 
+  renderAddHost() {
+    return (
+      <ListItem key="addHost" className={s.addHostContainer}>
+        <Textfield
+          label="Host"
+          type="text"
+          floatingLabel
+          pattern="^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+          error="Value must be a valid IP"
+          className={s.inputHost}
+          ref={e => (this.addHost.hostRef = e && e.inputRef)}
+        />
+        <Textfield
+          type="number"
+          label="Port"
+          floatingLabel
+          defaultValue="58846"
+          size={5}
+          className={s.inputPort}
+          ref={e => (this.addHost.portRef = e && e.inputRef)}
+        />
+        <Textfield
+          type="text"
+          floatingLabel
+          label="Username"
+          autoComplete="username"
+          className={s.inputUsername}
+          ref={e => (this.addHost.userRef = e && e.inputRef)}
+        />
+        <Textfield
+          type="password"
+          floatingLabel
+          label="Password"
+          autoComplete="current-password"
+          className={s.inputPassword}
+          ref={e => (this.addHost.passRef = e && e.inputRef)}
+        />
+        <Button primary ripple onClick={this.handleAddHostClick}>Add host</Button>
+      </ListItem>
+    )
+  }
+
   render() {
     return (
       <PageContent>
         <Card shadow={2}>
           <CardTitle>Connection Manager</CardTitle>
-          <List>{this.renderHosts()}</List>
+          <List>
+            {this.state.addHost ? this.renderAddHost() : this.renderHosts()}
+          </List>
         </Card>
+        <FABButton
+          colored
+          ripple
+          onClick={this.handleFABClick}
+          style={{
+            transform: `rotate(${this.state.addHost ? -45 : 0}deg)`,
+            transition: 'transform 100ms ease',
+          }}
+        >
+          <Icon name="add" />
+        </FABButton>
       </PageContent>
     )
   }

@@ -36,12 +36,12 @@ const config = {
         test: /\.css$/,
         include: /app/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract(
+        loaders: [
           'style?sourceMap',
           'css?camelCase&modules&importLoaders=1&localIdentName=[name]__[local]--[hash:base64:5]',
           'postcss',
-          'stylefmt?config=.stylelintrc',
-        ),
+          //'stylefmt?config=.stylelintrc',
+        ],
       }, {
         test: /\.css$/,
         exclude: /app/,

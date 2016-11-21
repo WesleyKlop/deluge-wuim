@@ -1,0 +1,17 @@
+.add-host-container {
+  flex-wrap: wrap;
+}
+
+.input-host {
+  flex: 1 1 calc(75% - 16px);
+}
+
+.input-port {
+  margin-left: 16px;
+  flex: 1 1 25%;
+}
+
+.input-password,
+.input-username {
+  flex: 0 0 100%;
+}

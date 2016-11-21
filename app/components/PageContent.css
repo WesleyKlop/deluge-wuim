@@ -10,3 +10,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.page-content :global(.mdl-button--fab) {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+}
