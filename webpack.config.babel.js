@@ -2,6 +2,8 @@ import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import StyleLintPlugin from 'stylelint-webpack-plugin'
+import NotifierPlugin from 'webpack-notifier'
+import path from 'path'
 
 const {
   PORT = 8080,
@@ -83,6 +85,11 @@ const config = {
     new StyleLintPlugin({
       configFile: '.stylelintrc',
       files: ['**/*.css'],
+    }),
+    new NotifierPlugin({
+      title: 'Deluge WUIM',
+      contentImage: path.join(__dirname, 'app/assets/deluge.svg'),
+      alwaysNotify: true,
     }),
   ],
 }
