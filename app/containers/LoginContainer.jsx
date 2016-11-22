@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory } from 'react-router'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
@@ -12,6 +11,7 @@ import delugeLogo from '../assets/deluge.svg'
 class LoginContainer extends Component {
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
+    router: PropTypes.object,
   }
 
   constructor() {
@@ -35,16 +35,16 @@ class LoginContainer extends Component {
   }
 
   async tryLogin(password) {
-    const { deluge } = this.context
+    const { deluge, router } = this.context
     if (await deluge.auth.login(password)) {
       if ('credentials' in navigator && location.protocol.startsWith('https')) {
         await this.saveCredentials(password)
       }
       // Go to home if we're connected or else route to the connection manager
       if (await deluge.web.connected() === true) {
-        browserHistory.push('/')
+        router.transitionTo('/')
       } else {
-        browserHistory.push('/connection')
+        router.transitionTo('/connection')
       }
     } else {
       this.setState({ error: 'Invalid password' })

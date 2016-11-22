@@ -8,10 +8,21 @@ class HomeContainer extends Component {
 
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
+    router: PropTypes.object,
   }
 
   state = {
     filter: {},
+  }
+
+  async componentWillMount() {
+    const { deluge, router } = this.context
+    console.log(router)
+    if (await deluge.auth.checkSession() === false) {
+      router.transitionTo('/login')
+    } else if (await deluge.web.connected() === false) {
+      router.transitionTo('/connection')
+    }
   }
 
   render() {

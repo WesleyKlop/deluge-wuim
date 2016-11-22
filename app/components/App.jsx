@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar } from 'react-mdl'
-import { Link } from 'react-router'
+import { Link, Match, Miss } from 'react-router'
+import { HomeContainer, LoginContainer, ConnectionManagerContainer } from '../containers'
+import NotFound from './NotFound'
 
 const AppNavigation = ({ hidePhone, hideDesktop }) => (
   <Navigation
@@ -22,7 +24,6 @@ AppNavigation.propTypes = {
 }
 
 const App = ({
-  children,
   searchValue,
   onSearchChange,
   snackbarActive,
@@ -45,7 +46,10 @@ const App = ({
       <AppNavigation hideDesktop />
     </Drawer>
     <Content>
-      {children}
+      <Match exactly pattern="/" component={HomeContainer} />
+      <Match exactly pattern="/login" component={LoginContainer} />
+      <Match exactly pattern="/connection" component={ConnectionManagerContainer} />
+      <Miss component={NotFound} />
       <Snackbar
         active={snackbarActive}
         onTimeout={onSnackbarTimeout}
@@ -55,7 +59,6 @@ const App = ({
 )
 
 App.propTypes = {
-  children: PropTypes.node,
   searchValue: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
   snackbarActive: PropTypes.bool.isRequired,

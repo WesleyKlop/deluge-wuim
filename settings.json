@@ -1,4 +1,4 @@
 {
-  "baseUrl": "/",
+  "basename": "",
   "delugeLocation": "https://app.wesleyklop.nl/deluge/"
 }

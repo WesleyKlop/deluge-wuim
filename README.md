@@ -4,19 +4,19 @@ WUIM stands for _**W**eb **U**i **IM**proved_, I started this project because of
 
 I'm also trying to make all the functions available (listed when calling `system.listMethods`) to me in the web ui but that will take a bit longer.
 
-# Installing
+## Installing
 
 Just your standard
 ```shell
 git clone git@github.com:WesleyKlop/deluge-wuim.git && cd deluge-wuim
 yarn install  # or npm install
-# Build the app, you can overwrite the build location with the BUILD_DIR environment variable
-yarn build # or npm run build
 ```
+
+## Configuration
 
 To see more options check out the webpack.config.babel.js file which lists all used environment variables, right at the top
 
-# TODO
+## TODO
 
 There is a lot more that needs to happen still.
 

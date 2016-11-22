@@ -2,8 +2,9 @@ import 'babel-polyfill'
 import React from 'react'
 import 'react-mdl/extra/material'
 import 'react-mdl/extra/material.css'
+import { AppContainer as HMRContainer } from 'react-hot-loader'
 import { render } from 'react-dom'
-import Routes from './components/Routes'
+import AppContainer from './containers/AppContainer'
 import './main.css'
 
 // For debug reasons
@@ -13,18 +14,16 @@ const appRoot = document.querySelector('#app')
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   /* eslint-disable */
-  const { AppContainer: HMRContainer } = require('react-hot-loader')
-
-  render(<HMRContainer>{Routes}</HMRContainer>, appRoot)
+  render(<HMRContainer><AppContainer /></HMRContainer>, appRoot)
 
   // HMR
   if (module.hot) {
-    module.hot.accept('./components/Routes', () => {
-      const Routes = require('./components/Routes').default
-      render(<HMRContainer>{Routes}</HMRContainer>)
+    module.hot.accept('./containers/AppContainer', () => {
+      const AppContainer = require('./containers/AppContainer').default
+      render(<HMRContainer><AppContainer /></HMRContainer>)
     })
   }
   /* eslint-enable */
 } else {
-  render(Routes, appRoot)
+  render(<AppContainer />, appRoot)
 }

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { browserHistory } from 'react-router'
+import { BrowserRouter } from 'react-router'
 import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
-import { delugeLocation } from '../../settings.json'
+import { delugeLocation, basename } from '../../settings.json'
 
 class AppContainer extends Component {
   static propTypes = {
@@ -40,14 +40,6 @@ class AppContainer extends Component {
     }
   }
 
-  async componentWillMount() {
-    if (await this.deluge.auth.checkSession() === false) {
-      browserHistory.push('/login')
-    } else if (await this.deluge.web.connected() === false) {
-      browserHistory.push('/connection')
-    }
-  }
-
   handleSearchChange(e) {
     this.setState({ searchValue: e.currentTarget.value })
   }
@@ -77,21 +69,21 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { children } = this.props
     return (
-      <App
-        onSearchChange={this.handleSearchChange}
-        searchValue={this.state.searchValue}
-        snackbarText={this.state.snackbarText}
-        snackbarActive={this.state.snackbarActive}
-        onSnackbarTimeout={this.handleSnackbarTimeout}
-      >
-        <Helmet
-          titleTemplate="%s - Deluge"
-          defaultTitle="Deluge WUIM"
-        />
-        {children}
-      </App>
+      <BrowserRouter basename={basename} ref={e => (this.router = e)}>
+        <App
+          onSearchChange={this.handleSearchChange}
+          searchValue={this.state.searchValue}
+          snackbarText={this.state.snackbarText}
+          snackbarActive={this.state.snackbarActive}
+          onSnackbarTimeout={this.handleSnackbarTimeout}
+        >
+          <Helmet
+            titleTemplate="%s - Deluge"
+            defaultTitle="Deluge WUIM"
+          />
+        </App>
+      </BrowserRouter>
     )
   }
 }
