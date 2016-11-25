@@ -88,7 +88,7 @@ const config = {
     }),
     new NotifierPlugin({
       title: 'Deluge WUIM',
-      contentImage: path.join(__dirname, 'app/assets/deluge.svg'),
+      contentImage: path.join(__dirname, 'app/assets/deluge.png'),
       alwaysNotify: true,
     }),
   ],

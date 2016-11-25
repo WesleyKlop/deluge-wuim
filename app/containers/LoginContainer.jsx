@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
-import delugeLogo from '../assets/deluge.svg'
+import delugeLogo from '../assets/deluge.png'
 
 /**
  * LoginContainer Component

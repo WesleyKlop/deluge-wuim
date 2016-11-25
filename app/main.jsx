@@ -13,6 +13,7 @@ window.log = console.log.bind(console, 'Promise result:') // eslint-disable-line
 const appRoot = document.querySelector('#app')
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
+  HMRContainer.displayName = 'HMRContainer'
   /* eslint-disable */
   render(<HMRContainer><AppContainer /></HMRContainer>, appRoot)
 
