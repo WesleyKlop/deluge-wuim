@@ -10,7 +10,7 @@ const {
   HOST = '0.0.0.0',
   NODE_ENV = 'development',
   BUILD_DIR = `${__dirname}/dist`,
-  WEBPACK_DEVTOOL = 'cheap-module-source-map',
+  WEBPACK_DEVTOOL = 'source-map',
 } = process.env
 
 const config = {
