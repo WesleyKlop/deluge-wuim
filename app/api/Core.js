@@ -1,9 +1,15 @@
+// @flow
+import Deluge from './Deluge'
+import type { FilterTree } from './types'
+
 class Core {
+  deluge: Deluge
+
   /**
    * Core constructor
    * @param {Deluge} deluge
    */
-  constructor(deluge) {
+  constructor(deluge: Deluge) {
     this.deluge = deluge
   }
 
@@ -11,7 +17,7 @@ class Core {
    * Get a list of available plugins
    * @returns {Promise<Array<string>>} an array of available plugins
    */
-  getAvailablePlugins() {
+  getAvailablePlugins(): Promise<string[]> {
     return this.deluge.call('core.get_available_plugins')
   }
 
@@ -19,7 +25,7 @@ class Core {
    * Get the cache status
    * @returns {Promise<Object.Number>} cache statistics
    */
-  getCacheStatus() {
+  getCacheStatus(): Promise<Object> {
     return this.deluge.call('core.get_cache_status')
   }
 
@@ -27,7 +33,7 @@ class Core {
    * Get the deluge configuration
    * @returns {Promise.<Object.*>}
    */
-  getConfig() {
+  getConfig(): Promise<Object> {
     return this.deluge.call('core.get_config')
   }
 
@@ -36,7 +42,7 @@ class Core {
    * @param {string} key
    * @returns {Promise.<*>} the value assigned to the key
    */
-  getConfigValue(key) {
+  getConfigValue(key: string): Promise<any> {
     if (key && typeof key === 'string') {
       return this.deluge.call('core.get_config_value', [key])
     }
@@ -48,7 +54,7 @@ class Core {
    * @param {Array<string>} keys
    * @returns {Promise<Object>} the key-value pairs for the requested keys
    */
-  getConfigValues(...keys) {
+  getConfigValues(...keys: string[]): Promise<Object> {
     if (!keys.length) {
       throw new TypeError('Expecting at least one value to be requested')
     }
@@ -63,28 +69,15 @@ class Core {
    * Get an array with the names of the enabled plugins
    * @returns {Promise.<Array<string>>} the array of enabled plugins
    */
-  getEnabledPlugins() {
+  getEnabledPlugins(): Promise<string[]> {
     return this.deluge.call('core.get_enabled_plugins')
   }
-
-  /**
-   * @typedef {Array} Filter
-   * @property {string} name name the name of the filter
-   * @property {number} amount amount of torrents in filter
-   */
-
-  /**
-   * @typedef {Object} FilterTree
-   * @property {Filter[]} label
-   * @property {Filter[]} state
-   * @property {Filter[]} tracker_host
-   */
 
   /**
    * Get an object with available filters
    * @returns {Promise.<FilterTree>}
    */
-  getFilterTree() {
+  getFilterTree(): Promise<FilterTree> {
     return this.deluge.call('core.get_filter_tree')
   }
 
@@ -92,7 +85,7 @@ class Core {
    * Get the free disk space in bytes
    * @returns {Promise.<number>}
    */
-  getFreeSpace() {
+  getFreeSpace(): Promise<number> {
     return this.deluge.call('core.get_free_space')
   }
 
@@ -100,7 +93,7 @@ class Core {
    * Get the Libtorrent version
    * @returns {Promise.<string>}
    */
-  getLibtorrentVersion() {
+  getLibtorrentVersion(): Promise<string> {
     return this.deluge.call('core.get_libtorrent_version')
   }
 
@@ -108,7 +101,7 @@ class Core {
    * Get the port that deluge is listening on
    * @returns {Promise.<number>}
    */
-  getListenPort() {
+  getListenPort(): Promise<number> {
     return this.deluge.call('core.get_listen_port')
   }
 
@@ -116,7 +109,7 @@ class Core {
    * Get the amount of connections
    * @returns {Promise.<number>}
    */
-  getNumConnections() {
+  getNumConnections(): Promise<number> {
     return this.deluge.call('core.get_num_connections')
   }
 
@@ -125,7 +118,7 @@ class Core {
    * @param {string} path
    * @returns {Promise.<number>}
    */
-  getPathSize(path) {
+  getPathSize(path: string): Promise<number> {
     if (!path || typeof path !== 'string') {
       throw new TypeError(`Expected parameter path of type string but got ${typeof path}`)
     }
@@ -136,7 +129,7 @@ class Core {
    * Get a list of all torrent ID's
    * @returns {Promise.<string>} array of all torrent ID's
    */
-  getSessionState() {
+  getSessionState(): Promise<string> {
     return this.deluge.call('core.get_session_state')
   }
 
@@ -145,7 +138,7 @@ class Core {
    * @param {string[]} keys to return
    * @returns {Promise.<Object>} an object with the specified keys
    */
-  getSessionStatus(...keys) {
+  getSessionStatus(...keys: string[]): Promise<Object> {
     return this.deluge.call('core.get_session_status', keys)
   }
 
@@ -155,8 +148,8 @@ class Core {
    * @param {string[]=} keys (To see available keys call this function with an empty array)
    * @returns {Promise.<Object>} the object with the specified keys
    */
-  getTorrentStatus(torrentId, keys = []) {
-    return this.deluge.call('core.get_torrent_status', torrentId, keys)
+  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Object> {
+    return this.deluge.call('core.get_torrent_status', torrentId, keys || [])
   }
 
   /**
@@ -166,8 +159,8 @@ class Core {
    * (To see available keys call this function with an empty array)
    * @returns {Promise.<Object.<string, Object>>}
    */
-  getTorrentsStatus(filterDict = {}, keys = []) {
-    return this.deluge.call('core.get_torrents_status', filterDict, keys)
+  getTorrentsStatus(filterDict: Object = {}, keys?: string[]): Promise<Object> {
+    return this.deluge.call('core.get_torrents_status', filterDict, keys || [])
   }
 }
 

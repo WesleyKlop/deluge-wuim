@@ -1,10 +1,31 @@
+// @flow
 import { Auth, Daemon, WebUi, Core, Web } from './'
+
+type Log = {
+  response: boolean,
+  result: boolean,
+  exclude: string[]
+}
+
+type ConstructorArgs = {
+  delugeLocation?: string,
+  auth?: Auth,
+  core?: Core,
+  daemon?: Daemon,
+  webui?: WebUi,
+  web?: Web,
+}
 
 /**
  * Deluge class with all accesible methods from the JSON api
  */
 class Deluge {
-  location = ''
+  location: string = ''
+  auth: Auth
+  core: Core
+  webui: WebUi
+  web: Web
+  daemon: Daemon
 
   /**
    * Deluge class constructor
@@ -15,7 +36,7 @@ class Deluge {
    * @param {WebUi=} webui
    * @param {Web=} web
    */
-  constructor({ delugeLocation = '', auth, core, daemon, webui, web }) {
+  constructor({ delugeLocation = '', auth, core, daemon, webui, web }: ConstructorArgs) {
     if (delugeLocation.length > 1) {
       this.location = delugeLocation.endsWith('/') ? delugeLocation.slice(0, -1) : delugeLocation
     }
@@ -30,8 +51,8 @@ class Deluge {
     }
   }
 
-  requestCounter = 0
-  log = {
+  requestCounter: number = 0
+  log: Log = {
     response: false,
     result: true,
     exclude: ['web.update_ui'],
@@ -41,7 +62,7 @@ class Deluge {
    * Increment the request counter and return it
    * @returns {number} the incremented request id
    */
-  getRequestCount() {
+  getRequestCount(): number {
     this.requestCounter += 1
     return this.requestCounter
   }
@@ -53,7 +74,7 @@ class Deluge {
    * @param {...*} params the optional parameters to send
    * @returns {Promise.<*>}
    */
-  call(method, ...params) {
+  call(method: string, ...params: any[]): Promise<any> {
     return fetch(
       `${this.location}/json`, {
         method: 'POST',
@@ -93,17 +114,17 @@ class Deluge {
    * @param {string=} command
    * @returns {Promise.<Array<string>>}
    */
-  findCommand(command = '') {
+  findCommand(command: string = ''): Promise<string[]> {
     const didLogResult = this.log.result
     this.log.result = false
     return this.call('system.listMethods')
-      .then(response => response.filter(row => row.includes(command)))
-      .then(matches => matches.sort((a, b) => a.localeCompare(b)))
-      .then((matches) => {
-        console.info(matches) // eslint-disable-line no-console
-        this.log.result = didLogResult
-        return matches
-      })
+    .then(response => response.filter(row => row.includes(command)))
+    .then(matches => matches.sort((a, b) => a.localeCompare(b)))
+    .then((matches) => {
+      console.info(matches) // eslint-disable-line no-console
+      this.log.result = didLogResult
+      return matches
+    })
   }
 }
 

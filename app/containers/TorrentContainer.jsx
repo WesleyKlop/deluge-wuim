@@ -2,12 +2,13 @@
 import React, { Component } from 'react'
 import { List } from 'react-mdl'
 import Helmet from 'react-helmet'
-import Deluge from '../api/Deluge'
 import TorrentItem from '../components/TorrentItem'
+import type { FilterTree } from '../api/types'
+import Deluge from '../api/Deluge'
 
 type TorrentContainerProps = {
   deluge: Deluge,
-  filter: {},
+  filter: FilterTree,
 }
 
 class TorrentContainer extends Component {
