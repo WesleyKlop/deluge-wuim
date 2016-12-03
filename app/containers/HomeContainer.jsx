@@ -1,10 +1,10 @@
+// @flow
 import React, { Component, PropTypes } from 'react'
 import Deluge from '../api/Deluge'
 import Home from '../components/Home'
-import TorrentContainer from './TorrentContainer'
+import { TorrentContainer } from './'
 
 class HomeContainer extends Component {
-  static propTypes = {}
 
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
@@ -15,14 +15,32 @@ class HomeContainer extends Component {
     filter: {},
   }
 
-  async componentWillMount() {
+  state: {
+    filter: {
+      state: string | string[],
+      label: string | string[],
+      tracker_host: string | string[],
+    },
+  }
+
+  componentWillMount(): void {
     const { deluge, router } = this.context
-    console.log(router)
-    if (await deluge.auth.checkSession() === false) {
-      router.transitionTo('/login')
-    } else if (await deluge.web.connected() === false) {
-      router.transitionTo('/connection')
-    }
+    deluge.auth.checkSession()
+    .then((resp) => {
+      if (!resp) {
+        // Route to login
+        router.transitionTo('/login')
+        // Resolve with true so we won't go to the connection manager before being able to login
+        return Promise.resolve(true)
+      }
+      return deluge.web.connected()
+    })
+    .then((resp) => {
+      if (!resp) {
+        // Route to connection manager
+        router.transitionTo('/connection')
+      }
+    })
   }
 
   render() {

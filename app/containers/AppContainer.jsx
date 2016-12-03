@@ -1,3 +1,4 @@
+// @flow
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter } from 'react-router'
 import Helmet from 'react-helmet'
@@ -6,9 +7,6 @@ import Deluge from '../api/Deluge'
 import { delugeLocation, basename } from '../../settings.json'
 
 class AppContainer extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-  }
 
   static childContextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
@@ -33,6 +31,13 @@ class AppContainer extends Component {
     onSnackbarTimeout: null,
   }
 
+  state: {
+    searchValue: string,
+    snackbarActive: boolean,
+    snackbarText: string,
+    onSnackbarTimeout?: () => void,
+  }
+
   getChildContext() {
     return {
       deluge: this.deluge,
@@ -40,8 +45,14 @@ class AppContainer extends Component {
     }
   }
 
-  handleSearchChange(e) {
-    this.setState({ searchValue: e.currentTarget.value })
+  deluge: Deluge
+  handleSearchChange: () => void
+  handleSnackbarTimeout: () => void
+  showSnackbar: () => void
+  router: BrowserRouter
+
+  handleSearchChange({ currentTarget: searchInput }: { currentTarget: HTMLInputElement }) {
+    this.setState({ searchValue: searchInput.value })
   }
 
   handleSnackbarTimeout() {
@@ -51,7 +62,7 @@ class AppContainer extends Component {
     this.setState({
       snackbarActive: false,
       snackbarText: '',
-      onSnackbarTimeout: null,
+      onSnackbarTimeout: undefined,
     })
   }
 
@@ -60,7 +71,7 @@ class AppContainer extends Component {
    * @param {string} message
    * @param {function=} onTimeout
    */
-  showSnackbar(message, onTimeout = null) {
+  showSnackbar(message: string, onTimeout?: () => void) {
     this.setState({
       snackbarActive: true,
       snackbarText: message,
