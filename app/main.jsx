@@ -7,9 +7,6 @@ import { render } from 'react-dom'
 import AppContainer from './containers/AppContainer'
 import './main.css'
 
-// For debug reasons
-window.log = console.log.bind(console, 'Promise result:') // eslint-disable-line no-console
-
 const appRoot = document.querySelector('#app')
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
