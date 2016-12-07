@@ -1,27 +1,20 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
-import { BrowserRouter } from 'react-router'
-import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
-import { delugeLocation, basename } from '../../settings.json'
 
 class AppContainer extends Component {
 
   static childContextTypes = {
-    deluge: PropTypes.instanceOf(Deluge),
     showSnackbar: PropTypes.func,
   }
 
   constructor() {
     super()
 
-    this.deluge = new Deluge({ delugeLocation })
     this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this)
     this.showSnackbar = this.showSnackbar.bind(this)
-
-    if (window) window.deluge = this.deluge
   }
 
   state = {
@@ -40,7 +33,6 @@ class AppContainer extends Component {
 
   getChildContext() {
     return {
-      deluge: this.deluge,
       showSnackbar: this.showSnackbar,
     }
   }
@@ -49,8 +41,11 @@ class AppContainer extends Component {
   handleSearchChange: () => void
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
-  router: BrowserRouter
+  props: {
+    children: element
+  }
 
+  // eslint-disable-next-line react/no-unused-prop-types eslint sees currentTarget as a var
   handleSearchChange({ currentTarget: searchInput }: { currentTarget: HTMLInputElement }) {
     this.setState({ searchValue: searchInput.value })
   }
@@ -80,21 +75,15 @@ class AppContainer extends Component {
   }
 
   render() {
+    const { children } = this.props
     return (
-      <BrowserRouter basename={basename} ref={e => (this.router = e)}>
-        <App
-          onSearchChange={this.handleSearchChange}
-          searchValue={this.state.searchValue}
-          snackbarText={this.state.snackbarText}
-          snackbarActive={this.state.snackbarActive}
-          onSnackbarTimeout={this.handleSnackbarTimeout}
-        >
-          <Helmet
-            titleTemplate="%s - Deluge"
-            defaultTitle="Deluge WUIM"
-          />
-        </App>
-      </BrowserRouter>
+      <App
+        onSearchChange={this.handleSearchChange}
+        searchValue={this.state.searchValue}
+        snackbarText={this.state.snackbarText}
+        snackbarActive={this.state.snackbarActive}
+        onSnackbarTimeout={this.handleSnackbarTimeout}
+      >{children}</App>
     )
   }
 }
