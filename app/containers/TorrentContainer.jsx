@@ -1,38 +1,33 @@
-import React, { Component, PropTypes } from 'react'
+// @flow
+import React, { Component } from 'react'
 import { List } from 'react-mdl'
 import Helmet from 'react-helmet'
-import Deluge from '../api/Deluge'
 import TorrentItem from '../components/TorrentItem'
+import type { FilterTree } from '../api/types'
+import Deluge from '../api/Deluge'
+
+type TorrentContainerProps = {
+  deluge: Deluge,
+  filter: FilterTree,
+}
 
 class TorrentContainer extends Component {
-  static propTypes = {
-    deluge: PropTypes.instanceOf(Deluge).isRequired,
-    filter: PropTypes.shape({
-      state: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.string,
-      ]),
-      label: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.string,
-      ]),
-      tracker_host: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.string),
-        PropTypes.string,
-      ]),
-    }),
-  }
-
   state = {
     torrents: [],
     showSessionSpeed: false,
     title: '',
   }
 
+  state: {
+    torrents: [],
+    showSessionSpeed: boolean,
+    title: string,
+  }
 
-  async componentWillMount() {
-    const { show_session_speed } = await this.props.deluge.web.getConfig()
-    this.setState({ showSessionSpeed: show_session_speed })
+  componentWillMount() {
+    this.props.deluge.web
+    .getConfig()
+    .then(config => this.setState({ showSessionSpeed: config.show_session_speed }))
   }
 
   componentDidMount() {
@@ -45,6 +40,9 @@ class TorrentContainer extends Component {
     this.setState({ torrents: [] })
   }
 
+  props: TorrentContainerProps
+  updateInterval: number
+
   async updateTorrents() {
     const {
       torrents,
@@ -56,7 +54,8 @@ class TorrentContainer extends Component {
     const nextState = { torrents: Object.values(torrents) }
 
     if (this.state.showSessionSpeed === true) {
-      nextState.title = `${(downloadRate / 1024).toFixed(1)}K / ${(uploadRate / 1024).toFixed(1)}K`
+      const title = `${(downloadRate / 1024).toFixed(1)}K / ${(uploadRate / 1024).toFixed(1)}K`
+      Object.assign({}, nextState, { title })
     }
 
     this.setState(nextState)

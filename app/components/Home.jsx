@@ -1,11 +1,8 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 
-const Home = ({ children }) => (
+const Home = ({ children }: { children?: any}) => (
   <div>{children}</div>
 )
-
-Home.propTypes = {
-  children: PropTypes.node,
-}
 
 export default Home

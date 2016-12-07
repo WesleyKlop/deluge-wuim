@@ -1,8 +1,14 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import { Card, CardTitle, CardText, CardActions, Button, Textfield } from 'react-mdl'
 
+type Props = {
+  onSubmit: () => void,
+  error: ?string,
+  inputRefCb: () => Textfield
+}
 
-const Login = ({ inputRefCb, onSubmit, error }) => (
+const Login = ({ inputRefCb, onSubmit, error }: Props) => (
   <Card shadow={2}>
     <form onSubmit={onSubmit} autoComplete="on">
       <CardTitle>Sign in</CardTitle>
@@ -25,11 +31,5 @@ const Login = ({ inputRefCb, onSubmit, error }) => (
     </form>
   </Card>
 )
-
-Login.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  inputRefCb: PropTypes.func,
-  error: PropTypes.string,
-}
 
 export default Login

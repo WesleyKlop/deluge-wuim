@@ -1,15 +1,7 @@
-import Deluge from './Deluge'
-import Auth from './Auth'
-import Daemon from './Daemon'
-import WebUi from './WebUi'
-import Core from './Core'
-import Web from './Web'
-
-export default Deluge
-export {
-  Auth,
-  Daemon,
-  WebUi,
-  Core,
-  Web,
-}
+// @flow
+export { default } from './Deluge'
+export { default as Auth } from './Auth'
+export { default as Daemon } from './Daemon'
+export { default as WebUi } from './WebUi'
+export { default as Core } from './Core'
+export { default as Web } from './Web'

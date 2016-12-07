@@ -1,12 +1,17 @@
+// @flow
+import Deluge from './Deluge'
+
 /**
  * Deluge Auth module, this class provides all auth.* methods of the API
  */
 class Auth {
+  deluge: Deluge
+
   /**
    * Auth constructor
    * @param {Deluge} deluge
    */
-  constructor(deluge) {
+  constructor(deluge: Deluge) {
     this.deluge = deluge
   }
 
@@ -15,7 +20,7 @@ class Auth {
    * @param {string} password
    * @returns {Promise.<bool>}
    */
-  login(password) {
+  login(password: string): Promise<boolean> {
     return this.deluge.call('auth.login', password)
   }
 
@@ -24,7 +29,7 @@ class Auth {
    * @see Auth#deleteSession
    * @returns {Promise.<bool>}
    */
-  logout() {
+  logout(): Promise<boolean> {
     return this.deleteSession()
   }
 
@@ -32,7 +37,7 @@ class Auth {
    *  Checks the sign in status on the server, resolves with true or false
    * @returns {Promise.<bool>} true if the user is logged in or false
    */
-  checkSession() {
+  checkSession(): Promise<boolean> {
     return this.deluge.call('auth.check_session')
   }
 
@@ -40,7 +45,7 @@ class Auth {
    * Sign out the current user
    * @returns {Promise.<bool>} true if the sign out was succesful
    */
-  deleteSession() {
+  deleteSession(): Promise<boolean> {
     return this.deluge.call('auth.delete_session')
   }
 
@@ -50,7 +55,7 @@ class Auth {
    * @param {string} newPass the new password
    * @returns {Promise.<bool>}
    */
-  changePassword(currPass, newPass) {
+  changePassword(currPass: string, newPass: string): Promise<boolean> {
     return this.deluge.call('auth.change_password', currPass, newPass)
   }
 }

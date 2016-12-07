@@ -1,10 +1,16 @@
+// @flow
+import Deluge from './Deluge'
+import type { FilterTree, TorrentInfo, PluginInfo, Host } from './types'
+
 class Web {
+  deluge: Deluge
+
   /**
    * Web constructor
    * @param {Deluge} deluge
    * @constructor
    */
-  constructor(deluge) {
+  constructor(deluge: Deluge) {
     this.deluge = deluge
   }
 
@@ -13,7 +19,7 @@ class Web {
    * @param {{path: string, options: Object}[]} torrents
    * @returns {Promise.<boolean>}} true on success
    */
-  addTorrents(torrents) {
+  addTorrents(torrents: {path: string, options: Object}[]): Promise<boolean> {
     return this.deluge.call('web.add_torrents', torrents)
   }
 
@@ -22,7 +28,7 @@ class Web {
    * @param {Host.id} hostId the id of the host to connect to
    * @returns {Promise.<null>}
    */
-  connect(hostId) {
+  connect(hostId: string): Promise<void> {
     return this.deluge.call('web.connect', hostId)
   }
 
@@ -30,7 +36,7 @@ class Web {
    * Returns true if the web ui is connected to the daemon
    * @returns {Promise.<boolean>}
    */
-  connected() {
+  connected(): Promise<boolean> {
     return this.deluge.call('web.connected')
   }
 
@@ -39,7 +45,7 @@ class Web {
    * @param {string} eventName the event to remove
    * @returns {Promise.<null>}
    */
-  deregisterEventListener(eventName) {
+  deregisterEventListener(eventName: string): Promise<void> {
     return this.deluge.call('web.deregister_event_listener', eventName)
   }
 
@@ -47,7 +53,7 @@ class Web {
    * Disconnect from the current daemon
    * @returns {Promise.<boolean>} true on a successful disconnect
    */
-  disconnect() {
+  disconnect(): Promise<boolean> {
     return this.deluge.call('web.disconnect')
   }
 
@@ -57,73 +63,46 @@ class Web {
    * @param {string=} cookie optional cookies to add to the request
    * @returns {Promise.<string>} the location where the torrent file is saved
    */
-  downloadTorrentFromUrl(url, cookie = '') {
-    return this.deluge.call('web.download_torrent_from_url', url, cookie)
+  downloadTorrentFromUrl(url: string, cookie?: string): Promise<string> {
+    return this.deluge.call('web.download_torrent_from_url', url, cookie || '')
   }
 
-  /**
-   * @name Filter
-   * @property {string} state
-   * @property {string} tracker_host
-   * @property {string} label
-   */
 
   /**
    * Get a list of torrents filtered by filter
    * @param {string[]=} fields
-   * @param {Filter=} filter
+   * @param {FilterTree=} filterTree
    * @returns {Promise.<Object>}
    */
-  updateUi(fields = [], filter) {
-    return this.deluge.call('web.update_ui', fields, filter || {})
+  updateUi(fields: ?string[] = [], filterTree: ?FilterTree): Promise<Object> {
+    return this.deluge.call('web.update_ui', fields || [], filterTree || {})
   }
-
-  /**
-   * @name Host an object containing information for connecting to a deluge daemon
-   * @property {string} id the host ID
-   * @property {string} ip the host IP
-   * @property {number} port the host PORT
-   * @property {string} status the host status (online or offline)
-   */
 
   /**
    * Get an array of available hosts
    * @returns {Promise.<Host[]>} array with hosts
    */
-  getHosts() {
+  getHosts(): Promise<Host[]> {
     return this.deluge.call('web.get_hosts')
-      .then(hosts => hosts.map(([id, ip, port, status]) => ({ id, ip, port, status })))
+    .then(hosts => hosts.map(([id, ip, port, status]) => ({ id, ip, port, status })))
   }
-
-  /**
-   * @name HostWithVersion
-   * @extends Host
-   * @property {string} version the deluge version running on the host
-   */
 
   /**
    * Get the status from a host
    * @param {Host.id} hostId id of host to get information from
-   * @returns {Promise.<HostWithVersion>}
+   * @returns {Promise.<Host>}
    */
-  getHostStatus(hostId) {
+  getHostStatus(hostId: string): Promise<Host> {
     return this.deluge.call('web.get_host_status', hostId)
-      .then(([id, ip, port, status, version]) => ({ id, ip, port, status, version }))
+    .then(([id, ip, port, status, version]) => ({ id, ip, port, status, version }))
   }
-
-  /**
-   * @name TorrentInfo
-   * @property {string} name the torrent name
-   * @property {string} info_hash the torrents info hash
-   * @property {?Object} an object containing the torrent file structure (null for magnet URL's)
-   */
 
   /**
    * Get information from a torrent file on the file system
    * @param {string} torrentPath the absolute path to the torrent on the file system
    * @returns {Promise.<TorrentInfo>}
    */
-  getTorrentInfo(torrentPath) {
+  getTorrentInfo(torrentPath: string): Promise<TorrentInfo> {
     return this.deluge.call('web.get_torrent_info', torrentPath)
   }
 
@@ -132,7 +111,7 @@ class Web {
    * @param {string} torrentUri the magnet uri
    * @returns {Promise.<TorrentInfo>}
    */
-  getMagnetInfo(torrentUri) {
+  getMagnetInfo(torrentUri: string): Promise<TorrentInfo> {
     return this.deluge.call('web.get_magnet_info', torrentUri)
   }
 
@@ -140,7 +119,7 @@ class Web {
    * Get an object containing the available and enabled plugins
    * @returns {Promise.<{available_plugins: string[],enabled_plugins: string[] }>}
    */
-  getPlugins() {
+  getPlugins(): Promise<{available_plugins: string[], enabled_plugins: string[]}> {
     return this.deluge.call('web.get_plugins')
   }
 
@@ -150,15 +129,15 @@ class Web {
    * @param {string[]=} keys
    * @returns {Promise.<Object>}
    */
-  getTorrentStatus(torrentId, keys = []) {
-    return this.deluge.call('web.get_torrent_status', torrentId, keys)
+  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Object> {
+    return this.deluge.call('web.get_torrent_status', torrentId, keys || [])
   }
 
   /**
    * Get the web configuration
    * @returns {Promise.<Object>} the web configuration
    */
-  getConfig() {
+  getConfig(): Promise<Object> {
     return this.deluge.call('web.get_config')
   }
 
@@ -168,7 +147,7 @@ class Web {
    * @param {string} pluginName
    * @returns {Promise.<?{debug_scripts: string[], scripts: string[]}>}
    */
-  getPluginResources(pluginName) {
+  getPluginResources(pluginName: string): Promise<?{debug_scripts: string[], scripts: string[]}> {
     return this.deluge.call('web.get_plugin_resources', pluginName)
   }
 
@@ -176,38 +155,25 @@ class Web {
    * Get the pending events for the session
    * @returns {Promise.<?string[]>}
    */
-  getEvents() {
+  getEvents(): Promise<?string[]> {
     return this.deluge.call('web.get_events')
   }
 
   /**
    * Get a file tree of the contents of a torrent
-   * @param torrentId
+   * @param {string} torrentId
    * @returns {Promise.<Object>}
    */
-  getTorrentFiles(torrentId) {
+  getTorrentFiles(torrentId: string): Promise<Object> {
     return this.deluge.call('web.get_torrent_files', torrentId)
   }
-
-  /**
-   * @name PluginInfo
-   * @property {string} Author
-   * @property {string} Author-email
-   * @property {string} Description
-   * @property {string} Home-page
-   * @property {string} License
-   * @property {string} Name
-   * @property {string} Platform
-   * @property {string} Summary
-   * @property {string} Version
-   */
 
   /**
    * Get information on a plugin
    * @param {string} pluginName
    * @returns {Promise.<PluginInfo>}
    */
-  getPluginInfo(pluginName) {
+  getPluginInfo(pluginName: string): Promise<PluginInfo> {
     return this.deluge.call('web.get_plugin_info', pluginName)
   }
 
@@ -216,7 +182,7 @@ class Web {
    * @param {Host.id} hostId the id of the host to remove
    * @returns {Promise.<boolean>} if the removal was successful
    */
-  removeHost(hostId) {
+  removeHost(hostId: string): Promise<boolean> {
     return this.deluge.call('web.remove_host', hostId)
   }
 
@@ -225,7 +191,7 @@ class Web {
    * @param {string} eventName the name of the event to listen for
    * @returns {Promise.<null>}
    */
-  registerEventListener(eventName) {
+  registerEventListener(eventName: string): Promise<void> {
     return this.deluge.call('web.register_event_listener', eventName)
   }
 
@@ -237,9 +203,9 @@ class Web {
    * @param {string} password the password to connect with
    * @returns {Promise.<boolean>} true if the addition was successful
    */
-  addHost(ip, port, username, password) {
+  addHost(ip: string, port: number, username: string, password: string): Promise<boolean> {
     return this.deluge.call('web.add_host', ip, port, username, password)
-      .then(result => result[0])
+    .then(result => result[0])
   }
 
   /**
@@ -247,7 +213,7 @@ class Web {
    * @param {number} port
    * @returns {Promise.<bool>}
    */
-  startDaemon(port) {
+  startDaemon(port: number): Promise<boolean> {
     return this.deluge.call('web.start_daemon', port)
   }
 
@@ -256,7 +222,7 @@ class Web {
    * @param {Host.id} hostId
    * @returns {Promise.<bool>}
    */
-  stopDaemon(hostId) {
+  stopDaemon(hostId: string): Promise<boolean> {
     return this.deluge.call('web.stop_daemon', hostId)
   }
 
@@ -266,7 +232,7 @@ class Web {
    * @param {string} path path to the plugin file
    * @returns {Promise.<bool>} true if the upload was success
    */
-  uploadPlugin(filename, path) {
+  uploadPlugin(filename: string, path: string): Promise<boolean> {
     return this.deluge.call('web.upload_plugin', filename, path)
   }
 }

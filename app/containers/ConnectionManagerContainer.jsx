@@ -1,30 +1,23 @@
+// @flow
 import React, { Component, PropTypes } from 'react'
-import {
-  Card,
-  CardTitle,
-  List,
-  ListItem,
-  ListItemContent,
-  ListItemAction,
-  IconButton,
-  FABButton,
-  Icon,
-  Textfield,
-  Button,
-} from 'react-mdl'
-import { browserHistory } from 'react-router'
+import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconButton, FABButton, Icon, Textfield, Button } from 'react-mdl'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import s from './ConnectionManagerContainer.css'
 
-/**
- * ConnectionManagerContainer component
- * @property {Host[]} state.hosts
- */
+type Host = {
+  status: 'Online' | 'Offline' | 'Connected',
+  id: string,
+  port: number,
+  ip: string,
+  version?: string,
+}
+
 class ConnectionManagerContainer extends Component {
   static contextTypes = {
     deluge: PropTypes.instanceOf(Deluge),
     showSnackbar: PropTypes.func,
+    router: PropTypes.object,
   }
 
   constructor() {
@@ -42,21 +35,32 @@ class ConnectionManagerContainer extends Component {
     addHost: false,
   }
 
-  async componentDidMount() {
+  state: {
+    hosts: Array<Host>,
+    addHost: boolean
+  }
+
+  componentDidMount(): void {
     this.updateHosts()
   }
 
-  getHosts() {
+  getHosts(): Promise<Host[]> {
     return this.context.deluge.web.getHosts()
   }
 
-  updateHosts() {
+  addDelugeVersions: () => void
+  handleActionClick: () => void
+  handleContentClick: () => void
+  handleFABClick: () => void
+  handleAddHostClick: () => void
+
+  updateHosts(): void {
     this.getHosts().then(hosts => this.setState({ hosts }, this.addDelugeVersions))
   }
 
   addHost = {}
 
-  async addDelugeVersions() {
+  async addDelugeVersions(): Promise<void> {
     const hosts = await Promise.all(
       this.state.hosts.map(({ id }) => this.context.deluge.web.getHostStatus(id)),
     )
@@ -64,18 +68,24 @@ class ConnectionManagerContainer extends Component {
     this.setState({ hosts })
   }
 
-  handleActionClick(e) {
-    const { hostId } = e.currentTarget.dataset
+  handleActionClick({ currentTarget }: { currentTarget: HTMLElement}): void {
+    const { hostId } = currentTarget.dataset
+    const { router } = this.context
     console.info('Connecting to host:', hostId)
-    const host = this.state.hosts.find(({ id }) => id === hostId)
+    const host: ?Host = this.state.hosts.find(({ id }) => id === hostId)
+
+    if (!host) {
+      console.error('Couldn\'t find host')
+      return
+    }
 
     switch (host.status) {
       case 'Online':
         this.context.deluge.web.connect(hostId)
-          .then(() => browserHistory.push('/'))
+        .then(() => router.transitionTo('/'))
         break
       case 'Connected':
-        browserHistory.push('/')
+        router.transitionTo('/')
         break
       case 'Offline':
         console.info('Should show a snackbar with something like "Daemon offline", even though this place shouldn\'t be reachable because the button is disabled')
@@ -85,21 +95,21 @@ class ConnectionManagerContainer extends Component {
     }
   }
 
-  async handleContentClick(e) {
-    const { hostId } = e.currentTarget.dataset
-    const host = this.state.hosts.find(({ id }) => id === hostId)
+  async handleContentClick({ currentTarget }: { currentTarget: HTMLElement}): Promise<void> {
+    const { hostId } = currentTarget.dataset
+    const host: ?Host = this.state.hosts.find(({ id }) => id === hostId)
 
     // Return on Offline hosts
-    if (host.status === 'Offline') return
+    if (!host || host.status === 'Offline') return
 
     console.info('Should update/remove this host:', host)
   }
 
-  handleFABClick() {
+  handleFABClick(): void {
     this.setState({ addHost: !this.state.addHost })
   }
 
-  handleAddHostClick() {
+  handleAddHostClick(): void {
     if (this.state.addHost === false) return
 
     const { hostRef, portRef, userRef, passRef } = this.addHost
@@ -109,19 +119,20 @@ class ConnectionManagerContainer extends Component {
     const pass = passRef.value
 
     this.context.deluge.web.addHost(host, port, user, pass)
-      .then((resp) => {
-        if (resp) {
-          this.context.showSnackbar(`Host ${host} succesfully added!`)
-        } else {
-          this.context.showSnackbar(`Error adding host ${host}`)
-        }
-        this.setState({ addHost: false })
-        this.updateHosts()
-      })
+    .then((resp) => {
+      if (resp) {
+        this.context.showSnackbar(`Host ${host} succesfully added!`)
+      } else {
+        this.context.showSnackbar(`Error adding host ${host}`)
+        return
+      }
+      this.setState({ addHost: false })
+      this.updateHosts()
+    })
   }
 
   renderHosts() {
-    return this.state.hosts.map((host) => {
+    return this.state.hosts.map((host: Host) => {
       const disabled = host.status === 'Offline'
       const icon = host.status === 'Connected' ? 'navigate_next' : 'launch'
       return (

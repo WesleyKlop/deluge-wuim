@@ -1,3 +1,6 @@
+// @flow
+import Deluge from './Deluge'
+
 class WebUi {
   static CONFIG_KEYS = [
     'ssl',
@@ -5,11 +8,14 @@ class WebUi {
     'port',
   ]
 
+  static CONFIG_KEYS: string[]
+  deluge: Deluge
+
   /**
    * WebUi constructor
    * @param {Deluge} deluge
    */
-  constructor(deluge) {
+  constructor(deluge: Deluge) {
     this.deluge = deluge
   }
 
@@ -18,10 +24,10 @@ class WebUi {
    * @param {string=} key
    * @returns {Promise<*>} the specified config value or the object with all config options
    */
-  async getConfig(key) {
+  async getConfig(key?: string): Promise<Object | string | number> {
     const config = await this.deluge.call('webui.get_config')
 
-    if (key === undefined) {
+    if (!key) {
       return config
     }
 
@@ -37,8 +43,9 @@ class WebUi {
    * @param {bool=} config.ssl
    * @param {bool=} config.enabled
    * @param {int=} config.port
+   * TODO: Check return value
    */
-  async setConfig(config) {
+  async setConfig(config: {ssl?: boolean, enabled?: boolean, port?: number}) {
     if (config.ssl && typeof config.ssl !== 'boolean') {
       throw new TypeError(`Expecting parameter ssl to be Boolean but got ${typeof config.ssl}`)
     }
@@ -61,21 +68,21 @@ class WebUi {
    * I honestly have no idea what this does ¯\_(ツ)_/¯
    * @returns {Promise<bool>}
    */
-  gotDelugeWeb() {
+  gotDelugeWeb(): Promise<boolean> {
     return this.deluge.call('webui.got_deluge_web')
   }
 
   /**
    * Start the web ui
    */
-  start() {
+  start(): void {
     this.deluge.call('webui.start')
   }
 
   /**
    * Stop the web ui
    */
-  stop() {
+  stop(): void {
     this.deluge.call('webui.stop')
   }
 }

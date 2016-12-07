@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import s from './PageContent.css'
 
-const PageContent = ({ children }) => (
+type Props = {
+  children?: any
+}
+
+const PageContent = ({ children }: Props) => (
   <div className={s.pageContent}>{children}</div>
 )
-
-PageContent.propTypes = {
-  children: PropTypes.node.isRequired,
-}
 
 export default PageContent

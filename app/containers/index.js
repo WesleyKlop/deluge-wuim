@@ -1,13 +1,5 @@
-import AppContainer from './AppContainer'
-import HomeContainer from './HomeContainer'
-import LoginContainer from './LoginContainer'
-import TorrentContainer from './TorrentContainer'
-import ConnectionManagerContainer from './ConnectionManagerContainer'
-
-export {
-  AppContainer,
-  HomeContainer,
-  LoginContainer,
-  TorrentContainer,
-  ConnectionManagerContainer,
-}
+export { default as AppContainer } from './AppContainer'
+export { default as HomeContainer } from './HomeContainer'
+export { default as LoginContainer } from './LoginContainer'
+export { default as TorrentContainer } from './TorrentContainer'
+export { default as ConnectionManagerContainer } from './ConnectionManagerContainer'

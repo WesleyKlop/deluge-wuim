@@ -1,8 +1,11 @@
+// @flow
 import React, { Component, PropTypes } from 'react'
+import { Textfield } from 'react-mdl'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import delugeLogo from '../assets/deluge.png'
+
 
 /**
  * LoginContainer Component
@@ -24,7 +27,13 @@ class LoginContainer extends Component {
     error: '',
   }
 
-  async handleSubmit(e) {
+  state: {
+    error: ?string
+  }
+  passwordRef: HTMLInputElement
+  handleSubmit: () => void
+
+  async handleSubmit(e: Event): Promise<void> {
     e.preventDefault()
     const password = this.passwordRef.value
 
@@ -34,7 +43,7 @@ class LoginContainer extends Component {
     await this.tryLogin(password)
   }
 
-  async tryLogin(password) {
+  async tryLogin(password: string) {
     const { deluge, router } = this.context
     if (await deluge.auth.login(password)) {
       if ('credentials' in navigator && location.protocol.startsWith('https')) {
@@ -51,7 +60,8 @@ class LoginContainer extends Component {
     }
   }
 
-  async saveCredentials(password) {
+  async saveCredentials(password: string) {
+    // $FlowIgnore: Flow does not have declaration for Credentials API
     const credential = new PasswordCredential({
       id: 'deluge',
       password,
@@ -60,6 +70,7 @@ class LoginContainer extends Component {
     })
 
     this.setState({ error: '' })
+    // $FlowIgnore: Flow does not have declarations for Credentials API
     return await navigator.credentials.store(credential)
   }
 
@@ -68,7 +79,7 @@ class LoginContainer extends Component {
       <PageContent>
         <Login
           onSubmit={this.handleSubmit}
-          inputRefCb={e => (this.passwordRef = e && e.inputRef)}
+          inputRefCb={(e: Textfield) => (this.passwordRef = e && e.inputRef)}
           error={this.state.error}
         />
       </PageContent>
