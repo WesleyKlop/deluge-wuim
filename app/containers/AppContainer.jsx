@@ -3,6 +3,10 @@ import React, { Component, PropTypes } from 'react'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
 
+type AppContainerProps = {
+  children?: any
+}
+
 class AppContainer extends Component {
 
   static childContextTypes = {
@@ -41,13 +45,10 @@ class AppContainer extends Component {
   handleSearchChange: () => void
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
-  props: {
-    children: element
-  }
+  props: AppContainerProps
 
-  // eslint-disable-next-line react/no-unused-prop-types eslint sees currentTarget as a var
-  handleSearchChange({ currentTarget: searchInput }: { currentTarget: HTMLInputElement }) {
-    this.setState({ searchValue: searchInput.value })
+  handleSearchChange(e: { currentTarget: HTMLInputElement }) {
+    this.setState({ searchValue: e.currentTarget.value })
   }
 
   handleSnackbarTimeout() {
