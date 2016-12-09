@@ -6,17 +6,8 @@ import { Link, Match, Miss } from 'react-router'
 import { HomeContainer, LoginContainer, ConnectionManagerContainer } from '../containers'
 import NotFound from './NotFound'
 
-const AppNavigation = ({
-  hidePhone, hideDesktop,
-}: {
-  hidePhone?: boolean, hideDesktop?: boolean
-}) => (
-  <Navigation
-    className={classnames({
-      'mdl-layout--large-screen-only': hidePhone,
-      'mdl-layout--small-screen-only': hideDesktop,
-    })}
-  >
+const AppNavigation = () => (
+  <Navigation>
     <Link to="/login">Login</Link>
     <Link to="/settings">Settings</Link>
     <Link to="/connection">Connection Manager</Link>
@@ -38,9 +29,8 @@ const App = ({
   onSnackbarTimeout,
   snackbarText,
 }: AppProps) => (
-  <Layout fixedHeader>
+  <Layout fixedHeader fixedDrawer>
     <Header title={'Deluge WUIM'}>
-      <AppNavigation hidePhone />
       <Textfield
         value={searchValue}
         onChange={onSearchChange}
@@ -51,7 +41,7 @@ const App = ({
       />
     </Header>
     <Drawer title="Deluge WUIM">
-      <AppNavigation hideDesktop />
+      <AppNavigation />
     </Drawer>
     <Content>
       <Match exactly pattern="/" component={HomeContainer} />

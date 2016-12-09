@@ -2,9 +2,11 @@
 import React, { Component, PropTypes } from 'react'
 import { BrowserRouter } from 'react-router'
 import Helmet from 'react-helmet'
+import { Provider } from 'react-redux'
 import { delugeLocation, basename } from '../settings.json'
 import Deluge from './api/Deluge'
 import AppContainer from './containers/AppContainer'
+import store from './store'
 
 class DelugeWUIM extends Component {
 
@@ -33,14 +35,16 @@ class DelugeWUIM extends Component {
 
   render() {
     return (
-      <BrowserRouter basename={basename} ref={e => (this.router = e)}>
-        <AppContainer>
-          <Helmet
-            titleTemplate="%s - Deluge"
-            defaultTitle="Deluge WUIM"
-          />
-        </AppContainer>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter basename={basename} ref={e => (this.router = e)} >
+          <AppContainer>
+            <Helmet
+              titleTemplate="%s - Deluge"
+              defaultTitle="Deluge WUIM"
+            />
+          </AppContainer>
+        </BrowserRouter>
+      </Provider>
     )
   }
 }

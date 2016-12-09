@@ -1,10 +1,14 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
+import { changeSearchValue } from '../actions'
 
 type AppContainerProps = {
-  children?: any
+  children?: any,
+  searchbarValue: string,
+  onSearchChange: () => void
 }
 
 class AppContainer extends Component {
@@ -16,7 +20,6 @@ class AppContainer extends Component {
   constructor() {
     super()
 
-    this.handleSearchChange = this.handleSearchChange.bind(this)
     this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this)
     this.showSnackbar = this.showSnackbar.bind(this)
   }
@@ -47,10 +50,6 @@ class AppContainer extends Component {
   showSnackbar: () => void
   props: AppContainerProps
 
-  handleSearchChange(e: { currentTarget: HTMLInputElement }) {
-    this.setState({ searchValue: e.currentTarget.value })
-  }
-
   handleSnackbarTimeout() {
     if (typeof this.state.onSnackbarTimeout === 'function') {
       this.state.onSnackbarTimeout()
@@ -79,8 +78,8 @@ class AppContainer extends Component {
     const { children } = this.props
     return (
       <App
-        onSearchChange={this.handleSearchChange}
-        searchValue={this.state.searchValue}
+        onSearchChange={this.props.onSearchChange}
+        searchValue={this.props.searchbarValue}
         snackbarText={this.state.snackbarText}
         snackbarActive={this.state.snackbarActive}
         onSnackbarTimeout={this.handleSnackbarTimeout}
@@ -89,4 +88,16 @@ class AppContainer extends Component {
   }
 }
 
-export default AppContainer
+const mapStateToProps = state => ({
+  searchbarValue: state.searchbarValue,
+})
+
+const mapDispatchToProps = dispatch => ({
+  onSearchChange: e => dispatch(changeSearchValue(e.currentTarget.value)),
+})
+
+// $FlowIgnore
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AppContainer)
