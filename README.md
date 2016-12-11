@@ -14,7 +14,36 @@ yarn install  # or npm install
 
 ## Configuration
 
-To see more options check out the webpack.config.babel.js file which lists all used environment variables, right at the top
+Check out settings.json which looks like this
+```json
+{
+  // Appended to react app url's so you stay inside the application
+  "basename": "",
+  // The location where the default deluge-web ui exists
+  "delugeLocation": "https://deluge.mywebsite.io:8112"
+}
+```
+
+To see more options check out the `webpack.config.babel.js` file which lists all used environment variables, right at the top
+
+## Development
+
+To start a dev server (webpack-dev-server) on port 8080 by default
+```shell
+yarn start # or npm start
+```
+
+Or build the application
+```shell
+yarn build:dev
+```
+
+## Production
+
+Build the application by running
+```shell
+yarn build:prod
+```
 
 ## TODO
 
@@ -28,7 +57,5 @@ There is a lot more that needs to happen still.
 * Change torrent options
 * Preferences
 * Server info
-* Most `web.*` calls
+* Most `core.*` calls
 * Service worker
-
-What would be really cool but not something I can do as I haven't learned python (yet) is if the api could be rewritten to be a websocket and the login call would use credentials so I can use the credentials api :^)
