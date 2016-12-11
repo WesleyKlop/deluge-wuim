@@ -6,7 +6,6 @@ import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import delugeLogo from '../assets/deluge.png'
 
-
 /**
  * LoginContainer Component
  * @property {Deluge} context.deluge
@@ -65,7 +64,7 @@ class LoginContainer extends Component {
     const credential = new PasswordCredential({
       id: 'deluge',
       password,
-      name: 'Deluge',
+      name: 'Deluge WUIM',
       iconURL: `${location.origin}/${delugeLogo}`,
     })
 
