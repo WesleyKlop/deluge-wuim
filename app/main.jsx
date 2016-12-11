@@ -37,6 +37,7 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
   })
 
   /* eslint-enable */
+  if (window) window.deluge = deluge
 } else {
   render(<DelugeWUIM deluge={deluge} store={store} />, appRoot)
 }

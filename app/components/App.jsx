@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import classnames from 'classnames'
 import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar } from 'react-mdl'
 import { Link, Match, Miss } from 'react-router'
 import { HomeContainer, LoginContainer, ConnectionManagerContainer } from '../containers'

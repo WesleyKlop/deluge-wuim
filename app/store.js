@@ -3,8 +3,9 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
 import Deluge from './api/Deluge'
+import type { AppState } from './api/types'
 
-const defaultState = {
+const defaultState: AppState = {
   torrents: [],
   hosts: [],
   searchbarValue: '',

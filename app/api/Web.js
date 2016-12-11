@@ -1,6 +1,6 @@
 // @flow
 import Deluge from './Deluge'
-import type { FilterTree, TorrentInfo, PluginInfo, Host } from './types'
+import type { FilterTree, TorrentInfo, PluginInfo, Host, Torrent } from './types'
 
 class Web {
   deluge: Deluge
@@ -129,7 +129,7 @@ class Web {
    * @param {string[]=} keys
    * @returns {Promise.<Object>}
    */
-  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Object> {
+  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Torrent> {
     return this.deluge.call('web.get_torrent_status', torrentId, keys || [])
   }
 
