@@ -27,7 +27,7 @@ export type FilterTree = {
  * @property {string} ip the host IP
  * @property {number} port the host PORT
  * @property {string} status the host status (online or offline)
- * @property {version} version
+ * @property {?string} version
  */
 export type Host = {
   id: string,

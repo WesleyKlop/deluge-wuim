@@ -1,5 +1,5 @@
 // @flow
-import { CHANGE_SEARCH_VALUE } from '../actions/hosts'
+import { CHANGE_SEARCH_VALUE } from '../actions/searchbarValue'
 
 type State = string
 

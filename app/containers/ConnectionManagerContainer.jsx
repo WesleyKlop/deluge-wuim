@@ -1,16 +1,18 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconButton, FABButton, Icon, Textfield, Button } from 'react-mdl'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import s from './ConnectionManagerContainer.css'
+import { addHost } from '../actions/hosts'
+import type { Host } from '../api/types'
 
-type Host = {
-  status: 'Online' | 'Offline' | 'Connected',
-  id: string,
-  port: number,
+type addHostParams = {
   ip: string,
-  version?: string,
+  port: number,
+  username: string,
+  password: string,
 }
 
 class ConnectionManagerContainer extends Component {
@@ -23,7 +25,6 @@ class ConnectionManagerContainer extends Component {
   constructor() {
     super()
 
-    this.addDelugeVersions = this.addDelugeVersions.bind(this)
     this.handleActionClick = this.handleActionClick.bind(this)
     this.handleContentClick = this.handleContentClick.bind(this)
     this.handleFABClick = this.handleFABClick.bind(this)
@@ -31,48 +32,29 @@ class ConnectionManagerContainer extends Component {
   }
 
   state = {
-    hosts: [],
     addHost: false,
   }
 
   state: {
-    hosts: Array<Host>,
     addHost: boolean
   }
 
-  componentDidMount(): void {
-    this.updateHosts()
+  props: {
+    hosts: Host[],
+    dispatchAddHost: addHostParams => Promise<boolean>,
   }
 
-  getHosts(): Promise<Host[]> {
-    return this.context.deluge.web.getHosts()
-  }
-
-  addDelugeVersions: () => void
   handleActionClick: () => void
   handleContentClick: () => void
   handleFABClick: () => void
   handleAddHostClick: () => void
 
-  updateHosts(): void {
-    this.getHosts().then(hosts => this.setState({ hosts }, this.addDelugeVersions))
-  }
-
   addHost = {}
 
-  async addDelugeVersions(): Promise<void> {
-    const hosts = await Promise.all(
-      this.state.hosts.map(({ id }) => this.context.deluge.web.getHostStatus(id)),
-    )
-
-    this.setState({ hosts })
-  }
-
-  handleActionClick({ currentTarget }: { currentTarget: HTMLElement}): void {
-    const { hostId } = currentTarget.dataset
+  handleActionClick(hostId: string): void {
     const { router } = this.context
     console.info('Connecting to host:', hostId)
-    const host: ?Host = this.state.hosts.find(({ id }) => id === hostId)
+    const host: ?Host = this.props.hosts.find(({ id }) => id === hostId)
 
     if (!host) {
       console.error('Couldn\'t find host')
@@ -82,7 +64,7 @@ class ConnectionManagerContainer extends Component {
     switch (host.status) {
       case 'Online':
         this.context.deluge.web.connect(hostId)
-        .then(() => router.transitionTo('/'))
+          .then(() => router.transitionTo('/'))
         break
       case 'Connected':
         router.transitionTo('/')
@@ -95,9 +77,8 @@ class ConnectionManagerContainer extends Component {
     }
   }
 
-  async handleContentClick({ currentTarget }: { currentTarget: HTMLElement}): Promise<void> {
-    const { hostId } = currentTarget.dataset
-    const host: ?Host = this.state.hosts.find(({ id }) => id === hostId)
+  async handleContentClick(hostId: string): Promise<void> {
+    const host: ?Host = this.props.hosts.find(({ id }) => id === hostId)
 
     // Return on Offline hosts
     if (!host || host.status === 'Offline') return
@@ -118,29 +99,29 @@ class ConnectionManagerContainer extends Component {
     const user = userRef.value.trim()
     const pass = passRef.value
 
-    this.context.deluge.web.addHost(host, port, user, pass)
-    .then((resp) => {
-      if (resp) {
-        this.context.showSnackbar(`Host ${host} succesfully added!`)
-      } else {
-        this.context.showSnackbar(`Error adding host ${host}`)
-        return
-      }
-      this.setState({ addHost: false })
-      this.updateHosts()
-    })
+    this.props.dispatchAddHost(host, port, user, pass)
+      .then((resp) => {
+        if (resp) {
+          this.context.showSnackbar(`Host ${host} succesfully added!`)
+        } else {
+          this.context.showSnackbar(`Error adding host ${host}`)
+          return
+        }
+        this.setState({ addHost: false })
+      })
   }
 
   renderHosts() {
-    return this.state.hosts.map((host: Host) => {
+    return this.props.hosts.map((host: Host) => {
       const disabled = host.status === 'Offline'
       const icon = host.status === 'Connected' ? 'navigate_next' : 'launch'
+      const handleActionClick = this.handleActionClick.bind(this, host.id)
+      const handleContentClick = this.handleContentClick.bind(this, host.id)
       return (
         <ListItem key={host.id} twoLine>
           <ListItemContent
             subtitle={`${host.status}${host.version ? ` • ${host.version} ` : ''}`}
-            onClick={this.handleContentClick}
-            data-host-id={host.id}
+            onClick={handleContentClick}
           >
             {`${host.ip}:${host.port}`}
           </ListItemContent>
@@ -149,8 +130,7 @@ class ConnectionManagerContainer extends Component {
               name={icon}
               primary
               ripple
-              onClick={this.handleActionClick}
-              data-host-id={host.id}
+              onClick={handleActionClick}
               disabled={disabled}
               title={host.status}
             />
@@ -227,4 +207,16 @@ class ConnectionManagerContainer extends Component {
   }
 }
 
-export default ConnectionManagerContainer
+const mapStateToProps = state => ({
+  hosts: state.hosts,
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchAddHost: (ip, port, username, password): addHostParams =>
+    dispatch(addHost(ip, port, username, password)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ConnectionManagerContainer)
