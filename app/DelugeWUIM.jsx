@@ -3,10 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { BrowserRouter } from 'react-router'
 import Helmet from 'react-helmet'
 import { Provider } from 'react-redux'
-import { delugeLocation, basename } from '../settings.json'
+import { basename } from '../settings.json'
 import Deluge from './api/Deluge'
 import AppContainer from './containers/AppContainer'
-import store from './store'
 
 class DelugeWUIM extends Component {
 
@@ -14,28 +13,25 @@ class DelugeWUIM extends Component {
     deluge: PropTypes.instanceOf(Deluge),
   }
 
-  constructor() {
-    super()
-
-    this.deluge = new Deluge({ delugeLocation })
-
-    if (window && process.env.NODE_ENV === 'development') {
-      window.deluge = this.deluge
-    }
+  static propTypes = {
+    deluge: PropTypes.instanceOf(Deluge).isRequired,
   }
 
   getChildContext() {
     return {
-      deluge: this.deluge,
+      deluge: this.props.deluge,
     }
   }
 
-  deluge: Deluge
+  props: {
+    deluge: Deluge,
+    store: Store,
+  }
   router: BrowserRouter
 
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.props.store}>
         <BrowserRouter basename={basename} ref={e => (this.router = e)} >
           <AppContainer>
             <Helmet

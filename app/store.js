@@ -2,6 +2,7 @@
 import { createStore, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
+import Deluge from './api/Deluge'
 
 const defaultState = {
   torrents: [],
@@ -9,27 +10,15 @@ const defaultState = {
   searchbarValue: '',
 }
 
-const enhancers = compose(
-  applyMiddleware(thunk),
-  // Redux devtools
-  // eslint-disable-next-line no-underscore-dangle
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-)
-
-const store = createStore(
+const createAppStore = (deluge: Deluge): Store => createStore(
   rootReducer,
   defaultState,
-  enhancers,
+  compose(
+    applyMiddleware(thunk.withExtraArgument(deluge)),
+    // Redux devtools
+    // eslint-disable-next-line no-underscore-dangle
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  ),
 )
 
-if (module.hot) {
-  module.hot.accept('./reducers', () => {
-    // eslint-disable-next-line global-require
-    const nextRootReducer = require('./reducers/index').default
-    store.replaceReducer(nextRootReducer)
-  })
-}
-
-window.store = store
-
-export default store
+export default createAppStore
