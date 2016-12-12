@@ -1,7 +1,6 @@
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import StyleLintPlugin from 'stylelint-webpack-plugin'
 import NotifierPlugin from 'webpack-notifier'
 import path from 'path'
 
@@ -83,16 +82,17 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
     new ExtractTextPlugin('app.css'),
-    new StyleLintPlugin({
-      configFile: '.stylelintrc',
-      files: ['**/*.css'],
-    }),
+  ],
+}
+
+if (NODE_ENV === 'development') {
+  config.plugins.push(
     new NotifierPlugin({
       title: 'Deluge WUIM',
       contentImage: path.join(__dirname, 'app/assets/deluge.png'),
       alwaysNotify: true,
     }),
-  ],
+  )
 }
 
 export default config
