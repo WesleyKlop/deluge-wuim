@@ -9,6 +9,11 @@ const defaultState: AppState = {
   torrents: [],
   hosts: [],
   searchbarValue: '',
+  session: {
+    download: 0,
+    upload: 0,
+    showSessionSpeed: false,
+  },
 }
 
 const createAppStore = (deluge: Deluge): Store => createStore(
