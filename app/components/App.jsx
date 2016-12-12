@@ -8,6 +8,7 @@ import NotFound from './NotFound'
 import s from './App.css'
 
 type AppProps = {
+  authenticated: boolean,
   searchValue: string,
   onSearchChange: () => void,
   onDrawerLinkClick: () => void,
@@ -15,9 +16,11 @@ type AppProps = {
   onSnackbarTimeout: () => void,
   snackbarText: string,
   helmet: Helmet,
+  signOut?: () => void,
 }
 
 const App = ({
+  authenticated,
   searchValue,
   onSearchChange,
   onDrawerLinkClick,
@@ -25,6 +28,7 @@ const App = ({
   onSnackbarTimeout,
   snackbarText,
   helmet,
+  signOut,
 }: AppProps) => (
   <Layout fixedHeader fixedDrawer>
     <Header title="Deluge WUIM">
@@ -57,11 +61,16 @@ const App = ({
           activeClassName={s.drawerLinkActive}
         ><Icon name="storage" />Connection Manager</Link>
         <Spacer />
-        <Link
-          onClick={onDrawerLinkClick}
-          to="/login"
-          activeClassName={s.drawerLinkActive}
-        ><Icon name="account_circle" />Login</Link>
+        {authenticated
+          ? <button
+            onClick={signOut}
+          ><Icon name="account_circle" />Logout</button>
+          : <Link
+            onClick={onDrawerLinkClick}
+            to="/login"
+            activeClassName={s.drawerLinkActive}
+          ><Icon name="account_circle" />Login</Link>
+        }
         <Link
           onClick={onDrawerLinkClick}
           to="/settings"

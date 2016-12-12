@@ -169,4 +169,10 @@ export type AppState = {
   searchbarValue: string,
   hosts: Host[],
   torrents: Torrent[],
+  session: {
+    upload: number,
+    download: number,
+    authenticated: boolean,
+    showSessionSpeed: boolean,
+  }
 }

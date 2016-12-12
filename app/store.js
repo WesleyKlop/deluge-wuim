@@ -13,10 +13,11 @@ const defaultState: AppState = {
     download: 0,
     upload: 0,
     showSessionSpeed: false,
+    authenticated: false,
   },
 }
 
-const createAppStore = (deluge: Deluge): Store => createStore(
+const createAppStore = (deluge: Deluge) => createStore(
   rootReducer,
   defaultState,
   compose(

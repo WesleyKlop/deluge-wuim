@@ -9,7 +9,8 @@ import { changeSearchValue } from '../actions'
 type AppContainerProps = {
   children: Helmet,
   searchbarValue: string,
-  onSearchChange: () => void
+  onSearchChange: () => void,
+  authenticated: boolean,
 }
 
 class AppContainer extends Component {
@@ -27,14 +28,12 @@ class AppContainer extends Component {
   }
 
   state = {
-    searchValue: '',
     snackbarActive: false,
     snackbarText: '',
     onSnackbarTimeout: null,
   }
 
   state: {
-    searchValue: string,
     snackbarActive: boolean,
     snackbarText: string,
     onSnackbarTimeout?: () => void,
@@ -90,9 +89,10 @@ class AppContainer extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, authenticated } = this.props
     return (
       <App
+        authenticated={authenticated}
         onDrawerLinkClick={this.toggleDrawer}
         onSearchChange={this.props.onSearchChange}
         searchValue={this.props.searchbarValue}
@@ -107,6 +107,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = state => ({
   searchbarValue: state.searchbarValue,
+  authenticated: state.session.authenticated,
 })
 
 const mapDispatchToProps = dispatch => ({

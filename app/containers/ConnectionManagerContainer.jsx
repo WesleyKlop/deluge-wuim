@@ -45,7 +45,7 @@ class ConnectionManagerContainer extends Component {
 
   props: {
     hosts: Host[],
-    dispatchAddHost: addHostParams => Promise<boolean>,
+    dispatchAddHost: () => Promise<boolean>,
     fetchHosts: () => void,
   }
 

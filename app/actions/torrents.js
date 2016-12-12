@@ -18,11 +18,11 @@ export const receiveTorrents = (torrents: Torrent[]) => ({
 export const fetchTorrents = () =>
   (dispatch: Dispatch, getState: () => AppState, deluge: Deluge) => {
     dispatch(requestTorrents())
-    return deluge.web.updateUi(['hash', 'name', 'eta', 'label', 'ratio', 'state', 'download_rate', 'progress', 'total_done', 'total_wanted', 'upload_rate'])
+    return deluge.web.updateUi(['hash', 'name', 'eta', 'label', 'ratio', 'state', 'download_payload_rate', 'progress', 'total_done', 'total_wanted', 'upload_payload_rate'])
       .then((data) => {
         const { download_rate, upload_rate } = data.stats
         dispatch(receiveStats(download_rate, upload_rate))
-        return Object.values(data.torrents)
+        return (Object.values(data.torrents): any)
       })
       .then((torrents: Torrent[]) => {
         dispatch(receiveTorrents(torrents))

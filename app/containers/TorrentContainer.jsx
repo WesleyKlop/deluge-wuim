@@ -37,7 +37,6 @@ class TorrentContainer extends Component {
 
   componentWillUnmount() {
     clearInterval(this.updateInterval)
-    this.setState({ torrents: [] })
   }
 
   props: TorrentContainerProps
@@ -55,7 +54,7 @@ class TorrentContainer extends Component {
           label={row.label}
           ratio={row.ratio}
           state={row.state}
-          downloadRate={row.download_rate}
+          downloadRate={row.download_payload_rate}
           progress={row.progress}
           downloaded={row.total_done}
           size={row.total_wanted}
@@ -94,6 +93,7 @@ const mapDispatchToProps = dispatch => ({
   showSessionSpeed: val => dispatch(setShowSessionSpeed(val)),
 })
 
+// $FlowIgnore
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

@@ -6,6 +6,20 @@
 }
 
 :global {
+  button.mdl-navigation__link {
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mdl-navigation__link {
+    user-select: none;
+  }
+
   .mdl-navigation {
     flex: 1;
 

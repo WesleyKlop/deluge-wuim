@@ -1,10 +1,12 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { Textfield } from 'react-mdl'
+import { connect } from 'react-redux'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import delugeLogo from '../assets/deluge.png'
+import { authenticate } from '../actions/session'
 
 /**
  * LoginContainer Component
@@ -44,7 +46,7 @@ class LoginContainer extends Component {
 
   async tryLogin(password: string) {
     const { deluge, router } = this.context
-    if (await deluge.auth.login(password)) {
+    if (await this.props.authenticate(password)) {
       if ('credentials' in navigator && location.protocol.startsWith('https')) {
         await this.saveCredentials(password)
       }
@@ -86,4 +88,16 @@ class LoginContainer extends Component {
   }
 }
 
-export default LoginContainer
+const mapStateToProps = state => ({
+  authenticated: state.session.authenticated,
+})
+
+const mapDispatchToProps = dispatch => ({
+  authenticate: password => dispatch(authenticate(password)),
+})
+
+// $FlowIgnore
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginContainer)
