@@ -4,3 +4,25 @@
 :root {
   background: #fefefe;
 }
+
+:global {
+  .mdl-navigation__link > .material-icons {
+    margin-right: 32px;
+  }
+
+  .mdl-js-layout.has-drawer.mdl-layout:not(.is-small-screen) {
+    .mdl-layout__drawer {
+      width: 300px;
+    }
+
+    .mdl-layout__inner-container {
+      & > .mdl-layout__content {
+        margin-left: 300px;
+      }
+      & > .mdl-layout__header {
+        margin-left: 300px;
+        width: calc(100% - 300px)
+      }
+    }
+  }
+}

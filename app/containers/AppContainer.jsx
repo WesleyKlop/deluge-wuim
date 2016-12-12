@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import MaterialLayout from 'material-design-lite/src/layout/layout'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
 import { changeSearchValue } from '../actions'
@@ -22,6 +23,7 @@ class AppContainer extends Component {
 
     this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this)
     this.showSnackbar = this.showSnackbar.bind(this)
+    this.toggleDrawer = this.toggleDrawer.bind(this)
   }
 
   state = {
@@ -44,10 +46,16 @@ class AppContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    this.layout = (document.querySelector('.mdl-layout'): any).MaterialLayout
+  }
+
   deluge: Deluge
   handleSearchChange: () => void
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
+  toggleDrawer: () => void
+  layout: MaterialLayout
   props: AppContainerProps
 
   handleSnackbarTimeout() {
@@ -59,6 +67,12 @@ class AppContainer extends Component {
       snackbarText: '',
       onSnackbarTimeout: undefined,
     })
+  }
+
+  toggleDrawer() {
+    if (typeof this.layout !== 'undefined') {
+      this.layout.toggleDrawer()
+    }
   }
 
   /**
@@ -78,12 +92,14 @@ class AppContainer extends Component {
     const { children } = this.props
     return (
       <App
+        onDrawerLinkClick={this.toggleDrawer}
         onSearchChange={this.props.onSearchChange}
         searchValue={this.props.searchbarValue}
         snackbarText={this.state.snackbarText}
         snackbarActive={this.state.snackbarActive}
         onSnackbarTimeout={this.handleSnackbarTimeout}
-      >{children}</App>
+        helmet={children}
+      />
     )
   }
 }
