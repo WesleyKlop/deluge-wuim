@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import MaterialLayout from 'material-design-lite/src/layout/layout'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
 import { changeSearchValue } from '../actions'
@@ -55,7 +54,7 @@ class AppContainer extends Component {
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
   toggleDrawer: () => void
-  layout: MaterialLayout
+  layout: Object
   props: AppContainerProps
 
   handleSnackbarTimeout() {
