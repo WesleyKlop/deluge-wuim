@@ -1,4 +1,4 @@
-// flow-typed signature: a64dfb6b634ce91d61367909daf9e6bf
+// flow-typed signature: 09cc98287411755a1d3d033b451d7dcf
 // flow-typed version: <<STUB>>/eslint_v^3.10.0/flow_v0.36.0
 
 /**
@@ -451,6 +451,10 @@ declare module 'eslint/lib/rules/no-alert' {
 }
 
 declare module 'eslint/lib/rules/no-array-constructor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/no-await-in-loop' {
   declare module.exports: any;
 }
 
@@ -1558,6 +1562,9 @@ declare module 'eslint/lib/rules/no-alert.js' {
 }
 declare module 'eslint/lib/rules/no-array-constructor.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-array-constructor'>;
+}
+declare module 'eslint/lib/rules/no-await-in-loop.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-await-in-loop'>;
 }
 declare module 'eslint/lib/rules/no-bitwise.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-bitwise'>;
