@@ -1,0 +1,4 @@
+:global(.mdl-navigation) .drawer-link--active:global(.mdl-navigation__link) {
+  font-weight: bold;
+  color: rgb(255, 64, 129);
+}

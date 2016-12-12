@@ -1,12 +1,13 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
 import { changeSearchValue } from '../actions'
 
 type AppContainerProps = {
-  children?: any,
+  children: Helmet,
   searchbarValue: string,
   onSearchChange: () => void
 }
@@ -69,7 +70,8 @@ class AppContainer extends Component {
   }
 
   toggleDrawer() {
-    if (typeof this.layout !== 'undefined') {
+    // eslint-disable-next-line no-underscore-dangle
+    if (typeof this.layout !== 'undefined' && this.layout.element_.classList.contains('is-small-screen')) {
       this.layout.toggleDrawer()
     }
   }

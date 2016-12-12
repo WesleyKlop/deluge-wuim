@@ -1,9 +1,11 @@
 // @flow
 import React from 'react'
-import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer } from 'react-mdl'
+import Helmet from 'react-helmet'
 import { Link, Match, Miss } from 'react-router'
 import { HomeContainer, LoginContainer, ConnectionManagerContainer } from '../containers'
 import NotFound from './NotFound'
+import s from './App.css'
 
 type AppProps = {
   searchValue: string,
@@ -12,7 +14,7 @@ type AppProps = {
   snackbarActive: boolean,
   onSnackbarTimeout: () => void,
   snackbarText: string,
-  helmet: any,
+  helmet: Helmet,
 }
 
 const App = ({
@@ -41,12 +43,30 @@ const App = ({
       )}
       />
     </Header>
-    <Drawer>
-      <Navigation onClick={onDrawerLinkClick}>
-        <Link to="/"><Icon name="home" />Torrents</Link>
-        <Link to="/login"><Icon name="account_circle" />Login</Link>
-        <Link to="/settings"><Icon name="settings" />Settings</Link>
-        <Link to="/connection"><Icon name="storage" />Connection Manager</Link>
+    <Drawer title={<span className="mdl-layout--small-screen-only">Deluge WUIM</span>}>
+      <Navigation>
+        <Link
+          onClick={onDrawerLinkClick}
+          to="/"
+          activeClassName={s.drawerLinkActive}
+          activeOnlyWhenExact
+        ><Icon name="home" />Torrents</Link>
+        <Link
+          onClick={onDrawerLinkClick}
+          to="/connection"
+          activeClassName={s.drawerLinkActive}
+        ><Icon name="storage" />Connection Manager</Link>
+        <Spacer />
+        <Link
+          onClick={onDrawerLinkClick}
+          to="/login"
+          activeClassName={s.drawerLinkActive}
+        ><Icon name="account_circle" />Login</Link>
+        <Link
+          onClick={onDrawerLinkClick}
+          to="/settings"
+          activeClassName={s.drawerLinkActive}
+        ><Icon name="settings" />Settings</Link>
       </Navigation>
     </Drawer>
     <Content>

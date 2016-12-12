@@ -6,6 +6,14 @@
 }
 
 :global {
+  .mdl-navigation {
+    flex: 1;
+
+    .mdl-layout-spacer + .mdl-navigation__link {
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+
   .mdl-navigation__link > .material-icons {
     margin-right: 32px;
   }
