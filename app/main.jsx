@@ -8,14 +8,11 @@ import DelugeWUIM from './DelugeWUIM'
 import Deluge from './api/Deluge'
 import { delugeLocation } from '../settings.json'
 import createAppStore from './store'
-import { fetchHosts } from './actions/hosts'
 import './main.css'
 
 const appRoot = document.querySelector('#app')
 const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)
-
-store.dispatch(fetchHosts()).then(() => console.log(store.getState()))
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
   HMRContainer.displayName = 'HMRContainer'

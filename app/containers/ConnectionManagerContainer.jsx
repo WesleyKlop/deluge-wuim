@@ -5,7 +5,7 @@ import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconB
 import PageContent from '../components/PageContent'
 import Deluge from '../api/Deluge'
 import s from './ConnectionManagerContainer.css'
-import { addHost } from '../actions/hosts'
+import { addHost, fetchHosts } from '../actions/hosts'
 import type { Host } from '../api/types'
 
 type addHostParams = {
@@ -39,9 +39,14 @@ class ConnectionManagerContainer extends Component {
     addHost: boolean
   }
 
+  componentWillMount() {
+    this.props.fetchHosts()
+  }
+
   props: {
     hosts: Host[],
     dispatchAddHost: addHostParams => Promise<boolean>,
+    fetchHosts: () => void,
   }
 
   handleActionClick: () => void
@@ -214,6 +219,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchAddHost: (ip, port, username, password): addHostParams =>
     dispatch(addHost(ip, port, username, password)),
+  fetchHosts: () => dispatch(fetchHosts()),
 })
 
 export default connect(
