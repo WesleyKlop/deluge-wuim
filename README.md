@@ -49,8 +49,8 @@ yarn build:prod
 
 There is a lot more that needs to happen still.
 
-* Connection manager
-* Filters (name, state, label, tracker_host)
+* Connection manager (Remove host, need to think about UX)
+* Filters (~~name~~, state, label, tracker_host)
 * Add torrents
 * Remove torrents
 * View torrent details
@@ -58,4 +58,4 @@ There is a lot more that needs to happen still.
 * Preferences
 * Server info
 * Most `core.*` calls
-* Service worker
+* Service worker (PWA)
