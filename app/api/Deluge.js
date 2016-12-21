@@ -55,7 +55,10 @@ class Deluge {
   log: Log = {
     response: false,
     result: true,
-    exclude: ['web.update_ui'],
+    exclude: [
+      'web.update_ui',
+      'web.get_torrent_status',
+    ],
   }
 
   /**
@@ -118,13 +121,13 @@ class Deluge {
     const didLogResult = this.log.result
     this.log.result = false
     return this.call('system.listMethods')
-    .then(response => response.filter(row => row.includes(command)))
-    .then(matches => matches.sort((a, b) => a.localeCompare(b)))
-    .then((matches) => {
-      console.info(matches) // eslint-disable-line no-console
-      this.log.result = didLogResult
-      return matches
-    })
+      .then(response => response.filter(row => row.includes(command)))
+      .then(matches => matches.sort((a, b) => a.localeCompare(b)))
+      .then((matches) => {
+        console.info(matches) // eslint-disable-line no-console
+        this.log.result = didLogResult
+        return matches
+      })
   }
 }
 

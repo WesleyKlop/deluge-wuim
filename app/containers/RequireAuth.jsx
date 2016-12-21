@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Deluge from '../api/Deluge'
 import { setAuthenticated } from '../actions/session'
@@ -10,7 +10,7 @@ type RequireAuthProps = {
   children: any,
 }
 
-class RequireAuth extends Component {
+class RequireAuth extends React.Component {
 
   static lastAuthCheck: number = 0
 
@@ -25,7 +25,7 @@ class RequireAuth extends Component {
 
   componentWillReceiveProps(nextProps: RequireAuthProps): void {
     if (this.props.authenticated !== nextProps.authenticated) {
-      this.accessCheck()
+      this.accessCheck(true)
     }
   }
 

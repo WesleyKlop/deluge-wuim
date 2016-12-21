@@ -5,12 +5,15 @@ import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../api/Deluge'
 import { changeSearchValue } from '../actions'
+import { setAuthenticated } from '../actions/session'
 
 type AppContainerProps = {
   children: Helmet,
   searchbarValue: string,
   onSearchChange: () => void,
   authenticated: boolean,
+  setAuthenticated: () => void,
+  deluge: Deluge,
 }
 
 class AppContainer extends Component {
@@ -22,6 +25,7 @@ class AppContainer extends Component {
   constructor() {
     super()
 
+    this.signOut = this.signOut.bind(this)
     this.handleSnackbarTimeout = this.handleSnackbarTimeout.bind(this)
     this.showSnackbar = this.showSnackbar.bind(this)
     this.toggleDrawer = this.toggleDrawer.bind(this)
@@ -45,14 +49,14 @@ class AppContainer extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.layout = (document.querySelector('.mdl-layout'): any).MaterialLayout
   }
 
-  deluge: Deluge
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
   toggleDrawer: () => void
+  signOut: () => void
   layout: Object
   props: AppContainerProps
 
@@ -67,7 +71,13 @@ class AppContainer extends Component {
     })
   }
 
-  toggleDrawer() {
+  signOut(): void {
+    this.props.deluge.auth.logout()
+      .then(() => this.props.setAuthenticated())
+    this.toggleDrawer()
+  }
+
+  toggleDrawer(): void {
     // eslint-disable-next-line no-underscore-dangle
     if (typeof this.layout !== 'undefined' && this.layout.element_.classList.contains('is-small-screen')) {
       this.layout.toggleDrawer()
@@ -99,6 +109,7 @@ class AppContainer extends Component {
         snackbarActive={this.state.snackbarActive}
         onSnackbarTimeout={this.handleSnackbarTimeout}
         helmet={children}
+        signOut={this.signOut}
       />
     )
   }
@@ -111,6 +122,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSearchChange: e => dispatch(changeSearchValue(e.currentTarget.value)),
+  setAuthenticated: () => dispatch(setAuthenticated(false)),
 })
 
 export default connect(

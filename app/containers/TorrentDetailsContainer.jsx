@@ -33,11 +33,20 @@ class TorrentDetailsContainer extends Component {
     this.props.fetchTorrentDetails(this.props.location.query.id)
   }
 
+  componentDidMount() {
+    const { fetchTorrentDetails: updateTorrentStatus, location } = this.props
+    if (this.hasTorrentId()) {
+      this.refreshInterval = setInterval(() => updateTorrentStatus(location.query.id), 3000)
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearSelectedTorrent()
+    clearInterval(this.refreshInterval)
   }
 
   props: TorrentDetailsProps
+  refreshInterval: number = -1
 
   hasTorrentId(): boolean {
     return this.props.location.query !== null && typeof this.props.location.query.id === 'string'
@@ -54,12 +63,16 @@ class TorrentDetailsContainer extends Component {
       )
     }
 
-    if (typeof this.props.selectedTorrent.hash === 'undefined') {
+    const { selectedTorrent: torrent } = this.props
+
+    if (typeof torrent.hash === 'undefined') {
       return <h3>Torrent not found</h3>
     }
 
     return (
-      <TorrentDetails />
+      <TorrentDetails
+        {...torrent}
+      />
     )
   }
 }

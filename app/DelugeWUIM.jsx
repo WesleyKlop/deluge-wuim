@@ -13,10 +13,6 @@ class DelugeWUIM extends Component {
     deluge: PropTypes.instanceOf(Deluge),
   }
 
-  static propTypes = {
-    deluge: PropTypes.instanceOf(Deluge).isRequired,
-  }
-
   getChildContext() {
     return {
       deluge: this.props.deluge,
@@ -33,7 +29,7 @@ class DelugeWUIM extends Component {
     return (
       <Provider store={this.props.store}>
         <BrowserRouter basename={basename} ref={e => (this.router = e)} >
-          <AppContainer>
+          <AppContainer deluge={this.props.deluge}>
             <Helmet
               titleTemplate="%s - Deluge"
               defaultTitle="Deluge WUIM"

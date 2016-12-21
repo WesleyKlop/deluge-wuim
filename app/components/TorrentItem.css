@@ -14,13 +14,13 @@
 .torrent-item__button {
   width: 100%;
   padding: 16px;
+  margin: 0;
   font: inherit;
   text-align: inherit;
+  letter-spacing: inherit;
   background: none;
-  margin: 0;
   border: 0;
   outline: none;
-  letter-spacing: inherit;
 
   &:hover,
   &:focus {

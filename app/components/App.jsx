@@ -15,7 +15,7 @@ type AppProps = {
   onSnackbarTimeout: () => void,
   snackbarText: string,
   helmet: Helmet,
-  signOut?: () => void,
+  signOut: () => void,
 }
 
 const App = ({
