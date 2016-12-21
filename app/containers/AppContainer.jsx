@@ -50,7 +50,6 @@ class AppContainer extends Component {
   }
 
   deluge: Deluge
-  handleSearchChange: () => void
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
   toggleDrawer: () => void

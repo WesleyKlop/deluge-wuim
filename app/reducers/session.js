@@ -1,11 +1,13 @@
 // @flow
-import { RECEIVE_SESSION_SPEED, SHOW_SESSION_SPEED, SET_AUTHENTICATED } from '../actions/session'
+import { RECEIVE_SESSION_SPEED, SHOW_SESSION_SPEED, SET_AUTHENTICATED, RECEIVE_TORRENT_DETAILS } from '../actions/session'
+import type { Torrent } from '../api/types'
 
 type State = {
   download: number,
   upload: number,
   showSessionSpeed: boolean,
   authenticated: boolean,
+  selectedTorrent: ?Torrent,
 }
 
 const defaultState: State = {
@@ -13,6 +15,7 @@ const defaultState: State = {
   upload: 0,
   showSessionSpeed: false,
   authenticated: false,
+  selectedTorrent: null,
 }
 
 const session = (state: State = defaultState, action: Object) => {
@@ -29,6 +32,10 @@ const session = (state: State = defaultState, action: Object) => {
     case SET_AUTHENTICATED:
       return Object.assign({}, state, {
         authenticated: action.authenticated,
+      })
+    case RECEIVE_TORRENT_DETAILS:
+      return Object.assign({}, state, {
+        selectedTorrent: action.torrent,
       })
     default:
       return state

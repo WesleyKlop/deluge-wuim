@@ -1,5 +1,6 @@
 .torrent-item {
   width: 100%;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -8,6 +9,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.torrent-item__button {
+  width: 100%;
+  padding: 16px;
+  font: inherit;
+  text-align: inherit;
+  background: none;
+  margin: 0;
+  border: 0;
+  outline: none;
+  letter-spacing: inherit;
+
+  &:hover,
+  &:focus {
+    background: rgba(0, 0, 0, 0.12);
+  }
 }
 
 .container {

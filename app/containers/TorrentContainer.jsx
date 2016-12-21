@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { List } from 'react-mdl'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
@@ -24,6 +24,10 @@ type TorrentContainerProps = {
 
 class TorrentContainer extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   componentWillMount() {
     this.props.deluge.web
       .getConfig()
@@ -42,6 +46,17 @@ class TorrentContainer extends Component {
   props: TorrentContainerProps
   updateInterval: number
 
+  handleTorrentClick = (hash) => {
+    const { router } = this.context
+
+    router.transitionTo({
+      pathname: '/torrent',
+      query: {
+        id: hash,
+      },
+    })
+  }
+
   renderTorrents() {
     return this.props.torrents
       .filter(row => row.name.includes(this.props.nameFilter))
@@ -59,6 +74,7 @@ class TorrentContainer extends Component {
           downloaded={row.total_done}
           size={row.total_wanted}
           complete={row.total_done === row.total_wanted}
+          onTorrentClick={this.handleTorrentClick}
         />
       ))
   }

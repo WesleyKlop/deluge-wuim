@@ -19,7 +19,7 @@ class Web {
    * @param {{path: string, options: Object}[]} torrents
    * @returns {Promise.<boolean>}} true on success
    */
-  addTorrents(torrents: {path: string, options: Object}[]): Promise<boolean> {
+  addTorrents(torrents: { path: string, options: Object }[]): Promise<boolean> {
     return this.deluge.call('web.add_torrents', torrents)
   }
 
@@ -67,7 +67,6 @@ class Web {
     return this.deluge.call('web.download_torrent_from_url', url, cookie || '')
   }
 
-
   /**
    * Get a list of torrents filtered by filter
    * @param {string[]=} fields
@@ -84,7 +83,7 @@ class Web {
    */
   getHosts(): Promise<Host[]> {
     return this.deluge.call('web.get_hosts')
-    .then(hosts => hosts.map(([id, ip, port, status]) => ({ id, ip, port, status })))
+      .then(hosts => hosts.map(([id, ip, port, status]) => ({ id, ip, port, status })))
   }
 
   /**
@@ -94,7 +93,7 @@ class Web {
    */
   getHostStatus(hostId: string): Promise<Host> {
     return this.deluge.call('web.get_host_status', hostId)
-    .then(([id, ip, port, status, version]) => ({ id, ip, port, status, version }))
+      .then(([id, ip, port, status, version]) => ({ id, ip, port, status, version }))
   }
 
   /**
@@ -119,15 +118,17 @@ class Web {
    * Get an object containing the available and enabled plugins
    * @returns {Promise.<{available_plugins: string[],enabled_plugins: string[] }>}
    */
-  getPlugins(): Promise<{available_plugins: string[], enabled_plugins: string[]}> {
+  getPlugins(): Promise<{ available_plugins: string[], enabled_plugins: string[] }> {
     return this.deluge.call('web.get_plugins')
   }
 
   /**
-   * Get information about a torrent by Id
+   * Receive a dictionary of the torrent with id torrentId
+   * The difference between this and {@link Core#getTorrentStatus} is
+   * that this one can also give you the torrent label
    * @param {string} torrentId
-   * @param {string[]=} keys
-   * @returns {Promise.<Object>}
+   * @param {string[]=} keys (To see available keys call this function with an empty array)
+   * @returns {Promise.<Torrent>} the object with the specified keys
    */
   getTorrentStatus(torrentId: string, keys?: string[]): Promise<Torrent> {
     return this.deluge.call('web.get_torrent_status', torrentId, keys || [])
@@ -147,7 +148,7 @@ class Web {
    * @param {string} pluginName
    * @returns {Promise.<?{debug_scripts: string[], scripts: string[]}>}
    */
-  getPluginResources(pluginName: string): Promise<?{debug_scripts: string[], scripts: string[]}> {
+  getPluginResources(pluginName: string): Promise<?{ debug_scripts: string[], scripts: string[] }> {
     return this.deluge.call('web.get_plugin_resources', pluginName)
   }
 
@@ -205,7 +206,7 @@ class Web {
    */
   addHost(ip: string, port: number, username: string, password: string): Promise<boolean> {
     return this.deluge.call('web.add_host', ip, port, username, password)
-    .then(result => result[0])
+      .then(result => result[0])
   }
 
   /**

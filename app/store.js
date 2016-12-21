@@ -14,6 +14,7 @@ const defaultState: AppState = {
     upload: 0,
     showSessionSpeed: false,
     authenticated: false,
+    selectedTorrent: null,
   },
 }
 

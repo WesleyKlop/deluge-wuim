@@ -1,10 +1,9 @@
 // @flow
 import React from 'react'
-import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer } from 'react-mdl'
+import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
 import Helmet from 'react-helmet'
-import { Link, Match, Miss } from 'react-router'
-import { HomeContainer, LoginContainer, ConnectionManagerContainer } from '../containers'
-import NotFound from './NotFound'
+import { Link, Match } from 'react-router'
+import { HomeContainer, LoginContainer, ConnectionManagerContainer, AuthMatch, TorrentDetailsContainer } from '../containers'
 import s from './App.css'
 
 type AppProps = {
@@ -31,21 +30,23 @@ const App = ({
   signOut,
 }: AppProps) => (
   <Layout fixedHeader fixedDrawer>
-    <Header title="Deluge WUIM">
-      <Match
-        exactly
-        pattern="/"
-        render={() => (
-          <Textfield
-            value={searchValue}
-            onChange={onSearchChange}
-            label="Search"
-            expandable
-            expandableIcon="search"
-            type="text"
-          />
-      )}
-      />
+    <Header>
+      <HeaderRow title="Deluge WUIM">
+        <Match
+          exactly
+          pattern="/"
+          render={() => (
+            <Textfield
+              value={searchValue}
+              onChange={onSearchChange}
+              label="Search"
+              expandable
+              expandableIcon="search"
+              type="text"
+            />
+          )}
+        />
+      </HeaderRow>
     </Header>
     <Drawer title={<span className="mdl-layout--small-screen-only">Deluge WUIM</span>}>
       <Navigation>
@@ -83,7 +84,7 @@ const App = ({
       <Match exactly pattern="/" component={HomeContainer} />
       <Match exactly pattern="/login" component={LoginContainer} />
       <Match exactly pattern="/connection" component={ConnectionManagerContainer} />
-      <Miss component={NotFound} />
+      <AuthMatch exactly pattern="/torrent" component={TorrentDetailsContainer} />
       <Snackbar
         active={snackbarActive}
         onTimeout={onSnackbarTimeout}

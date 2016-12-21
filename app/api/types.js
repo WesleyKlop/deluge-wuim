@@ -174,5 +174,6 @@ export type AppState = {
     download: number,
     authenticated: boolean,
     showSessionSpeed: boolean,
-  }
+    selectedTorrent: ?Torrent,
+  },
 }

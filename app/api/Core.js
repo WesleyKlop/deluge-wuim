@@ -1,6 +1,6 @@
 // @flow
 import Deluge from './Deluge'
-import type { FilterTree } from './types'
+import type { FilterTree, Torrent } from './types'
 
 class Core {
   deluge: Deluge
@@ -144,11 +144,13 @@ class Core {
 
   /**
    * Receive a dictionary of the torrent with id torrentId
+   * The difference between this and {@link Web#getTorrentStatus} is
+   * that {@link Web#getTorrentStatus} can also give you the torrent label
    * @param {string} torrentId
    * @param {string[]=} keys (To see available keys call this function with an empty array)
-   * @returns {Promise.<Object>} the object with the specified keys
+   * @returns {Promise.<Torrent>} the object with the specified keys
    */
-  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Object> {
+  getTorrentStatus(torrentId: string, keys?: string[]): Promise<Torrent> {
     return this.deluge.call('core.get_torrent_status', torrentId, keys || [])
   }
 
