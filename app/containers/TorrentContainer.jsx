@@ -93,7 +93,6 @@ const mapDispatchToProps = dispatch => ({
   showSessionSpeed: val => dispatch(setShowSessionSpeed(val)),
 })
 
-// $FlowIgnore
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

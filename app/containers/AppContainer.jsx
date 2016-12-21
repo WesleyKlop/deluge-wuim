@@ -114,7 +114,6 @@ const mapDispatchToProps = dispatch => ({
   onSearchChange: e => dispatch(changeSearchValue(e.currentTarget.value)),
 })
 
-// $FlowIgnore
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

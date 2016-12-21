@@ -96,7 +96,6 @@ const mapDispatchToProps = dispatch => ({
   authenticate: password => dispatch(authenticate(password)),
 })
 
-// $FlowIgnore
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
