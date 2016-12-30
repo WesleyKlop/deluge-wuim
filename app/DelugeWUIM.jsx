@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router'
 import Helmet from 'react-helmet'
 import { Provider } from 'react-redux'
 import { basename } from '../settings.json'
-import Deluge from './api/Deluge'
+import Deluge from './lib/Deluge/Deluge'
 import AppContainer from './containers/AppContainer'
 
 class DelugeWUIM extends Component {

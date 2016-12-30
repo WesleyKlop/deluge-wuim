@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TorrentDetails from '../components/TorrentDetails'
 import { fetchTorrentDetails, receiveTorrentDetails } from '../actions/session'
 import Loading from '../components/Loading'
-import type { Torrent } from '../api/types'
+import type { Torrent } from '../lib/types'
 
 type TorrentDetailsProps = {
   location: {

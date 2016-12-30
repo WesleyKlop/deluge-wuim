@@ -1,5 +1,5 @@
 // @flow
-import type { Host } from '../api/types'
+import type { Host } from '../lib/types'
 import { RECEIVE_HOSTS, RECEIVE_HOST_STATUS } from '../actions/hosts'
 
 type State = Host[]

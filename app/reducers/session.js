@@ -1,6 +1,6 @@
 // @flow
 import { RECEIVE_SESSION_SPEED, SHOW_SESSION_SPEED, SET_AUTHENTICATED, RECEIVE_TORRENT_DETAILS } from '../actions/session'
-import type { Torrent } from '../api/types'
+import type { Torrent } from '../lib/types'
 
 type State = {
   download: number,

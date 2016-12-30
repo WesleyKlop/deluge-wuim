@@ -1,6 +1,6 @@
 // @flow
-import type { Torrent, AppState } from '../api/types'
-import Deluge from '../api/Deluge'
+import type { Torrent, AppState } from '../lib/types'
+import Deluge from '../lib/Deluge/Deluge'
 import { receiveStats } from './session'
 
 export const REQUEST_TORRENTS = 'REQUEST_TORRENTS'

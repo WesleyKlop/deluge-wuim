@@ -4,7 +4,7 @@ import { Textfield } from 'react-mdl'
 import { connect } from 'react-redux'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import delugeLogo from '../assets/deluge.png'
 import { authenticate } from '../actions/session'
 

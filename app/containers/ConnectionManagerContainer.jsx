@@ -1,12 +1,12 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconButton, FABButton, Icon, Textfield, Button } from 'react-mdl'
-import PageContent from '../components/PageContent'
-import Deluge from '../api/Deluge'
-import s from './ConnectionManagerContainer.css'
+import { ListItem, ListItemContent, ListItemAction, Button, Textfield, IconButton } from 'react-mdl'
+import ConnectionManager from '../components/ConnectionManager'
+import Deluge from '../lib/Deluge/Deluge'
+import s from '../components/ConnectionManager.css'
 import { addHost, fetchHosts } from '../actions/hosts'
-import type { Host } from '../api/types'
+import type { Host } from '../lib/types'
 
 type addHostParams = {
   ip: string,
@@ -99,13 +99,13 @@ class ConnectionManagerContainer extends Component {
     if (this.state.addHost === false) return
 
     const { hostRef, portRef, userRef, passRef } = this.addHost
-    const host = hostRef.value.trim()
-    const port = portRef.value.trim()
-    const user = userRef.value.trim()
-    const pass = passRef.value
+    const host: string = hostRef.value.trim()
+    const port: string = portRef.value.trim()
+    const user: string = userRef.value.trim()
+    const pass: string = passRef.value
 
     this.props.dispatchAddHost(host, port, user, pass)
-      .then((resp) => {
+      .then((resp: boolean) => {
         if (resp) {
           this.context.showSnackbar(`Host ${host} succesfully added!`)
         } else {
@@ -154,6 +154,7 @@ class ConnectionManagerContainer extends Component {
           floatingLabel
           pattern="^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
           error="Value must be a valid IP"
+          autoComplete="off"
           className={s.inputHost}
           ref={e => (this.addHost.hostRef = e && e.inputRef)}
         />
@@ -163,6 +164,7 @@ class ConnectionManagerContainer extends Component {
           floatingLabel
           defaultValue="58846"
           size={5}
+          autoComplete="off"
           className={s.inputPort}
           ref={e => (this.addHost.portRef = e && e.inputRef)}
         />
@@ -170,7 +172,7 @@ class ConnectionManagerContainer extends Component {
           type="text"
           floatingLabel
           label="Username"
-          autoComplete="username"
+          autoComplete="off"
           className={s.inputUsername}
           ref={e => (this.addHost.userRef = e && e.inputRef)}
         />
@@ -178,7 +180,7 @@ class ConnectionManagerContainer extends Component {
           type="password"
           floatingLabel
           label="Password"
-          autoComplete="current-password"
+          autoComplete="off"
           className={s.inputPassword}
           ref={e => (this.addHost.passRef = e && e.inputRef)}
         />
@@ -189,25 +191,12 @@ class ConnectionManagerContainer extends Component {
 
   render() {
     return (
-      <PageContent>
-        <Card shadow={2}>
-          <CardTitle>Connection Manager</CardTitle>
-          <List>
-            {this.state.addHost ? this.renderAddHost() : this.renderHosts()}
-          </List>
-        </Card>
-        <FABButton
-          colored
-          ripple
-          onClick={this.handleFABClick}
-          style={{
-            transform: `rotate(${this.state.addHost ? -45 : 0}deg)`,
-            transition: 'transform 100ms ease',
-          }}
-        >
-          <Icon name="add" />
-        </FABButton>
-      </PageContent>
+      <ConnectionManager
+        onFABClick={this.handleFABClick}
+        active={this.state.addHost}
+      >
+        {this.state.addHost ? this.renderAddHost() : this.renderHosts()}
+      </ConnectionManager>
     )
   }
 }

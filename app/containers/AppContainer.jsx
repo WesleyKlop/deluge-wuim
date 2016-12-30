@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import App from '../components/App'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import { changeSearchValue } from '../actions'
 import { setAuthenticated } from '../actions/session'
 
