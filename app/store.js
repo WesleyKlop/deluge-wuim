@@ -2,7 +2,7 @@
 import { createStore, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import rootReducer from './reducers'
-import Deluge from './lib/Deluge/Deluge'
+import Deluge from './lib/Deluge'
 import type { AppState } from './lib/Deluge/types'
 
 const defaultState: AppState = {

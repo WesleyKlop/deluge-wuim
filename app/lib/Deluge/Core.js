@@ -1,6 +1,6 @@
 // @flow
 import Deluge from './Deluge'
-import type { FilterTree, Torrent } from './types'
+import type { FilterTree, Torrent } from '../types'
 
 class Core {
   deluge: Deluge

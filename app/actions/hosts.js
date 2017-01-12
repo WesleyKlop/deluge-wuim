@@ -1,6 +1,6 @@
 // @flow
 import type { Host } from '../lib/Deluge/types'
-import Deluge from '../lib/Deluge/Deluge'
+import Deluge from '../lib/Deluge'
 
 export const HOST_ADDED = 'HOST_ADDED'
 export const REQUEST_ADD_HOST = 'REQUEST_ADD_HOST'

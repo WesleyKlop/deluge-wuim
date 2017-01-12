@@ -1,6 +1,6 @@
 // @flow
 import type { AppState, Torrent } from '../lib/Deluge/types'
-import Deluge from '../lib/Deluge/Deluge'
+import Deluge from '../lib/Deluge'
 
 export const RECEIVE_SESSION_SPEED = 'RECEIVE_SESSION_SPEED'
 export const SHOW_SESSION_SPEED = 'SHOW_SESSION_SPEED'
