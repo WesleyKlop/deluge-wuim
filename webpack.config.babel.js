@@ -90,7 +90,7 @@ if (NODE_ENV === 'development') {
     new NotifierPlugin({
       title: 'Deluge WUIM',
       contentImage: path.join(__dirname, 'app/assets/deluge.png'),
-      alwaysNotify: true,
+      alwaysNotify: false,
     }),
   )
 }

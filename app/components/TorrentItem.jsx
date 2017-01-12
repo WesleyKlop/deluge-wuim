@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import s from './TorrentItem.css'
+import { bytesToSize } from '../lib/Helpers'
 
 type Props = {
   name: string,
@@ -25,7 +26,7 @@ const TorrentItem = ({
         <div className={s.torrentName}>{name}</div>
         <span className="mdl-list__item-text-body">
           {state} •&nbsp;
-          {!complete ? `${(downloaded / 1048576).toFixed(2)}/${(size / 1048576).toFixed(2)}MB(${progress}%)` : `${progress}%`}{downloaded ? null : `• ${eta}`}
+          {!complete ? `${bytesToSize(downloaded, true)}/${bytesToSize(size)}(${Math.round(progress)}%)` : `${progress}%`}{downloaded ? null : `• ${eta}`}
           &nbsp;• {ratio.toFixed(3)}{label && ` • ${label}`}
         </span>
       </div>

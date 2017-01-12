@@ -3,10 +3,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardTitle, List, ListItem, ListItemContent, ListItemAction, IconButton, FABButton, Icon, Textfield, Button } from 'react-mdl'
 import PageContent from '../components/PageContent'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import s from './ConnectionManagerContainer.css'
 import { addHost, fetchHosts } from '../actions/hosts'
-import type { Host } from '../api/types'
+import type { Host } from '../lib/Deluge/types'
 
 type addHostParams = {
   ip: string,

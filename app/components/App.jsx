@@ -30,6 +30,7 @@ const App = ({
   signOut,
 }: AppProps) => (
   <Layout fixedHeader fixedDrawer>
+    {helmet}
     <Header>
       <HeaderRow title="Deluge WUIM">
         <Match
@@ -80,7 +81,6 @@ const App = ({
       </Navigation>
     </Drawer>
     <Content>
-      {helmet}
       <Match exactly pattern="/" component={HomeContainer} />
       <Match exactly pattern="/login" component={LoginContainer} />
       <Match exactly pattern="/connection" component={ConnectionManagerContainer} />

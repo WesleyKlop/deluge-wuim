@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import { TorrentContainer, RequireAuth } from './'
 
 type HomeContainerProps = {

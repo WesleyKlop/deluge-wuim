@@ -1,7 +1,7 @@
 // @flow
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import { setAuthenticated } from '../actions/session'
 
 type RequireAuthProps = {

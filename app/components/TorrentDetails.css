@@ -1,9 +1,67 @@
-.content {
-  padding: 8px;
+.name {
+  margin: 0;
+  overflow: hidden;
+  font-size: 24px;
+  line-height: 1.6;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 0 100%;
 }
 
-.name {
-  margin: 0 0 8px;
-  font-size: 24px;
-  line-height: 1.4;
+.sub-title {
+  width: 100%;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.67);
+  text-align: center;
+}
+
+.status-container {
+  position: relative;
+  display: flex;
+  height: 150px;
+  box-sizing: border-box;
+  padding: 8px 8px 56px;
+  background: #fff;
+  align-content: space-around;
+  flex-flow: row wrap;
+}
+
+.torrent-size,
+.torrent-state {
+  padding: 4px;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.54);
+  flex: 1;
+}
+
+.torrent-size {
+  text-align: right;
+}
+
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  :global(.mdl-tabs__tab) {
+    flex: 1;
+  }
+}
+
+.header {
+  height: 40px;
+  padding: 0 16px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.list-container {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  flex-flow: row wrap;
 }

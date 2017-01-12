@@ -4,10 +4,10 @@ import { List } from 'react-mdl'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import TorrentItem from '../components/TorrentItem'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import { fetchTorrents } from '../actions/torrents'
 import { setShowSessionSpeed } from '../actions/session'
-import type { Torrent } from '../api/types'
+import type { Torrent } from '../lib/Deluge/types'
 
 type TorrentContainerProps = {
   deluge: Deluge,

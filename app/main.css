@@ -6,18 +6,15 @@
 }
 
 :global {
-  button.mdl-navigation__link {
-    border: none;
-    background: none;
+  .mdl-navigation__link {
     text-align: left;
     cursor: pointer;
+    user-select: none;
+    background: none;
+    border: 0;
     outline: none;
     appearance: none;
     -webkit-tap-highlight-color: transparent;
-  }
-
-  .mdl-navigation__link {
-    user-select: none;
   }
 
   .mdl-navigation {
@@ -41,9 +38,10 @@
       & > .mdl-layout__content {
         margin-left: 300px;
       }
+
       & > .mdl-layout__header {
+        width: calc(100% - 300px);
         margin-left: 300px;
-        width: calc(100% - 300px)
       }
     }
   }

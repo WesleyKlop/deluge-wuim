@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TorrentDetails from '../components/TorrentDetails'
 import { fetchTorrentDetails, receiveTorrentDetails } from '../actions/session'
 import Loading from '../components/Loading'
-import type { Torrent } from '../api/types'
+import type { Torrent } from '../lib/Deluge/types'
 
 type TorrentDetailsProps = {
   location: {
@@ -17,10 +17,18 @@ type TorrentDetailsProps = {
   clearSelectedTorrent: () => void,
 }
 
+type TorrentDetailsState = {
+  activeTab: number,
+}
+
 class TorrentDetailsContainer extends Component {
 
   static contextTypes = {
     router: PropTypes.object,
+  }
+
+  state: TorrentDetailsState = {
+    activeTab: 0,
   }
 
   componentWillMount(): void {
@@ -33,14 +41,14 @@ class TorrentDetailsContainer extends Component {
     this.props.fetchTorrentDetails(this.props.location.query.id)
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { fetchTorrentDetails: updateTorrentStatus, location } = this.props
     if (this.hasTorrentId()) {
       this.refreshInterval = setInterval(() => updateTorrentStatus(location.query.id), 3000)
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.props.clearSelectedTorrent()
     clearInterval(this.refreshInterval)
   }
@@ -51,6 +59,8 @@ class TorrentDetailsContainer extends Component {
   hasTorrentId(): boolean {
     return this.props.location.query !== null && typeof this.props.location.query.id === 'string'
   }
+
+  handleTabChange = (activeTab): void => this.setState({ activeTab })
 
   isLoading(): boolean {
     return this.hasTorrentId() && this.props.selectedTorrent === null
@@ -72,6 +82,8 @@ class TorrentDetailsContainer extends Component {
     return (
       <TorrentDetails
         {...torrent}
+        activeTab={this.state.activeTab}
+        onTabChange={this.handleTabChange}
       />
     )
   }

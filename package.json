@@ -4,8 +4,8 @@
   "description": "Deluge Web Ui IMproved ",
   "scripts": {
     "start": "webpack-dev-server --colors",
-    "lint:scripts": "eslint app/**/*.{js,jsx} --fix",
-    "lint:styles": "stylelint app/**/*.css",
+    "lint:scripts": "eslint \"app/**/*.{js,jsx}\" --fix",
+    "lint:styles": "stylelint \"app/**/*.css\"",
     "lint": "yarn lint:scripts && yarn lint:styles",
     "flow": "flow check",
     "test": "yarn lint && yarn flow",
