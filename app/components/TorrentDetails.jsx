@@ -5,7 +5,8 @@ import { ProgressBar, Tabs, Tab } from 'react-mdl'
 import ListItem from './TorrentDetailsListItem'
 import s from './TorrentDetails.css'
 import TabContent from './TabContent'
-import { bytesToSize } from '../lib/Helpers'
+import { bytesToSize, timestampToFormat, timestampToRange } from '../lib/Helpers'
+import FileList from './FileList'
 
 type TorrentDetailsProps = {
   name: string,
@@ -16,17 +17,25 @@ type TorrentDetailsProps = {
   total_size: number,
   activeTab: number,
   onTabChange: () => void,
-  // upload_payload_rate: number,
-  // download_payload_rate: number,
+  upload_payload_rate: number,
+  download_payload_rate: number,
   all_time_download: number,
   total_uploaded: number,
   ratio: number,
+  num_files: number,
+  total_peers: number,
+  total_seeds: number,
+  time_added: number,
+  active_time: number,
+  files: [],
 }
 
 const TorrentDetails = ({
   name, comment, progress, state, total_size: totalSize, activeTab, onTabChange,
-  // upload_payload_rate: uploadPayloadRate, download_payload_rate: downloadPayloadRate,
+  upload_payload_rate: uploadRate, download_payload_rate: downloadRate,
   all_time_download: allTimeDownload, total_uploaded: totalUploaded, ratio, eta,
+  num_files: fileCount, total_peers: totalPeers, total_seeds: totalSeeds, active_time: activeTime,
+  time_added: timeAdded, files,
 }: TorrentDetailsProps) => (
   <div>
     <div className={classnames(s.statusContainer)}>
@@ -43,17 +52,21 @@ const TorrentDetails = ({
     </div>
 
     <TabContent activeTab={activeTab}>
-      <div>
-        <h3 className={classnames(s.header, 'mdl-color-text--primary')}>Data</h3>
-        <ul className={classnames(s.listContainer, 'mdl-shadow--2dp')}>
-          <ListItem label="ETA" title={eta} />
-          <ListItem label="Size" title={bytesToSize(totalSize)} alignRight />
-          <ListItem label="Downloaded" title={bytesToSize(allTimeDownload)} />
-          <ListItem label="Uploaded" title={bytesToSize(totalUploaded)} alignRight />
-          <ListItem label="Ratio" title={ratio.toFixed(2)} />
-        </ul>
-      </div>
-      <div />
+      <ul className={classnames(s.listContainer, 'mdl-shadow--2dp')}>
+        <ListItem label="Down speed" title={downloadRate} />
+        <ListItem label="Up speed" title={uploadRate} alignRight />
+        <ListItem label="ETA" title={eta === 0 ? '∞' : eta} />
+        <ListItem label="Size" title={bytesToSize(totalSize)} alignRight />
+        <ListItem label="Downloaded" title={bytesToSize(allTimeDownload)} />
+        <ListItem label="Uploaded" title={bytesToSize(totalUploaded)} alignRight />
+        <ListItem label="Ratio" title={ratio.toFixed(2)} />
+        <ListItem label="# Files" title={fileCount} alignRight />
+        <ListItem label="Peers" title={totalPeers} />
+        <ListItem label="Seeds" title={totalSeeds} alignRight />
+        <ListItem label="Added on" title={timestampToFormat(timeAdded)} fullWidth />
+        <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
+      </ul>
+      <FileList files={files} />
       <div />
     </TabContent>
   </div>

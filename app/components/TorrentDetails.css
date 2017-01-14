@@ -60,8 +60,8 @@
 
 .list-container {
   display: flex;
+  margin: 16px 0;
   padding: 0;
-  margin: 0;
   background: #fff;
   flex-flow: row wrap;
 }

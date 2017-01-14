@@ -131,6 +131,7 @@ export type Torrent = {
   total_payload_download: number,
   total_payload_upload: number,
   total_peers: number,
+  total_seeds: number,
   total_size: number,
   total_uploaded: number,
   total_wanted: number,

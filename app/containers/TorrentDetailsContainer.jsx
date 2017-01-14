@@ -24,7 +24,8 @@ type TorrentDetailsState = {
 class TorrentDetailsContainer extends Component {
 
   static contextTypes = {
-    router: PropTypes.object,
+    router: PropTypes.object.isRequired,
+    setDrawerButton: PropTypes.func.isRequired,
   }
 
   state: TorrentDetailsState = {
@@ -32,6 +33,7 @@ class TorrentDetailsContainer extends Component {
   }
 
   componentWillMount(): void {
+    this.context.setDrawerButton('arrow_back')
     if (!this.hasTorrentId()) {
       console.warn('Missing torrent Id')
       this.context.router.transitionTo('/')
@@ -49,6 +51,7 @@ class TorrentDetailsContainer extends Component {
   }
 
   componentWillUnmount(): void {
+    this.context.setDrawerButton('menu')
     this.props.clearSelectedTorrent()
     clearInterval(this.refreshInterval)
   }
@@ -62,15 +65,22 @@ class TorrentDetailsContainer extends Component {
 
   handleTabChange = (activeTab): void => this.setState({ activeTab })
 
+  mapFiles = () => {
+    const torrent: Torrent = this.props.selectedTorrent
+    // $FlowIgnore
+    return torrent.files.map((file, i) => Object.assign({
+      progress: torrent.file_progress[i],
+      priority: torrent.file_priorities[i],
+    }, file))
+  }
+
   isLoading(): boolean {
     return this.hasTorrentId() && this.props.selectedTorrent === null
   }
 
   render() {
     if (this.isLoading()) {
-      return (
-        <Loading />
-      )
+      return <Loading />
     }
 
     const { selectedTorrent: torrent } = this.props
@@ -84,6 +94,7 @@ class TorrentDetailsContainer extends Component {
         {...torrent}
         activeTab={this.state.activeTab}
         onTabChange={this.handleTabChange}
+        files={this.mapFiles()}
       />
     )
   }

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { Layout, Header, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
+import { Layout, IconButton, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
 import Helmet from 'react-helmet'
 import { Link, Match } from 'react-router'
 import { HomeContainer, LoginContainer, ConnectionManagerContainer, AuthMatch, TorrentDetailsContainer } from '../containers'
@@ -16,6 +16,8 @@ type AppProps = {
   snackbarText: string,
   helmet: Helmet,
   signOut: () => void,
+  drawerButton: ?string,
+  onDrawerButtonClick: () => void,
 }
 
 const App = ({
@@ -28,10 +30,17 @@ const App = ({
   snackbarText,
   helmet,
   signOut,
+  drawerButton,
+  onDrawerButtonClick,
 }: AppProps) => (
   <Layout fixedHeader fixedDrawer>
     {helmet}
-    <Header>
+    <div className="mdl-layout__header">
+      <IconButton
+        className="mdl-layout__drawer-button"
+        name={drawerButton}
+        onClick={onDrawerButtonClick}
+      />
       <HeaderRow title="Deluge WUIM">
         <Match
           exactly
@@ -48,7 +57,7 @@ const App = ({
           )}
         />
       </HeaderRow>
-    </Header>
+    </div>
     <Drawer title={<span className="mdl-layout--small-screen-only">Deluge WUIM</span>}>
       <Navigation>
         <Link
@@ -78,6 +87,11 @@ const App = ({
           to="/settings"
           activeClassName={s.drawerLinkActive}
         ><Icon name="settings" />Settings</Link>
+        <a
+          href="https://github.com/Wesleyklop/deluge-wuim"
+          target="_blank"
+          rel="noopener noreferrer"
+        ><Icon name="code" />Github</a>
       </Navigation>
     </Drawer>
     <Content>

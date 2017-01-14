@@ -18,8 +18,13 @@ type AppContainerProps = {
 
 class AppContainer extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   static childContextTypes = {
     showSnackbar: PropTypes.func,
+    setDrawerButton: PropTypes.func,
   }
 
   constructor() {
@@ -35,23 +40,28 @@ class AppContainer extends Component {
     snackbarActive: false,
     snackbarText: '',
     onSnackbarTimeout: null,
+    drawerButton: 'menu',
   }
 
   state: {
     snackbarActive: boolean,
     snackbarText: string,
     onSnackbarTimeout?: () => void,
+    drawerButton: string,
   }
 
   getChildContext() {
     return {
       showSnackbar: this.showSnackbar,
+      setDrawerButton: this.setDrawerButton,
     }
   }
 
   componentDidMount(): void {
     this.layout = (document.querySelector('.mdl-layout'): any).MaterialLayout
   }
+
+  setDrawerButton = drawerButton => this.setState({ drawerButton })
 
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
@@ -69,6 +79,26 @@ class AppContainer extends Component {
       snackbarText: '',
       onSnackbarTimeout: undefined,
     })
+  }
+
+  handleDrawerButtonClick = (e?: Event): void => {
+    if (e !== undefined) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+
+    switch (this.state.drawerButton) {
+      case 'menu':
+        return
+      case 'arrow_back':
+        // Drawer toggles regardless of stopPropagation/preventDefault so toggle it again to
+        // close it again
+        this.toggleDrawer()
+        history.back()
+        break
+      default:
+        console.warn('Unknown drawerButton', this.state.drawerButton)
+    }
   }
 
   signOut(): void {
@@ -110,6 +140,8 @@ class AppContainer extends Component {
         onSnackbarTimeout={this.handleSnackbarTimeout}
         helmet={children}
         signOut={this.signOut}
+        onDrawerButtonClick={this.handleDrawerButtonClick}
+        drawerButton={this.state.drawerButton}
       />
     )
   }

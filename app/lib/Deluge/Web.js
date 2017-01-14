@@ -1,6 +1,6 @@
 // @flow
 import Deluge from './Deluge'
-import type { FilterTree, TorrentInfo, PluginInfo, Host, Torrent } from '../types'
+import type { FilterTree, TorrentInfo, PluginInfo, Host, Torrent } from './types'
 
 class Web {
   deluge: Deluge
