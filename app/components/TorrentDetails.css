@@ -25,6 +25,10 @@
   background: #fff;
   align-content: space-around;
   flex-flow: row wrap;
+
+  :global(.mdl-progress) {
+    width: 100%;
+  }
 }
 
 .torrent-size,
