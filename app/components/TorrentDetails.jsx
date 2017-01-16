@@ -7,6 +7,9 @@ import s from './TorrentDetails.css'
 import TabContent from './TabContent'
 import { bytesToSize, timestampToFormat, timestampToRange } from '../lib/Helpers'
 import FileList from './FileList'
+import TrackerList from './TrackerList'
+import PeerList from './PeerList'
+import type { Tracker, Peer } from '../lib/Deluge/types'
 
 type TorrentDetailsProps = {
   name: string,
@@ -28,6 +31,8 @@ type TorrentDetailsProps = {
   time_added: number,
   active_time: number,
   files: [],
+  trackers: Tracker[],
+  peers: Peer[],
 }
 
 const TorrentDetails = ({
@@ -35,7 +40,7 @@ const TorrentDetails = ({
   upload_payload_rate: uploadRate, download_payload_rate: downloadRate,
   all_time_download: allTimeDownload, total_uploaded: totalUploaded, ratio, eta,
   num_files: fileCount, total_peers: totalPeers, total_seeds: totalSeeds, active_time: activeTime,
-  time_added: timeAdded, files,
+  time_added: timeAdded, files, peers, trackers,
 }: TorrentDetailsProps) => (
   <div>
     <div className={classnames(s.statusContainer)}>
@@ -47,7 +52,7 @@ const TorrentDetails = ({
       <Tabs activeTab={activeTab} ripple onChange={onTabChange} className={s.tabBar}>
         <Tab>Overview</Tab>
         <Tab>Files</Tab>
-        <Tab>Peers</Tab>
+        <Tab>Connections</Tab>
       </Tabs>
     </div>
 
@@ -67,7 +72,12 @@ const TorrentDetails = ({
         <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
       </ul>
       <FileList files={files} />
-      <div />
+      <div>
+        <span className={s.header}>Trackers</span>
+        <TrackerList trackers={trackers} />
+        <span className={s.header}>Peers</span>
+        <PeerList peers={peers} />
+      </div>
     </TabContent>
   </div>
 )

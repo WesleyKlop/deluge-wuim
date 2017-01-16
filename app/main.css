@@ -3,6 +3,8 @@
 
 :root {
   background: #f2f2f2;
+  font-family: 'Roboto', 'Helvetica', 'Noto', sans-serif;
+  font-size: 14px;
 }
 
 :global {

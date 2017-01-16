@@ -57,15 +57,21 @@
   height: 40px;
   padding: 0 16px;
   margin: 0;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
   line-height: 40px;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.54);
 }
 
 .list-container {
   display: flex;
-  margin: 16px 0;
+  margin: 16px 8px;
   padding: 0;
   background: #fff;
   flex-flow: row wrap;
+  list-style: none;
+}
+
+.header + .list-container {
+  margin: 0 8px 4px;
 }
