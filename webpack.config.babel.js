@@ -48,10 +48,6 @@ const config = {
       include: [APP_DIR],
       loader: 'html-loader',
     }, {
-      test: /\.json$/,
-      include: [APP_DIR],
-      loader: 'json-loader',
-    }, {
       test: /\.(jpe?g|png|gif|webp|svg)$/i,
       loaders: [
         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
