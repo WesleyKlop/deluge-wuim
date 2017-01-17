@@ -8,10 +8,11 @@ const {
   HOST = '0.0.0.0',
   NODE_ENV = 'development',
   BUILD_DIR = path.resolve(__dirname, 'dist'),
-  WEBPACK_DEVTOOL = 'source-map',
+  WEBPACK_DEVTOOL = 'inline-source-map',
 } = process.env
 
 const APP_DIR = path.resolve(__dirname, 'app')
+const isProd = NODE_ENV === 'production'
 
 const config = {
   entry: [
@@ -22,7 +23,7 @@ const config = {
   ],
   output: {
     path: BUILD_DIR,
-    filename: 'main.bundle.js',
+    filename: 'bundle.js',
     publicPath: '/',
   },
   module: {
@@ -76,7 +77,6 @@ const config = {
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
     }),
-
   ],
   devServer: {
     hot: true,
@@ -87,7 +87,7 @@ const config = {
     host: HOST,
     noInfo: true,
   },
-  devtool: WEBPACK_DEVTOOL,
+  devtool: isProd ? 'cheap-module-source-map' : WEBPACK_DEVTOOL,
   context: __dirname,
   target: 'web',
 }
