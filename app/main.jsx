@@ -10,6 +10,7 @@ import { delugeLocation } from '../settings.json'
 import createAppStore from './store'
 import './main.css'
 
+
 const appRoot = document.querySelector('#app')
 const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)

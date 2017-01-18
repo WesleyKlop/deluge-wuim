@@ -1,7 +1,7 @@
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import path from 'path'
+import { basename as publicPath } from './settings.json'
 
 const {
   PORT = 8080,
@@ -12,7 +12,6 @@ const {
 } = process.env
 
 const APP_DIR = path.resolve(__dirname, 'app')
-const isProd = NODE_ENV === 'production'
 
 const config = {
   entry: [
@@ -24,7 +23,7 @@ const config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath,
   },
   module: {
     rules: [{
@@ -34,15 +33,11 @@ const config = {
     }, {
       test: /\.css$/,
       include: [APP_DIR],
-      loader: ExtractTextPlugin.extract({
-        loader: 'css-loader?sourceMap&modules&camelCase!postcss-loader',
-      }),
+      loader: 'style-loader!css-loader?sourceMap&modules&camelCase!postcss-loader',
     }, {
       test: /\.css$/,
       include: [/node_modules/],
-      loader: ExtractTextPlugin.extract({
-        loader: 'css-loader?sourceMap!postcss-loader',
-      }),
+      loader: 'style-loader!css-loader?sourceMap!postcss-loader',
     }, {
       test: /\.html$/,
       include: [APP_DIR],
@@ -69,7 +64,6 @@ const config = {
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
-    new ExtractTextPlugin({ filename: 'bundle.css', disable: false, allChunks: true }),
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
     }),
@@ -77,13 +71,13 @@ const config = {
   devServer: {
     hot: true,
     contentBase: BUILD_DIR,
-    publicPath: '/',
+    publicPath,
     port: PORT,
     historyApiFallback: true,
     host: HOST,
     noInfo: true,
   },
-  devtool: isProd ? 'cheap-module-source-map' : WEBPACK_DEVTOOL,
+  devtool: WEBPACK_DEVTOOL,
   context: __dirname,
   target: 'web',
 }
