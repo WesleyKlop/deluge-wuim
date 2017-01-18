@@ -46,6 +46,9 @@ const config = {
         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
         'image-webpack-loader?bypassOnDebug?optimizationLevel=7&interlaced=false',
       ],
+    }, {
+      test: /manifest\.json$/,
+      loader: 'file-loader',
     }],
   },
   resolve: {
