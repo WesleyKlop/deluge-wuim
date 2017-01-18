@@ -34,4 +34,8 @@ const TorrentItem = ({
   </li>
 )
 
+TorrentItem.defaultProps = {
+  label: '',
+}
+
 export default TorrentItem

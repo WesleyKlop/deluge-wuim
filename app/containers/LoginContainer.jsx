@@ -72,7 +72,7 @@ class LoginContainer extends Component {
 
     this.setState({ error: '' })
     // $FlowIgnore: Flow does not have declarations for Credentials API
-    return await navigator.credentials.store(credential)
+    return navigator.credentials.store(credential)
   }
 
   render() {

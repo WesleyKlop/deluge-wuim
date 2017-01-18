@@ -10,4 +10,8 @@ const PageContent = ({ children }: Props) => (
   <div className={s.pageContent}>{children}</div>
 )
 
+PageContent.defaultProps = {
+  children: undefined,
+}
+
 export default PageContent

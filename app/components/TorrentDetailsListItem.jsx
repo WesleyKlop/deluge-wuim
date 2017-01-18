@@ -24,4 +24,9 @@ const TorrentDetailsListItem = ({
   </ListItem>
 )
 
+TorrentDetailsListItem.defaultProps = {
+  alignRight: false,
+  fullWidth: false,
+}
+
 export default TorrentDetailsListItem
