@@ -4,6 +4,7 @@ import 'react-mdl/extra/material'
 import 'react-mdl/extra/material.css'
 import { AppContainer as HMRContainer } from 'react-hot-loader'
 import { render } from 'react-dom'
+import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import DelugeWUIM from './DelugeWUIM'
 import Deluge from './lib/Deluge'
 import { delugeLocation } from '../settings.json'
@@ -35,4 +36,8 @@ if (module.hot) {
   })
 
   if (window) window.deluge = deluge
+}
+
+if ('serviceWorker' in navigator) {
+  runtime.register()
 }

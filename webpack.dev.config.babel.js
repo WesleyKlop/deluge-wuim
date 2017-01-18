@@ -1,17 +1,18 @@
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ServiceWorkerPlugin from 'serviceworker-webpack-plugin'
 import path from 'path'
 import { basename as publicPath } from './settings.json'
 
 const {
   PORT = 8080,
   HOST = '0.0.0.0',
-  NODE_ENV = 'development',
   BUILD_DIR = path.resolve(__dirname, 'dist'),
   WEBPACK_DEVTOOL = 'inline-source-map',
 } = process.env
 
 const APP_DIR = path.resolve(__dirname, 'app')
+const NODE_ENV = 'development'
 
 const config = {
   entry: [
@@ -22,7 +23,7 @@ const config = {
   ],
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     publicPath,
   },
   module: {
@@ -48,6 +49,9 @@ const config = {
         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
         'image-webpack-loader?bypassOnDebug?optimizationLevel=7&interlaced=false',
       ],
+    }, {
+      test: /manifest\.json$/,
+      loader: 'file-loader',
     }],
   },
   resolve: {
@@ -66,6 +70,9 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
+    }),
+    new ServiceWorkerPlugin({
+      entry: path.join(APP_DIR, 'service-worker.js'),
     }),
   ],
   devServer: {

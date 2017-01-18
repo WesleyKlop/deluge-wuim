@@ -1,6 +1,7 @@
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import ServiceWorkerPlugin from 'serviceworker-webpack-plugin'
 import path from 'path'
 import { basename as publicPath } from './settings.json'
 
@@ -62,6 +63,10 @@ const config = {
     new ExtractTextPlugin({ filename: 'bundle.css', disable: false, allChunks: true }),
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
+      inject: 'body',
+    }),
+    new ServiceWorkerPlugin({
+      entry: path.join(APP_DIR, 'service-worker.js'),
     }),
     new Webpack.LoaderOptionsPlugin({
       minimize: true,
