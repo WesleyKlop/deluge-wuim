@@ -6033,14 +6033,14 @@ style-search@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
 
-stylefmt-loader@^1.1.0:
+stylefmt-loader@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/stylefmt-loader/-/stylefmt-loader-1.2.0.tgz#def07f53e3de48c251e3ad278e1b40731908fd95"
   dependencies:
     loader-utils "0.2.16"
     postcss-scss "0.3.1"
 
-stylefmt@^5.0.2:
+stylefmt@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/stylefmt/-/stylefmt-5.1.1.tgz#36d933fdf3a776f7fe95497b32a1404d1eb97b0f"
   dependencies:

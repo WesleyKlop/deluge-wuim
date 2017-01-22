@@ -13,8 +13,23 @@ type File = {
   size: number,
 }
 
-const formatTitle = (progress, size, priority): string =>
-  `progress: ${Math.round(progress * 100)}% | priority: ${priority} | size: ${bytesToSize(size)}`
+const formatPriority = (priority: number): string => {
+  switch (priority) {
+    case 0:
+      return 'skipped'
+    case 1:
+      return 'normal'
+    case 5:
+      return 'high'
+    case 7:
+      return 'highest'
+    default:
+      return priority.toString()
+  }
+}
+
+const formatTitle = (progress: number, size: number, priority: number): string =>
+  `progress: ${Math.round(progress * 100)}% | priority: ${formatPriority(priority)} | size: ${bytesToSize(size)}`
 
 const FileList = ({ files }: { files: File[] }) => (
   <ul className={classnames(listContainer, 'mdl-shadow--2dp')}>

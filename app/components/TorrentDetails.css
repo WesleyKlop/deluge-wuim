@@ -47,9 +47,11 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  overflow-x: auto;
 
   :global(.mdl-tabs__tab) {
-    flex: 1;
+    flex: 1 0 auto;
+    overflow: visible;
   }
 }
 

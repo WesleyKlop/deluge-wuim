@@ -35,6 +35,13 @@ type TorrentDetailsProps = {
   peers: Peer[],
 }
 
+const formatNumber = (n) => {
+  if (n <= 0) {
+    return 0
+  }
+  return n.toFixed(2)
+}
+
 const TorrentDetails = ({
   name, comment, progress, state, total_size: totalSize, activeTab, onTabChange,
   upload_payload_rate: uploadRate, download_payload_rate: downloadRate,
@@ -64,10 +71,10 @@ const TorrentDetails = ({
         <ListItem label="Size" title={bytesToSize(totalSize)} alignRight />
         <ListItem label="Downloaded" title={bytesToSize(allTimeDownload)} />
         <ListItem label="Uploaded" title={bytesToSize(totalUploaded)} alignRight />
-        <ListItem label="Ratio" title={ratio.toFixed(2)} />
+        <ListItem label="Ratio" title={formatNumber(ratio)} />
         <ListItem label="# Files" title={fileCount} alignRight />
-        <ListItem label="Peers" title={totalPeers} />
-        <ListItem label="Seeds" title={totalSeeds} alignRight />
+        <ListItem label="Peers" title={formatNumber(totalPeers)} />
+        <ListItem label="Seeds" title={formatNumber(totalSeeds)} alignRight />
         <ListItem label="Added on" title={timestampToFormat(timeAdded)} fullWidth />
         <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
       </ul>

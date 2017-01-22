@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Login from '../components/Login'
 import PageContent from '../components/PageContent'
 import Deluge from '../lib/Deluge/Deluge'
-import delugeLogo from '../assets/deluge.png'
+// import delugeLogo from '../assets/deluge.png'
 import { authenticate } from '../actions/session'
 
 /**
@@ -33,6 +33,9 @@ class LoginContainer extends Component {
   }
   passwordRef: HTMLInputElement
   handleSubmit: () => void
+  props: {
+    authenticate: (password: string) => Promise<boolean>
+  }
 
   async handleSubmit(e: Event): Promise<void> {
     e.preventDefault()
@@ -47,33 +50,31 @@ class LoginContainer extends Component {
   async tryLogin(password: string) {
     const { deluge, router } = this.context
     if (await this.props.authenticate(password)) {
-      if ('credentials' in navigator && location.protocol.startsWith('https')) {
-        await this.saveCredentials(password)
-      }
+      // if ('credentials' in navigator && location.protocol.startsWith('https')) {
+      //   await this.saveCredentials(password)
+      // }
       // Go to home if we're connected or else route to the connection manager
       if (await deluge.web.connected() === true) {
-        router.transitionTo('/')
+        router.replaceWith('/')
       } else {
-        router.transitionTo('/connection')
+        router.replaceWith('/connection')
       }
     } else {
       this.setState({ error: 'Invalid password' })
     }
   }
 
-  async saveCredentials(password: string) {
-    // $FlowIgnore: Flow does not have declaration for Credentials API
-    const credential = new PasswordCredential({
-      id: 'deluge',
-      password,
-      name: 'Deluge WUIM',
-      iconURL: `${location.origin}/${delugeLogo}`,
-    })
-
-    this.setState({ error: '' })
-    // $FlowIgnore: Flow does not have declarations for Credentials API
-    return navigator.credentials.store(credential)
-  }
+  // async saveCredentials(password: string) {
+  //   const credential = new PasswordCredential({
+  //     id: 'deluge',
+  //     password,
+  //     name: 'Deluge WUIM',
+  //     iconURL: `${location.origin}/${delugeLogo}`,
+  //   })
+  //
+  //   this.setState({ error: '' })
+  //   return navigator.credentials.store(credential)
+  // }
 
   render() {
     return (

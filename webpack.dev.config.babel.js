@@ -16,6 +16,7 @@ const NODE_ENV = 'development'
 
 const config = {
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${PORT}`,
     'webpack/hot/only-dev-server',
@@ -34,11 +35,20 @@ const config = {
     }, {
       test: /\.css$/,
       include: [APP_DIR],
-      loader: 'style-loader!css-loader?sourceMap&modules&camelCase!postcss-loader',
+      loaders: [
+        'style-loader',
+        'css-loader?sourceMap&modules&camelCase',
+        'postcss-loader',
+        // 'stylefmt-loader',
+      ],
     }, {
       test: /\.css$/,
       include: [/node_modules/],
-      loader: 'style-loader!css-loader?sourceMap!postcss-loader',
+      loaders: [
+        'style-loader',
+        'css-loader?sourceMap',
+        'postcss-loader',
+      ],
     }, {
       test: /\.html$/,
       include: [APP_DIR],

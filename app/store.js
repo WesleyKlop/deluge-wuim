@@ -20,15 +20,15 @@ const defaultState: AppState = {
 
 
 const createAppStore = (deluge: Deluge) => {
-  const middleware = applyMiddleware(thunk.withExtraArgument(deluge))
+  let enhancer = applyMiddleware(thunk.withExtraArgument(deluge))
   // eslint-disable-next-line no-underscore-dangle
-  const enhancer = typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'function'
-    ? compose(
-      middleware,
-      // Redux devtools
+  if (typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'function') {
+    enhancer = compose(
+      enhancer,
       // eslint-disable-next-line no-underscore-dangle
-      typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'function' && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    ) : middleware
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
+    )
+  }
 
   return createStore(
     rootReducer,

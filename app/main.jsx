@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+// @flow
 import React from 'react'
 import 'react-mdl/extra/material'
 import 'react-mdl/extra/material.css'
@@ -10,6 +10,7 @@ import Deluge from './lib/Deluge'
 import { delugeLocation } from '../settings.json'
 import createAppStore from './store'
 import './main.css'
+import './assets/deluge.png'
 
 
 const appRoot = document.querySelector('#app')
@@ -17,7 +18,7 @@ const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)
 HMRContainer.displayName = 'HMRContainer'
 
-const renderApp = App => render(
+const renderApp = (App: any) => render(
   <HMRContainer>
     <App deluge={deluge} store={store} />
   </HMRContainer>,
@@ -27,7 +28,9 @@ const renderApp = App => render(
 renderApp(DelugeWUIM)
 
 if (module.hot) {
-  module.hot.accept('./DelugeWUIM', () => renderApp(DelugeWUIM))
+  module.hot.accept('./DelugeWUIM', () => {
+    renderApp(DelugeWUIM)
+  })
 
   module.hot.accept('./reducers', () => {
     // eslint-disable-next-line global-require

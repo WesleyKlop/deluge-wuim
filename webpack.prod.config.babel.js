@@ -1,3 +1,4 @@
+// @flow
 import Webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
@@ -13,7 +14,10 @@ const APP_DIR = path.resolve(__dirname, 'app')
 const NODE_ENV = 'production'
 
 const config = {
-  entry: ['./app/main.jsx'],
+  entry: [
+    'babel-polyfill',
+    './app/main.jsx',
+  ],
   output: {
     path: BUILD_DIR,
     filename: '[name].bundle.js',
