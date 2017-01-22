@@ -24,7 +24,7 @@ Check out settings.json which looks like this
 }
 ```
 
-To see more options check out the `webpack.config.babel.js` file which lists all used environment variables, right at the top
+To see more options check out the `webpack.{dev,prod}.config.babel.js` file which lists all used environment variables, right at the top
 
 ## Development
 
@@ -33,16 +33,11 @@ To start a dev server (webpack-dev-server) on port 8080 by default
 yarn start # or npm start
 ```
 
-Or build the application
-```shell
-yarn build:dev
-```
-
 ## Production
 
 Build the application by running
 ```shell
-yarn build:prod
+yarn build
 ```
 
 ## TODO
@@ -53,9 +48,7 @@ There is a lot more that needs to happen still.
 * Filters (~~name~~, state, label, tracker_host)
 * Add torrents
 * Remove torrents
-* View torrent details
 * Change torrent options
 * Preferences
 * Server info
 * Most `core.*` calls
-* Service worker (PWA)
