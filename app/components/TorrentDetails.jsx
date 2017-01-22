@@ -9,7 +9,7 @@ import { bytesToSize, timestampToFormat, timestampToRange, formatNumber } from '
 import FileList from './FileList'
 import TrackerList from './TrackerList'
 import PeerList from './PeerList'
-import type { Tracker, Peer } from '../lib/Deluge/types'
+import type { Tracker, Peer, MappedFile } from '../lib/Deluge/types'
 
 type TorrentDetailsProps = {
   name: string,
@@ -30,7 +30,7 @@ type TorrentDetailsProps = {
   total_seeds: number,
   time_added: number,
   active_time: number,
-  files: [],
+  mappedFiles: MappedFile[],
   trackers: Tracker[],
   peers: Peer[],
 }
@@ -40,7 +40,7 @@ const TorrentDetails = ({
   upload_payload_rate: uploadRate, download_payload_rate: downloadRate,
   all_time_download: allTimeDownload, total_uploaded: totalUploaded, ratio, eta,
   num_files: fileCount, total_peers: totalPeers, total_seeds: totalSeeds, active_time: activeTime,
-  time_added: timeAdded, files, peers, trackers,
+  time_added: timeAdded, mappedFiles, peers, trackers,
 }: TorrentDetailsProps) => (
   <div>
     <div className={classnames(s.statusContainer)}>
@@ -71,7 +71,7 @@ const TorrentDetails = ({
         <ListItem label="Added on" title={timestampToFormat(timeAdded)} fullWidth />
         <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
       </ul>
-      <FileList files={files} />
+      <FileList files={mappedFiles} />
       <div>
         <span className={s.header}>Trackers</span>
         <TrackerList trackers={trackers} />

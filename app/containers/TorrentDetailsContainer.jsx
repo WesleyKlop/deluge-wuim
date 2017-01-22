@@ -94,7 +94,7 @@ class TorrentDetailsContainer extends Component {
         {...torrent}
         activeTab={this.state.activeTab}
         onTabChange={this.handleTabChange}
-        files={this.mapFiles()}
+        mappedFiles={this.mapFiles()}
       />
     )
   }

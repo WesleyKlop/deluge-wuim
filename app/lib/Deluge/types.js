@@ -178,3 +178,11 @@ export type AppState = {
     selectedTorrent: ?Torrent,
   },
 }
+
+export type MappedFile = {
+  index: number,
+  path: string,
+  priority: number,
+  progress: number,
+  size: number,
+}
