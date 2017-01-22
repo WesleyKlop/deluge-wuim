@@ -5,7 +5,7 @@ import { ProgressBar, Tabs, Tab } from 'react-mdl'
 import ListItem from './TorrentDetailsListItem'
 import s from './TorrentDetails.css'
 import TabContent from './TabContent'
-import { bytesToSize, timestampToFormat, timestampToRange } from '../lib/Helpers'
+import { bytesToSize, timestampToFormat, timestampToRange, formatNumber } from '../lib/Helpers'
 import FileList from './FileList'
 import TrackerList from './TrackerList'
 import PeerList from './PeerList'
@@ -33,13 +33,6 @@ type TorrentDetailsProps = {
   files: [],
   trackers: Tracker[],
   peers: Peer[],
-}
-
-const formatNumber = (n) => {
-  if (n <= 0) {
-    return 0
-  }
-  return n.toFixed(2)
 }
 
 const TorrentDetails = ({

@@ -31,3 +31,10 @@ export const timestampToRange = (timestamp: number): string => {
 
   return `${days} days, ${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`
 }
+
+export const formatNumber = (n, digits = 2) => {
+  if (n <= 0) {
+    return 0
+  }
+  return n.toFixed(digits)
+}

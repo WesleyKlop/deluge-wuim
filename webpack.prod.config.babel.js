@@ -32,13 +32,20 @@ const config = {
       test: /\.css$/,
       include: [APP_DIR],
       loader: ExtractTextPlugin.extract({
-        loader: 'css-loader?sourceMap&modules&camelCase!postcss-loader',
+        loader: [
+          'css-loader?sourceMap&modules&camelCase',
+          'postcss-loader',
+          'stylefmt-loader?config=.stylelintrc',
+        ],
       }),
     }, {
       test: /\.css$/,
       include: [/node_modules/],
       loader: ExtractTextPlugin.extract({
-        loader: 'css-loader?sourceMap!postcss-loader',
+        loader: [
+          'css-loader?sourceMap',
+          'postcss-loader',
+        ],
       }),
     }, {
       test: /\.html$/,

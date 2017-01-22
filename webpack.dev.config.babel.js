@@ -39,7 +39,7 @@ const config = {
         'style-loader',
         'css-loader?sourceMap&modules&camelCase',
         'postcss-loader',
-        // 'stylefmt-loader',
+        //'stylefmt-loader?config=.stylelintrc',
       ],
     }, {
       test: /\.css$/,

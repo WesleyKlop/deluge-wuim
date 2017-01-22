@@ -7,8 +7,8 @@
   }
 
   &:not(.full-width) {
-    flex: 1 1 50%;
     width: 50%;
+    flex: 1 1 50%;
   }
 
   &.align-right {

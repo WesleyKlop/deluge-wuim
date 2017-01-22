@@ -50,28 +50,28 @@
   overflow-x: auto;
 
   :global(.mdl-tabs__tab) {
-    flex: 1 0 auto;
     overflow: visible;
+    flex: 1 0 auto;
   }
 }
 
 .header {
+  width: 100%;
   height: 40px;
   padding: 0 16px;
   margin: 0;
   font-size: 14px;
   line-height: 40px;
-  width: 100%;
   color: rgba(0, 0, 0, 0.54);
 }
 
 .list-container {
   display: flex;
-  margin: 16px 8px;
   padding: 0;
+  margin: 16px 8px;
+  list-style: none;
   background: #fff;
   flex-flow: row wrap;
-  list-style: none;
 }
 
 .header + .list-container {
