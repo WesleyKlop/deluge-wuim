@@ -25,9 +25,13 @@ const TorrentItem = ({
       <div className={`mdl-list__item-primary-content ${s.container}`}>
         <div className={s.torrentName}>{name}</div>
         <span className="mdl-list__item-text-body">
-          {state} •&nbsp;
-          {!complete ? `${bytesToSize(downloaded, true)}/${bytesToSize(size)}(${Math.round(progress)}%)` : `${progress}%`}{downloaded ? null : `• ${eta}`}
-          &nbsp;• {formatNumber(ratio, 3)}{label && ` • ${label}`}
+          {[
+            state,
+            !complete ? `${bytesToSize(downloaded, true)}/${bytesToSize(size)}(${Math.round(progress)}%)` : `${progress}%`,
+            eta,
+            formatNumber(ratio, 3),
+            label,
+          ].filter(row => !!row).join(' • ')}
         </span>
       </div>
     </button>

@@ -18,6 +18,7 @@ type AppProps = {
   signOut: () => void,
   drawerButton: ?string,
   onDrawerButtonClick: () => void,
+  title: string,
 }
 
 const App = ({
@@ -32,6 +33,7 @@ const App = ({
   signOut,
   drawerButton,
   onDrawerButtonClick,
+  title,
 }: AppProps) => (
   <Layout fixedHeader fixedDrawer>
     {helmet}
@@ -41,7 +43,7 @@ const App = ({
         name={drawerButton}
         onClick={onDrawerButtonClick}
       />
-      <HeaderRow title="Deluge WUIM">
+      <HeaderRow title={title}>
         <Match
           exactly
           pattern="/"

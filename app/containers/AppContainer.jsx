@@ -14,6 +14,7 @@ type AppContainerProps = {
   authenticated: boolean,
   setAuthenticated: () => void,
   deluge: Deluge,
+  title: string,
 }
 
 class AppContainer extends Component {
@@ -142,6 +143,7 @@ class AppContainer extends Component {
         signOut={this.signOut}
         onDrawerButtonClick={this.handleDrawerButtonClick}
         drawerButton={this.state.drawerButton}
+        title={this.props.title}
       />
     )
   }
@@ -150,6 +152,7 @@ class AppContainer extends Component {
 const mapStateToProps = state => ({
   searchbarValue: state.searchbarValue,
   authenticated: state.session.authenticated,
+  title: state.ui.title,
 })
 
 const mapDispatchToProps = dispatch => ({

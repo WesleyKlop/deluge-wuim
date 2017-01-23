@@ -9,6 +9,7 @@ import { bytesToSize, timestampToFormat, timestampToRange, formatNumber } from '
 import FileList from './FileList'
 import TrackerList from './TrackerList'
 import PeerList from './PeerList'
+import Card from './Card'
 import type { Tracker, Peer, MappedFile } from '../lib/Deluge/types'
 
 type TorrentDetailsProps = {
@@ -33,6 +34,7 @@ type TorrentDetailsProps = {
   mappedFiles: MappedFile[],
   trackers: Tracker[],
   peers: Peer[],
+  message: string,
 }
 
 const TorrentDetails = ({
@@ -40,7 +42,7 @@ const TorrentDetails = ({
   upload_payload_rate: uploadRate, download_payload_rate: downloadRate,
   all_time_download: allTimeDownload, total_uploaded: totalUploaded, ratio, eta,
   num_files: fileCount, total_peers: totalPeers, total_seeds: totalSeeds, active_time: activeTime,
-  time_added: timeAdded, mappedFiles, peers, trackers,
+  time_added: timeAdded, mappedFiles, peers, trackers, message,
 }: TorrentDetailsProps) => (
   <div>
     <div className={classnames(s.statusContainer)}>
@@ -57,20 +59,23 @@ const TorrentDetails = ({
     </div>
 
     <TabContent activeTab={activeTab}>
-      <ul className={classnames(s.listContainer, 'mdl-shadow--2dp')}>
-        <ListItem label="Down speed" title={downloadRate} />
-        <ListItem label="Up speed" title={uploadRate} alignRight />
-        <ListItem label="ETA" title={eta === 0 ? '∞' : eta} />
-        <ListItem label="Size" title={bytesToSize(totalSize)} alignRight />
-        <ListItem label="Downloaded" title={bytesToSize(allTimeDownload)} />
-        <ListItem label="Uploaded" title={bytesToSize(totalUploaded)} alignRight />
-        <ListItem label="Ratio" title={formatNumber(ratio)} />
-        <ListItem label="# Files" title={fileCount} alignRight />
-        <ListItem label="Peers" title={formatNumber(totalPeers)} />
-        <ListItem label="Seeds" title={formatNumber(totalSeeds)} alignRight />
-        <ListItem label="Added on" title={timestampToFormat(timeAdded)} fullWidth />
-        <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
-      </ul>
+      <div>
+        <Card hidden={state !== 'Error'} shadow={2} title="Error">{message}</Card>
+        <ul className={classnames(s.listContainer, 'mdl-shadow--2dp')}>
+          <ListItem label="Down speed" title={downloadRate} />
+          <ListItem label="Up speed" title={uploadRate} alignRight />
+          <ListItem label="ETA" title={eta === 0 ? '∞' : eta} />
+          <ListItem label="Size" title={bytesToSize(totalSize)} alignRight />
+          <ListItem label="Downloaded" title={bytesToSize(allTimeDownload)} />
+          <ListItem label="Uploaded" title={bytesToSize(totalUploaded)} alignRight />
+          <ListItem label="Ratio" title={formatNumber(ratio)} />
+          <ListItem label="# Files" title={fileCount} alignRight />
+          <ListItem label="Peers" title={formatNumber(totalPeers)} />
+          <ListItem label="Seeds" title={formatNumber(totalSeeds)} alignRight />
+          <ListItem label="Added on" title={timestampToFormat(timeAdded)} fullWidth />
+          <ListItem label="Active time" title={timestampToRange(activeTime)} fullWidth />
+        </ul>
+      </div>
       <FileList files={mappedFiles} />
       <div>
         <span className={s.header}>Trackers</span>

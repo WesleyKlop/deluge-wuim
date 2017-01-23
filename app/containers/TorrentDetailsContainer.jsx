@@ -67,8 +67,7 @@ class TorrentDetailsContainer extends Component {
 
   mapFiles = () => {
     const torrent: Torrent = this.props.selectedTorrent
-    // $FlowIgnore
-    return torrent.files.map((file, i) => Object.assign({
+    return torrent.files.map((file, i) => Object.assign({}, {
       progress: torrent.file_progress[i],
       priority: torrent.file_priorities[i],
     }, file))

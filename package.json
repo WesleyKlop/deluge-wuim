@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Deluge Web Ui IMproved ",
   "scripts": {
-    "start": "yarn run clean && webpack-dev-server --colors --config webpack.dev.config.babel.js",
+    "start": "webpack-dev-server --colors --config webpack.dev.config.babel.js",
     "lint:scripts": "eslint \"app/**/*.{js,jsx}\" --fix",
     "lint:styles": "stylelint \"app/**/*.css\"",
     "lint": "yarn lint:scripts && yarn lint:styles",

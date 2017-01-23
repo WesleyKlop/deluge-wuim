@@ -16,10 +16,12 @@ const defaultState: AppState = {
     authenticated: false,
     selectedTorrent: null,
   },
+  ui: {
+    title: 'Deluge WUIM',
+  },
 }
 
-
-const createAppStore = (deluge: Deluge) => {
+const createAppStore = (deluge: Deluge): Store => {
   let enhancer = applyMiddleware(thunk.withExtraArgument(deluge))
   // eslint-disable-next-line no-underscore-dangle
   if (typeof window.__REDUX_DEVTOOLS_EXTENSION__ === 'function') {

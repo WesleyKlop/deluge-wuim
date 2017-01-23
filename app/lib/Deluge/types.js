@@ -177,6 +177,9 @@ export type AppState = {
     showSessionSpeed: boolean,
     selectedTorrent: ?Torrent,
   },
+  ui: {
+    title: string,
+  }
 }
 
 export type MappedFile = {

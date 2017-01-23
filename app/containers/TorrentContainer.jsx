@@ -5,8 +5,7 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import TorrentItem from '../components/TorrentItem'
 import Deluge from '../lib/Deluge'
-import { fetchTorrents } from '../actions/torrents'
-import { setShowSessionSpeed } from '../actions/session'
+import { fetchTorrents, setShowSessionSpeed } from '../actions'
 import type { Torrent } from '../lib/Deluge/types'
 
 type TorrentContainerProps = {
@@ -59,7 +58,8 @@ class TorrentContainer extends Component {
 
   renderTorrents() {
     return this.props.torrents
-      .filter(row => row.name.includes(this.props.nameFilter))
+      .filter(row => row.name.toLowerCase().includes(this.props.nameFilter.toLowerCase()))
+      // .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
       .map(row => (
         <TorrentItem
           key={row.hash}
