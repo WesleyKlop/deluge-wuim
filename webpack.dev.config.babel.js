@@ -37,7 +37,7 @@ const config = {
       include: [APP_DIR],
       loaders: [
         'style-loader',
-        'css-loader?sourceMap&modules&camelCase',
+        'css-loader?modules&camelCase',
         'postcss-loader',
         //'stylefmt-loader?config=.stylelintrc',
       ],
@@ -46,7 +46,7 @@ const config = {
       include: [/node_modules/],
       loaders: [
         'style-loader',
-        'css-loader?sourceMap',
+        'css-loader',
         'postcss-loader',
       ],
     }, {

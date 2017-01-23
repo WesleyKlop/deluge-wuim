@@ -12,7 +12,6 @@ import createAppStore from './store'
 import './main.css'
 import './assets/deluge.png'
 
-
 const appRoot = document.querySelector('#app')
 const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)

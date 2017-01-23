@@ -33,7 +33,7 @@ const config = {
       include: [APP_DIR],
       loader: ExtractTextPlugin.extract({
         loader: [
-          'css-loader?sourceMap&modules&camelCase',
+          'css-loader?modules&camelCase',
           'postcss-loader',
           'stylefmt-loader?config=.stylelintrc',
         ],
@@ -43,7 +43,7 @@ const config = {
       include: [/node_modules/],
       loader: ExtractTextPlugin.extract({
         loader: [
-          'css-loader?sourceMap',
+          'css-loader',
           'postcss-loader',
         ],
       }),
@@ -74,7 +74,7 @@ const config = {
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
-    new ExtractTextPlugin({ filename: '[hash].css', disable: false, allChunks: true }),
+    new ExtractTextPlugin({ filename: '[contenthash].css', disable: false, allChunks: true }),
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
       inject: 'body',
