@@ -11,26 +11,19 @@ const {
 
 const assetsToCache = [...assets, './']
   .map(path => new URL(path, global.location).toString())
-  .filter(path => !path.endsWith('.json') && !path.includes('hot-update'))
 
 self.addEventListener('install', e => e.waitUntil(
-  global.caches
-    .open(CACHE_NAME)
+  caches.open(CACHE_NAME)
     .then(cache => cache.addAll(assetsToCache))
     .then(() => self.skipWaiting()),
 ))
 
 self.addEventListener('activate', e => e.waitUntil(
-  global.caches
-    .keys()
-    .then(cacheNames => Promise.all(
-      cacheNames.map((cacheName) => {
-        if (cacheName.indexOf(CACHE_NAME) === 0) {
-          return null
-        }
-        return global.caches.delete(cacheName)
-      }),
-    ))
+  caches.keys()
+    .then(cacheNames => cacheNames.filter(cacheName => (cacheName !== CACHE_NAME)))
+    .then(cachesToDelete =>
+      Promise.all(cachesToDelete.map(cacheName =>
+        caches.delete(cacheName))))
     .then(() => self.clients.claim()),
 ))
 
@@ -45,8 +38,7 @@ self.addEventListener('fetch', (e) => {
   }
 
   return e.respondWith(
-    global.caches
-      .open(CACHE_NAME)
+    caches.open(CACHE_NAME)
       .then(cache => cache.match(e.request)
         .then(response => response || fetch(e.request)
           .then((fetchResponse) => {

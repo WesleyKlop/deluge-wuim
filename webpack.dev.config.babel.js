@@ -24,7 +24,7 @@ const config = {
   ],
   output: {
     path: BUILD_DIR,
-    filename: '[name].bundle.js',
+    filename: '[hash].js',
     publicPath,
   },
   module: {
@@ -83,6 +83,7 @@ const config = {
     }),
     new ServiceWorkerPlugin({
       entry: path.join(APP_DIR, 'service-worker.js'),
+      excludes: ['*.hot-update.json'],
     }),
   ],
   devServer: {

@@ -20,7 +20,7 @@ const config = {
   ],
   output: {
     path: BUILD_DIR,
-    filename: '[name].bundle.js',
+    filename: '[hash].js',
     publicPath,
   },
   module: {
@@ -74,7 +74,7 @@ const config = {
     new Webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
     }),
-    new ExtractTextPlugin({ filename: 'bundle.css', disable: false, allChunks: true }),
+    new ExtractTextPlugin({ filename: '[hash].css', disable: false, allChunks: true }),
     new HtmlWebpackPlugin({
       template: path.resolve(APP_DIR, 'index.html'),
       inject: 'body',
