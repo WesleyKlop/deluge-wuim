@@ -1,8 +1,8 @@
-/* Global styles go in this file */
+/* stylelint-disable selector-max-specificity, selector-max-compound-selectors */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons|Roboto");
 
 :root {
-  font-family: "Roboto", "Helvetica", "Noto", sans-serif;
+  font-family: Roboto, Helvetica, Noto, sans-serif;
   font-size: 14px;
   background: #f2f2f2;
 }
@@ -15,35 +15,21 @@
     background: none;
     border: 0;
     outline: none;
-    appearance: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .mdl-navigation {
+  .mdl-layout__drawer .mdl-navigation {
     flex: 1;
 
     .mdl-layout-spacer + .mdl-navigation__link {
       border-top: 1px solid rgba(0, 0, 0, 0.12);
     }
-  }
 
-  .mdl-navigation__link > .material-icons {
-    margin-right: 32px;
-  }
+    .mdl-navigation__link {
+      padding: 16px;
 
-  .mdl-js-layout.has-drawer.mdl-layout:not(.is-small-screen) {
-    .mdl-layout__drawer {
-      width: 300px;
-    }
-
-    .mdl-layout__inner-container {
-      & > .mdl-layout__content {
-        margin-left: 300px;
-      }
-
-      & > .mdl-layout__header {
-        width: calc(100% - 300px);
-        margin-left: 300px;
+      .material-icons {
+        margin-right: 16px;
       }
     }
   }

@@ -3,6 +3,7 @@ const CACHE_NAME = 'deluge-wuim-v1'
 const BLACKLISTED_URL_PARTS = [
   'sockjs-node',
   'hot-update.js',
+  'sw.js',
 ]
 
 const {

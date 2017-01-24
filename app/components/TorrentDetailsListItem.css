@@ -15,7 +15,7 @@
     text-align: right;
   }
 
-  & > :global(.mdl-list__item-primary-content):first-child {
+  > :global(.mdl-list__item-primary-content):first-child {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

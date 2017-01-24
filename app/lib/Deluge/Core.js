@@ -164,6 +164,14 @@ class Core {
   getTorrentsStatus(filterDict: Object = {}, keys?: string[]): Promise<Object> {
     return this.deluge.call('core.get_torrents_status', filterDict, keys || [])
   }
+
+  resumeTorrent(...ids: string[]): Promise<null> {
+    return this.deluge.call('core.resume_torrent', ids)
+  }
+
+  pauseTorrent(...ids: string[]): Promise<null> {
+    return this.deluge.call('core.pause_torrent', ids)
+  }
 }
 
 export default Core

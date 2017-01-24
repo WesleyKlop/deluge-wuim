@@ -58,6 +58,8 @@ class Deluge {
     exclude: [
       'web.update_ui',
       'web.get_torrent_status',
+      'web.get_config',
+      'auth.check_session',
     ],
   }
 

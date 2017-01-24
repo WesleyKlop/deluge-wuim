@@ -1,15 +1,13 @@
 // @flow
 import React from 'react'
-import { Layout, IconButton, Navigation, Drawer, Content, Textfield, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
+import { Layout, IconButton, Navigation, Drawer, Content, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
 import Helmet from 'react-helmet'
 import { Link, Match } from 'react-router'
-import { HomeContainer, LoginContainer, ConnectionManagerContainer, AuthMatch, TorrentDetailsContainer } from '../containers'
+import { HomeContainer, LoginContainer, ConnectionManagerContainer, AuthMatch, TorrentDetailsContainer, TorrentSearchBar, TorrentControlsBar } from '../containers'
 import s from './App.css'
 
 type AppProps = {
   authenticated: boolean,
-  searchValue: string,
-  onSearchChange: () => void,
   onDrawerLinkClick: () => void,
   snackbarActive: boolean,
   onSnackbarTimeout: () => void,
@@ -23,8 +21,6 @@ type AppProps = {
 
 const App = ({
   authenticated,
-  searchValue,
-  onSearchChange,
   onDrawerLinkClick,
   snackbarActive,
   onSnackbarTimeout,
@@ -44,20 +40,8 @@ const App = ({
         onClick={onDrawerButtonClick}
       />
       <HeaderRow title={title}>
-        <Match
-          exactly
-          pattern="/"
-          render={() => (
-            <Textfield
-              value={searchValue}
-              onChange={onSearchChange}
-              label="Search"
-              expandable
-              expandableIcon="search"
-              type="text"
-            />
-          )}
-        />
+        <Match exactly pattern="/" component={TorrentSearchBar} />
+        <Match exactly pattern="/torrent" component={TorrentControlsBar} />
       </HeaderRow>
     </div>
     <Drawer title={<span className="mdl-layout--small-screen-only">Deluge WUIM</span>}>

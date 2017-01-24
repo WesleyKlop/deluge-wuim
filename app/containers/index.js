@@ -6,3 +6,5 @@ export { default as ConnectionManagerContainer } from './ConnectionManagerContai
 export { default as TorrentDetailsContainer } from './TorrentDetailsContainer'
 export { default as RequireAuth } from './RequireAuth'
 export { default as AuthMatch } from '../components/AuthMatch'
+export { default as TorrentSearchBar } from './TorrentSearchBar'
+export { default as TorrentControlsBar } from './TorrentControlsBar'

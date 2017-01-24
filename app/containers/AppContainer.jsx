@@ -4,13 +4,10 @@ import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../lib/Deluge/Deluge'
-import { changeSearchValue } from '../actions'
 import { setAuthenticated } from '../actions/session'
 
 type AppContainerProps = {
   children: Helmet,
-  searchbarValue: string,
-  onSearchChange: () => void,
   authenticated: boolean,
   setAuthenticated: () => void,
   deluge: Deluge,
@@ -134,8 +131,6 @@ class AppContainer extends Component {
       <App
         authenticated={authenticated}
         onDrawerLinkClick={this.toggleDrawer}
-        onSearchChange={this.props.onSearchChange}
-        searchValue={this.props.searchbarValue}
         snackbarText={this.state.snackbarText}
         snackbarActive={this.state.snackbarActive}
         onSnackbarTimeout={this.handleSnackbarTimeout}
@@ -150,13 +145,11 @@ class AppContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  searchbarValue: state.searchbarValue,
   authenticated: state.session.authenticated,
   title: state.ui.title,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onSearchChange: e => dispatch(changeSearchValue(e.currentTarget.value)),
   setAuthenticated: () => dispatch(setAuthenticated(false)),
 })
 
