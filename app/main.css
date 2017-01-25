@@ -8,6 +8,20 @@
 }
 
 :global {
+  .noscript {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.6;
+    color: #b71c1c;
+    text-align: center;
+    transform: translate(-50%);
+  }
+
   .mdl-navigation__link {
     text-align: left;
     cursor: pointer;

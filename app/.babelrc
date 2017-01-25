@@ -12,13 +12,18 @@
   ],
   "plugins": [
     "transform-class-properties",
-    "transform-async-to-generator",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-runtime"
   ],
   "env": {
     "development": {
       "plugins": [
         "react-hot-loader/babel"
+      ]
+    },
+    "production": {
+      "presets": [
+        "react-optimize"
       ]
     }
   }

@@ -58,7 +58,7 @@ class ConnectionManagerContainer extends Component {
 
   handleActionClick(hostId: string): void {
     const { router } = this.context
-    console.info('Connecting to host:', hostId)
+
     const host: ?Host = this.props.hosts.find(({ id }) => id === hostId)
 
     if (!host) {
