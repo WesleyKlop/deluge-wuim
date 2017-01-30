@@ -87,7 +87,7 @@ class AppContainer extends Component {
 
     switch (this.state.drawerButton) {
       case 'menu':
-        return
+        break
       case 'arrow_back':
         // Drawer toggles regardless of stopPropagation/preventDefault so toggle it again to
         // close it again

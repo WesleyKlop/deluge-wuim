@@ -1,9 +1,28 @@
 // @flow
 import React from 'react'
-import { Layout, IconButton, Navigation, Drawer, Content, Snackbar, Icon, Spacer, HeaderRow } from 'react-mdl'
+import {
+  Layout,
+  IconButton,
+  Navigation,
+  Drawer,
+  Content,
+  Snackbar,
+  Icon,
+  Spacer,
+  HeaderRow,
+} from 'react-mdl'
 import Helmet from 'react-helmet'
 import { Link, Match } from 'react-router'
-import { HomeContainer, LoginContainer, ConnectionManagerContainer, AuthMatch, TorrentDetailsContainer, TorrentSearchBar, TorrentControlsBar } from '../containers'
+import {
+  HomeContainer,
+  LoginContainer,
+  ConnectionManagerContainer,
+  AuthMatch,
+  TorrentDetailsContainer,
+  TorrentSearchBar,
+  TorrentControlsBar,
+  AddTorrentContainer,
+} from '../containers'
 import s from './App.css'
 
 type AppProps = {
@@ -82,6 +101,7 @@ const App = ({
     </Drawer>
     <Content>
       <Match exactly pattern="/" component={HomeContainer} />
+      <Match exactly pattern="/add" component={AddTorrentContainer} />
       <Match exactly pattern="/login" component={LoginContainer} />
       <Match exactly pattern="/connection" component={ConnectionManagerContainer} />
       <AuthMatch exactly pattern="/torrent" component={TorrentDetailsContainer} />

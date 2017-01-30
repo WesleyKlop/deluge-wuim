@@ -66,7 +66,6 @@ const config = {
   resolve: {
     modules: [
       'node_modules',
-      APP_DIR,
     ],
     extensions: ['.js', '.json', '.jsx'],
   },

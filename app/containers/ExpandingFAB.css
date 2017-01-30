@@ -1,0 +1,46 @@
+.container {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 56px;
+}
+
+.option-container {
+  overflow-y: hidden;
+  transform: translateY(10px);
+}
+
+.option-holder {
+  display: flex;
+  flex-flow: column-reverse nowrap;
+  width: 40px;
+  margin: auto;
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transform: translateY(100%);
+}
+
+.option-holder.open {
+  transform: translateY(0);
+}
+
+.option-fab {
+  margin-bottom: 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease-out, transform 200ms ease-out;
+  transform: translateY(40px) rotate(-90deg);
+}
+
+.open .option-fab {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+.main-fab {
+  transition: transform 100ms ease-in-out 50ms;
+}
+
+.rotated {
+  transform: rotate(45deg);
+}
