@@ -16,6 +16,7 @@ const NODE_ENV = 'production'
 const config = {
   entry: [
     'babel-polyfill',
+    'whatwg-fetch',
     './app/main.jsx',
   ],
   output: {

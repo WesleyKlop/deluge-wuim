@@ -15,7 +15,6 @@ import './assets/deluge.png'
 const appRoot = document.querySelector('#app')
 const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)
-HMRContainer.displayName = 'HMRContainer'
 
 const renderApp = (App: any) => render(
   <HMRContainer>
@@ -27,6 +26,7 @@ const renderApp = (App: any) => render(
 renderApp(DelugeWUIM)
 
 if (module.hot) {
+  HMRContainer.displayName = 'HMRContainer'
   module.hot.accept('./DelugeWUIM', () => {
     renderApp(DelugeWUIM)
   })
@@ -37,7 +37,9 @@ if (module.hot) {
     store.replaceReducer(nextRootReducer)
   })
 
-  if (window) window.deluge = deluge
+  if (typeof window === 'object') {
+    window.deluge = deluge
+  }
 }
 
 if ('serviceWorker' in navigator) {
