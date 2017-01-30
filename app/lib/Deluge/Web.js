@@ -236,6 +236,31 @@ class Web {
   uploadPlugin(filename: string, path: string): Promise<boolean> {
     return this.deluge.call('web.upload_plugin', filename, path)
   }
+
+  uploadTorrentFile(file: File): Promise<string[]> {
+    const formData = new FormData()
+    formData.append('file', file)
+    return fetch(
+      `${this.deluge.location}/upload`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: new Headers({
+          Accept: 'application/json',
+        }),
+        body: formData,
+        cache: 'no-cache',
+        credentials: 'include',
+      },
+    )
+      .then(response => response.json())
+      .then((json) => {
+        console.log(json)
+        if (json.success === true) {
+          return json.files[0]
+        }
+        throw new Error('Error uploading files')
+      })
+  }
 }
 
 export default Web

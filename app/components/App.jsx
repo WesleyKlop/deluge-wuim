@@ -12,12 +12,12 @@ import {
   HeaderRow,
 } from 'react-mdl'
 import Helmet from 'react-helmet'
-import { Link, Match } from 'react-router'
+import { Route, Switch, NavLink } from 'react-router-dom'
 import {
   HomeContainer,
   LoginContainer,
   ConnectionManagerContainer,
-  AuthMatch,
+  AuthRoute,
   TorrentDetailsContainer,
   TorrentSearchBar,
   TorrentControlsBar,
@@ -59,39 +59,38 @@ const App = ({
         onClick={onDrawerButtonClick}
       />
       <HeaderRow title={title}>
-        <Match exactly pattern="/" component={TorrentSearchBar} />
-        <Match exactly pattern="/torrent" component={TorrentControlsBar} />
+        <Route exact path="/" component={TorrentSearchBar} />
+        <Route exact path="/torrent" component={TorrentControlsBar} />
       </HeaderRow>
     </div>
     <Drawer title={<span className="mdl-layout--small-screen-only">Deluge WUIM</span>}>
       <Navigation>
-        <Link
+        <NavLink
           onClick={onDrawerLinkClick}
           to="/"
           activeClassName={s.drawerLinkActive}
-          activeOnlyWhenExact
-        ><Icon name="home" />Torrents</Link>
-        <Link
+        ><Icon name="home" />Torrents</NavLink>
+        <NavLink
           onClick={onDrawerLinkClick}
           to="/connection"
           activeClassName={s.drawerLinkActive}
-        ><Icon name="storage" />Connection Manager</Link>
+        ><Icon name="storage" />Connection Manager</NavLink>
         <Spacer />
         {authenticated
           ? <button
             onClick={signOut}
           ><Icon name="account_circle" />Logout</button>
-          : <Link
+          : <NavLink
             onClick={onDrawerLinkClick}
             to="/login"
             activeClassName={s.drawerLinkActive}
-          ><Icon name="account_circle" />Login</Link>
+          ><Icon name="account_circle" />Login</NavLink>
         }
-        <Link
+        <NavLink
           onClick={onDrawerLinkClick}
           to="/settings"
           activeClassName={s.drawerLinkActive}
-        ><Icon name="settings" />Settings</Link>
+        ><Icon name="settings" />Settings</NavLink>
         <a
           href="https://github.com/Wesleyklop/deluge-wuim"
           target="_blank"
@@ -100,11 +99,13 @@ const App = ({
       </Navigation>
     </Drawer>
     <Content>
-      <Match exactly pattern="/" component={HomeContainer} />
-      <Match exactly pattern="/add" component={AddTorrentContainer} />
-      <Match exactly pattern="/login" component={LoginContainer} />
-      <Match exactly pattern="/connection" component={ConnectionManagerContainer} />
-      <AuthMatch exactly pattern="/torrent" component={TorrentDetailsContainer} />
+      <Switch>
+        <Route exact path="/" component={HomeContainer} />
+        <Route exact path="/add" component={AddTorrentContainer} />
+        <Route exact path="/login" component={LoginContainer} />
+        <Route exact path="/connection" component={ConnectionManagerContainer} />
+        <AuthRoute exact path="/torrent" component={TorrentDetailsContainer} />
+      </Switch>
       <Snackbar
         active={snackbarActive}
         onTimeout={onSnackbarTimeout}

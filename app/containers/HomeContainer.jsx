@@ -29,7 +29,7 @@ class HomeContainer extends Component {
 
   props: HomeContainerProps
 
-  handleFabClick = (type: string) => this.context.router.transitionTo({
+  handleFabClick = (type: string) => this.context.router.push({
     pathname: '/add',
     state: { type },
   })

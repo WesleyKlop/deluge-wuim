@@ -56,7 +56,7 @@ const config = {
       test: /\.(jpe?g|png|gif|webp|svg)$/i,
       loaders: [
         'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-        'image-webpack-loader?bypassOnDebug?optimizationLevel=7&interlaced=false',
+        'image-webpack-loader?bypassOnDebug?optimizationLevel=7',
       ],
     }, {
       test: /manifest\.json$/,

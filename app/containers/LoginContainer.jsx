@@ -55,9 +55,9 @@ class LoginContainer extends Component {
       // }
       // Go to home if we're connected or else route to the connection manager
       if (await deluge.web.connected() === true) {
-        router.replaceWith('/')
+        router.replace('/')
       } else {
-        router.replaceWith('/connection')
+        router.replace('/connection')
       }
     } else {
       this.setState({ error: 'Invalid password' })

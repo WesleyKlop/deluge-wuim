@@ -69,10 +69,10 @@ class ConnectionManagerContainer extends Component {
     switch (host.status) {
       case 'Online':
         this.context.deluge.web.connect(hostId)
-          .then(() => router.transitionTo('/'))
+          .then(() => router.replace('/'))
         break
       case 'Connected':
-        router.transitionTo('/')
+        router.replace('/')
         break
       case 'Offline':
         console.info('Should show a snackbar with something like "Daemon offline", even though this place shouldn\'t be reachable because the button is disabled')

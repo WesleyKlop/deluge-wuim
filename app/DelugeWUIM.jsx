@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
-import { BrowserRouter } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 import Helmet from 'react-helmet'
 import { Provider } from 'react-redux'
 import manifestUrl from './assets/manifest.json'

@@ -36,7 +36,7 @@ class TorrentDetailsContainer extends Component {
     this.context.setDrawerButton('arrow_back')
     if (!this.hasTorrentId()) {
       console.warn('Missing torrent Id')
-      this.context.router.transitionTo('/')
+      this.context.router.replace('/')
       return
     }
 

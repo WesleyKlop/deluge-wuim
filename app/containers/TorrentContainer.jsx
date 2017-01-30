@@ -48,7 +48,7 @@ class TorrentContainer extends Component {
   handleTorrentClick = (hash) => {
     const { router } = this.context
 
-    router.transitionTo({
+    router.push({
       pathname: '/torrent',
       query: {
         id: hash,
