@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import AddTorrent from '../components/AddTorrent'
 import Deluge from '../lib/Deluge'
+import type { TorrentInfo } from '../lib/Deluge/types'
 
 type AddTorrentContainerProps = {
   location: {
@@ -10,11 +11,19 @@ type AddTorrentContainerProps = {
   }
 }
 
+type AddTorrentContainerState = {
+  torrent: ?TorrentInfo,
+}
+
 class AddTorrentContainer extends Component {
 
   static contextTypes = {
     setDrawerButton: PropTypes.func.isRequired,
     deluge: PropTypes.instanceOf(Deluge),
+  }
+
+  state: AddTorrentContainerState = {
+    torrent: {},
   }
 
   componentWillMount() {
@@ -29,7 +38,6 @@ class AddTorrentContainer extends Component {
         this.inputRef.click()
         break
       case 'url':
-        // TODO DO SOMETHING WITh MAGNEt URL
         this.requestMagnetUri()
         break
       default:
@@ -47,7 +55,7 @@ class AddTorrentContainer extends Component {
   requestMagnetUri = () => {
     const { deluge } = this.context
     // TODO: Don't use an ugly prompt
-    const url = prompt('Enter magnet URI') // eslint-disable-line no-alert
+    const url = prompt('Enter magnet URI', 'magnet:?xt=urn:btih:9eae210fe47a073f991c83561e75d439887be3f3&dn=archlinux-2017.02.01-dual.iso&tr=udp://tracker.archlinux.org:6969&tr=http://tracker.archlinux.org:6969/announce') // eslint-disable-line no-alert
 
     if (typeof url !== 'string') {
       throw new Error('Did not receive URI')
@@ -57,8 +65,12 @@ class AddTorrentContainer extends Component {
       .then(info => this.handleReceivedTorrentInfo(info))
   }
 
-  handleReceivedTorrentInfo = (info) => {
-    console.log(info)
+  handleReceivedTorrentInfo = (torrent) => {
+    if (torrent === false) {
+      throw new Error('Invalid torrent or something')
+    }
+    console.log(torrent)
+    this.setState({ torrent })
   }
 
   handleReceiveTorrentFile = (e) => {
