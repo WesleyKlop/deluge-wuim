@@ -6,17 +6,17 @@
 }
 
 .option-container {
-  overflow-y: hidden;
+  overflow: hidden;
   transform: translateY(10px);
 }
 
 .option-holder {
   display: flex;
-  flex-flow: column-reverse nowrap;
   width: 40px;
   margin: auto;
   transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   transform: translateY(100%);
+  flex-flow: column-reverse nowrap;
 }
 
 .option-holder.open {
