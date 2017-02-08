@@ -1,5 +1,5 @@
 // @flow
-const CACHE_NAME = 'deluge-wuim-v1'
+const CACHE_NAME = 'deluge-wuim-v2'
 const BLACKLISTED_URL_PARTS = [
   'sockjs-node',
   'hot-update.js',
