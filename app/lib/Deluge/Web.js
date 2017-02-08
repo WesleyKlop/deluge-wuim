@@ -99,9 +99,9 @@ class Web {
   /**
    * Get information from a torrent file on the file system
    * @param {string} torrentPath the absolute path to the torrent on the file system
-   * @returns {Promise.<TorrentInfo>}
+   * @returns {Promise.<TorrentInfo|false>}
    */
-  getTorrentInfo(torrentPath: string): Promise<TorrentInfo> {
+  getTorrentInfo(torrentPath: string): Promise<TorrentInfo | false> {
     return this.deluge.call('web.get_torrent_info', torrentPath)
   }
 
@@ -251,10 +251,8 @@ class Web {
         cache: 'no-cache',
         credentials: 'include',
       },
-    )
-      .then(response => response.json())
+    ).then(response => response.json())
       .then((json) => {
-        console.log(json)
         if (json.success === true) {
           return json.files[0]
         }

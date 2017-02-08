@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import ExpandingFAB from '../containers/ExpandingFAB'
+import ExpandingFAB from './ExpandingFAB'
 import TorrentContainer from '../containers/TorrentContainer'
 import Deluge from '../lib/Deluge/Deluge'
 

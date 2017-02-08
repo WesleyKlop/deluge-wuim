@@ -1,11 +1,11 @@
 import React from 'react'
 
-// type AddTorrentProps = {
-//
-// }
+type AddTorrentProps = {
+  children: HTMLInputElement
+}
 
-const AddTorrent = (/* {}: AddTorrentProps */) => (
-  <div />
+const AddTorrent = ({ children }: AddTorrentProps) => (
+  <div>{children}</div>
 )
 
 export default AddTorrent

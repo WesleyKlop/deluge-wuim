@@ -16,7 +16,6 @@ const NODE_ENV = 'development'
 
 const config = {
   entry: [
-    'babel-polyfill',
     'whatwg-fetch',
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${PORT}`,
