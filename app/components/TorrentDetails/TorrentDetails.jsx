@@ -2,15 +2,15 @@
 import React from 'react'
 import classnames from 'classnames'
 import { ProgressBar, Tabs, Tab } from 'react-mdl'
-import ListItem from './TorrentDetailsListItem'
+import ListItem from '../TorrentDetailsListItem'
 import s from './TorrentDetails.css'
-import TabContent from './TabContent'
-import { bytesToSize, timestampToFormat, timestampToRange, formatNumber } from '../lib/Helpers'
-import FileList from './FileList'
-import TrackerList from './TrackerList'
-import PeerList from './PeerList'
-import Card from './Card'
-import type { Tracker, Peer, MappedFile } from '../lib/Deluge/types'
+import TabContent from '../TabContent'
+import { bytesToSize, timestampToFormat, timestampToRange, formatNumber } from '../../lib/Helpers'
+import FileList from '../FileList'
+import TrackerList from '../TrackerList'
+import PeerList from '../PeerList'
+import Card from '../Card'
+import type { Tracker, Peer, MappedFile } from '../../lib/Deluge/types'
 
 type TorrentDetailsProps = {
   name: string,
@@ -58,6 +58,7 @@ const TorrentDetails = ({
       </Tabs>
     </div>
 
+    {/* $FlowFixMe */}
     <TabContent activeTab={activeTab}>
       <div>
         <Card hidden={state !== 'Error'} shadow={2} title="Error">{message}</Card>

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { ListItem, ListItemContent } from 'react-mdl'
 import classnames from 'classnames'

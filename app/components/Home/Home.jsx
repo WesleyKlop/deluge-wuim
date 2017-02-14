@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
-import ExpandingFAB from './ExpandingFAB'
-import TorrentContainer from '../containers/TorrentContainer'
-import Deluge from '../lib/Deluge/Deluge'
+import ExpandingFAB from '../ExpandingFAB'
+import TorrentContainer from '../../containers/TorrentContainer'
+import Deluge from '../../lib/Deluge/Deluge'
 
 type HomeProps = {
   deluge: Deluge,

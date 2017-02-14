@@ -38,3 +38,7 @@ export const formatNumber = (n, digits = 2) => {
   }
   return n.toFixed(digits)
 }
+
+export const clearCaches = () => caches.keys()
+  .then(cacheNames => cacheNames
+    .forEach(cache => caches.delete(cache)))

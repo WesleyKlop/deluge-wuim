@@ -1,3 +1,4 @@
+// @flow
 import React, { PropTypes, Component } from 'react'
 import AddTorrent from '../components/AddTorrent'
 import Deluge from '../lib/Deluge'
@@ -23,7 +24,10 @@ class AddTorrentContainer extends Component {
   }
 
   state: AddTorrentContainerState = {
-    torrent: {},
+    torrent: {
+      name: '',
+      info_hash: '',
+    },
   }
 
   componentWillMount() {
@@ -50,6 +54,7 @@ class AddTorrentContainer extends Component {
     this.context.setDrawerButton('menu')
   }
 
+  inputRef: HTMLInputElement
   props: AddTorrentContainerProps
 
   requestMagnetUri = () => {
@@ -65,7 +70,7 @@ class AddTorrentContainer extends Component {
       .then(info => this.handleReceivedTorrentInfo(info))
   }
 
-  handleReceivedTorrentInfo = (torrent) => {
+  handleReceivedTorrentInfo = (torrent: TorrentInfo) => {
     if (torrent === false) {
       throw new Error('Invalid torrent or something')
     }
@@ -73,7 +78,7 @@ class AddTorrentContainer extends Component {
     this.setState({ torrent })
   }
 
-  handleReceiveTorrentFile = (e) => {
+  handleReceiveTorrentFile = (e: SyntheticChangeEvent) => {
     const [file] = e.target.files
     const { deluge } = this.context
 
@@ -84,7 +89,8 @@ class AddTorrentContainer extends Component {
 
   render() {
     return (
-      <AddTorrent>
+      // $FlowFixMe
+      <AddTorrent >
         <input
           type="file"
           name="file"

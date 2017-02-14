@@ -87,8 +87,6 @@ const config = {
   ],
   devServer: {
     hot: true,
-    contentBase: BUILD_DIR,
-    publicPath,
     port: PORT,
     historyApiFallback: true,
     host: HOST,

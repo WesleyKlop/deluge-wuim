@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import classnames from 'classnames'
 import s from './Card.css'
@@ -9,7 +10,7 @@ type CardProps = {
   title?: string,
 }
 
-const Card = ({ className, children, shadow, title, ...props }: CardProps) => (
+const Card = ({ className, children, shadow = 0, title, ...props }: CardProps) => (
   <div
     className={classnames(
       s.card,

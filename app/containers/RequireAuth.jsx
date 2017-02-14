@@ -45,16 +45,17 @@ class RequireAuth extends React.Component {
     deluge.auth.checkSession()
       .then((authenticated) => {
         this.props.setAuthenticated(authenticated)
+        console.log(router)
 
         if (!authenticated) {
-          router.transitionTo('/login')
+          router.replace('/login')
           return
         }
 
         deluge.web.connected()
           .then((connected) => {
             if (!connected) {
-              router.transitionTo('/connection')
+              router.replace('/connection')
             }
           })
       })

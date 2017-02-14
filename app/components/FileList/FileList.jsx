@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import classnames from 'classnames'
-import { listContainer } from './TorrentDetails.css'
-import ListItem from './TorrentDetailsListItem'
-import { bytesToSize } from '../lib/Helpers'
-import type { MappedFile } from '../lib/Deluge/types'
+import { listContainer } from '../TorrentDetails/TorrentDetails.css'
+import ListItem from '../TorrentDetailsListItem'
+import { bytesToSize } from '../../lib/Helpers'
+import type { MappedFile } from '../../lib/Deluge/types'
 
 const formatPriority = (priority: number): string => {
   switch (priority) {

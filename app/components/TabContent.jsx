@@ -1,8 +1,9 @@
+// @flow
 import React from 'react'
 
 type TabContentProps = {
   activeTab: number,
-  children: Array,
+  children: HTMLElement[],
 }
 
 const TabContent = ({ children, activeTab }: TabContentProps) => (

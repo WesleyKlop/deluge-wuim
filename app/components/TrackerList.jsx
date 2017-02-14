@@ -2,8 +2,8 @@
 import React from 'react'
 import classnames from 'classnames'
 import { ListItem } from 'react-mdl'
-import s from './TorrentDetails.css'
-import v from './TorrentDetailsListItem.css'
+import s from './TorrentDetails/TorrentDetails.css'
+import v from './TorrentDetailsListItem/TorrentDetailsListItem.css'
 import type { Tracker } from '../lib/Deluge/types'
 
 const TrackerList = ({ trackers }: { trackers: Tracker[] }) => (

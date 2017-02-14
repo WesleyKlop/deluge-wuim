@@ -1,6 +1,7 @@
+// @flow
 import React from 'react'
 import { Card, CardTitle, List, FABButton, Icon } from 'react-mdl'
-import PageContent from './PageContent'
+import PageContent from '../PageContent'
 
 type ConnectionManagerProps = {
   children: Node,

@@ -22,7 +22,8 @@ import {
   TorrentSearchBar,
   TorrentControlsBar,
   AddTorrentContainer,
-} from '../containers'
+  SettingsContainer,
+} from '../../containers'
 import s from './App.css'
 
 type AppProps = {
@@ -101,6 +102,7 @@ const App = ({
     <Content>
       <Switch>
         <Route exact path="/" component={HomeContainer} />
+        <Route exact path="/settings" component={SettingsContainer} />
         <Route exact path="/add" component={AddTorrentContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/connection" component={ConnectionManagerContainer} />

@@ -2,9 +2,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { ListItem, ListItemContent, ListItemAction, Button, Textfield, IconButton } from 'react-mdl'
-import ConnectionManager from '../components/ConnectionManager'
+import ConnectionManager, { Style as s } from '../components/ConnectionManager'
 import Deluge from '../lib/Deluge/Deluge'
-import s from '../components/ConnectionManager.css'
 import { addHost, fetchHosts } from '../actions/hosts'
 import type { Host } from '../lib/Deluge/types'
 

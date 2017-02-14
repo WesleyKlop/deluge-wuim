@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import s from './TorrentItem.css'
-import { bytesToSize, formatNumber } from '../lib/Helpers'
+import { bytesToSize, formatNumber } from '../../lib/Helpers'
 
 type Props = {
   name: string,
