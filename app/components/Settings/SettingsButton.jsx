@@ -3,8 +3,6 @@ import React from 'react'
 import classnames from 'classnames'
 import s from './style.css'
 
-console.log(s)
-
 type SettingsButtonProps = {
   children: HTMLElement,
   onClick: () => void,
