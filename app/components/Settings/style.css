@@ -1,7 +1,7 @@
 .list-item--button {
   width: 100%;
-  outline: none;
   border: 0;
+  outline: none;
 }
 
 .setting {
@@ -15,10 +15,10 @@
   }
 
   :global(.material-icons) {
-    margin-right: 32px;
+    display: inline-block;
     width: 24px;
     height: 24px;
-    display: inline-block;
+    margin-right: 32px;
     vertical-align: middle;
   }
 }

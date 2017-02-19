@@ -1,5 +1,6 @@
 # Deluge WUIM
 
+[![Build Status](https://travis-ci.org/WesleyKlop/deluge-wuim.svg?branch=master)](https://travis-ci.org/WesleyKlop/deluge-wuim)  
 WUIM stands for _**W**eb **U**i **IM**proved_, I started this project because of my frustration from wanting to check up on my torrents from my phone but ending up fighting with the ui.
 
 I'm also trying to make all the functions available (listed when calling `system.listMethods`) to me in the web ui but that will take a bit longer.
@@ -49,6 +50,6 @@ There is a lot more that needs to happen still.
 * Add torrents
 * Remove torrents
 * Change torrent options
-* Preferences
+* ~~Preferences~~
 * Server info
 * Most `core.*` calls
