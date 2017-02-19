@@ -70,6 +70,7 @@ const App = ({
           onClick={onDrawerLinkClick}
           to="/"
           activeClassName={s.drawerLinkActive}
+          exact
         ><Icon name="home" />Torrents</NavLink>
         <NavLink
           onClick={onDrawerLinkClick}
