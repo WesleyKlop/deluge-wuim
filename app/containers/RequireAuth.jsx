@@ -34,7 +34,7 @@ class RequireAuth extends React.Component {
       Date.now() - RequireAuth.lastAuthCheck < 15000
       && force === false
     ) {
-      console.log('Skipping auth check')
+      console.log('[RequireAuth] Skipping auth check')
       // Less than 15 seconds have passed since the last accessCheck so we're returning
       return
     }
@@ -45,7 +45,6 @@ class RequireAuth extends React.Component {
     deluge.auth.checkSession()
       .then((authenticated) => {
         this.props.setAuthenticated(authenticated)
-        console.log(router)
 
         if (!authenticated) {
           router.replace('/login')

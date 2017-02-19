@@ -92,11 +92,6 @@ const App = ({
           to="/settings"
           activeClassName={s.drawerLinkActive}
         ><Icon name="settings" />Settings</NavLink>
-        <a
-          href="https://github.com/Wesleyklop/deluge-wuim"
-          target="_blank"
-          rel="noopener noreferrer"
-        ><Icon name="code" />Github</a>
       </Navigation>
     </Drawer>
     <Content>

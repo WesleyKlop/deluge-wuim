@@ -33,9 +33,9 @@ export const timestampToRange = (timestamp: number): string => {
   return `${days} days, ${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`
 }
 
-export const formatNumber = (n, digits = 2) => {
+export const formatNumber = (n: number, digits: number = 2): string => {
   if (n <= 0) {
-    return 0
+    return '0'
   }
   return n.toFixed(digits)
 }
@@ -46,7 +46,7 @@ export const clearCaches = () => caches.keys()
 
 export const rememberMe = (newValue?: boolean): boolean => {
   if (typeof newValue !== 'undefined') {
-    localStorage.setItem('settings.rememberMe', newValue)
+    localStorage.setItem('settings.rememberMe', newValue.toString())
 
     if (newValue === false) {
       // Clear saved password

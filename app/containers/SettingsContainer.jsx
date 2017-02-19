@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react'
-import Settings, { SettingsAction, SettingsButton } from '../components/Settings'
+import { Icon } from 'react-mdl'
+import Settings, { SettingsAction, SettingsButton, SettingsLink } from '../components/Settings'
 import { clearCaches, rememberMe } from '../lib/Helpers'
 
 type SettingsContainerProps = {}
@@ -26,12 +27,21 @@ class SettingsContainer extends Component {
 
   render = () => (
     <Settings>
-      <SettingsButton onClick={this.handleClearCacheClick}>Clear caches</SettingsButton>
+      <SettingsButton onClick={this.handleClearCacheClick}>
+        <Icon name="cached" />Clear caches
+      </SettingsButton>
       <SettingsAction
         type="switch"
         value={this.state.rememberMe}
         onChange={this.handleRememberMeChange}
-      >Remember password</SettingsAction>
+      ><Icon name="" />Remember password</SettingsAction>
+      <SettingsLink
+        href="https://github.com/WesleyKlop/deluge-wuim"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="code" />Github
+      </SettingsLink>
     </Settings>
   )
 }

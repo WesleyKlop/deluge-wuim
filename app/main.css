@@ -43,7 +43,7 @@
       padding: 16px;
 
       .material-icons {
-        margin-right: 16px;
+        margin-right: 32px;
       }
     }
   }
@@ -51,5 +51,13 @@
   .mdl-list__item-secondary-action > .mdl-switch {
     /* Move switch action a bit to the left to it looks better */
     padding-right: 8px;
+  }
+
+  .material-icons {
+    vertical-align: middle;
+  }
+
+  .mdl-list__item-primary-content {
+    vertical-align: middle;
   }
 }

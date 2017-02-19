@@ -12,7 +12,7 @@ type SettingsButtonProps = {
 
 const SettingsButton = ({ children, onClick }: SettingsButtonProps) => (
   <li>
-    <button className={classnames('mdl-list__item', s.listItemButton)} onClick={onClick}>
+    <button className={classnames('mdl-list__item', s.listItemButton, s.setting)} onClick={onClick}>
       {children}
     </button>
   </li>

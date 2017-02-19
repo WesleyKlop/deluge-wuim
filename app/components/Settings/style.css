@@ -1,11 +1,24 @@
 .list-item--button {
   width: 100%;
-  background: none;
-  border: none;
   outline: none;
+  border: 0;
+}
+
+.setting {
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
 
   &:hover,
   &:focus {
     background: rgba(0, 0, 0, 0.12);
+  }
+
+  :global(.material-icons) {
+    margin-right: 32px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
   }
 }
