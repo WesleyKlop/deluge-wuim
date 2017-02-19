@@ -1,0 +1,11 @@
+.list-item--button {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background: rgba(0, 0, 0, 0.12);
+  }
+}

@@ -1,3 +1,4 @@
+// @flow
 /* eslint-disable import/prefer-default-export */
 
 export const bytesToSize = (bytes: number, noExtension: boolean = false): string => {
@@ -42,3 +43,16 @@ export const formatNumber = (n, digits = 2) => {
 export const clearCaches = () => caches.keys()
   .then(cacheNames => cacheNames
     .forEach(cache => caches.delete(cache)))
+
+export const rememberMe = (newValue?: boolean): boolean => {
+  if (typeof newValue !== 'undefined') {
+    localStorage.setItem('settings.rememberMe', newValue)
+
+    if (newValue === false) {
+      // Clear saved password
+      localStorage.removeItem('savedPassword')
+    }
+  }
+
+  return localStorage.getItem('settings.rememberMe') === 'true'
+}

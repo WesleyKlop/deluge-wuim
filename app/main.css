@@ -47,4 +47,9 @@
       }
     }
   }
+
+  .mdl-list__item-secondary-action > .mdl-switch {
+    /* Move switch action a bit to the left to it looks better */
+    padding-right: 8px;
+  }
 }

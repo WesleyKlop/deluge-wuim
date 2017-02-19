@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import App from '../components/App'
 import Deluge from '../lib/Deluge/Deluge'
 import { setAuthenticated } from '../actions/session'
+import { rememberMe } from '../lib/Helpers'
 
 type AppContainerProps = {
   children: Helmet,
@@ -100,8 +101,12 @@ class AppContainer extends Component {
   }
 
   signOut(): void {
-    this.props.deluge.auth.logout()
-      .then(() => this.props.setAuthenticated())
+    this.props.deluge.auth
+      .logout()
+      .then(() => {
+        this.props.setAuthenticated()
+        rememberMe(false)
+      })
     this.toggleDrawer()
   }
 

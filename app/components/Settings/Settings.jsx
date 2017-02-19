@@ -1,12 +1,13 @@
 // @flow
 import React from 'react'
+import { List } from 'react-mdl'
 
 type SettingsProps = {
   children: HTMLElement[],
 }
 
 const Settings = ({ children }: SettingsProps) => (
-  <ul>{children}</ul>
+  <List>{children}</List>
 )
 
 Settings.defaultProps = {}

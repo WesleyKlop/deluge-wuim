@@ -7,6 +7,7 @@ import PageContent from '../components/PageContent'
 import Deluge from '../lib/Deluge/Deluge'
 // import delugeLogo from '../assets/deluge.png'
 import { authenticate } from '../actions/session'
+import { rememberMe } from '../lib/Helpers'
 
 /**
  * LoginContainer Component
@@ -26,11 +27,23 @@ class LoginContainer extends Component {
 
   state = {
     error: '',
+    rememberMe: rememberMe(),
   }
 
   state: {
-    error: ?string
+    error: ?string,
+    rememberMe: boolean,
   }
+
+  componentWillMount() {
+    const savedPassword = localStorage.getItem('savedPassword')
+    if (typeof savedPassword === 'string') {
+      console.log('auto sign in')
+      this.tryLogin(savedPassword).then(() => {
+      })
+    }
+  }
+
   passwordRef: HTMLInputElement
   handleSubmit: () => void
   props: {
@@ -55,6 +68,10 @@ class LoginContainer extends Component {
       // }
       // Go to home if we're connected or else route to the connection manager
       if (await deluge.web.connected() === true) {
+        if (this.state.rememberMe === true) {
+          // Save password
+          localStorage.setItem('savedPassword', password)
+        }
         router.replace('/')
       } else {
         router.replace('/connection')
@@ -76,6 +93,8 @@ class LoginContainer extends Component {
   //   return navigator.credentials.store(credential)
   // }
 
+  toggleRememberMe = () => this.setState({ rememberMe: rememberMe(!this.state.rememberMe) })
+
   render() {
     return (
       <PageContent>
@@ -83,6 +102,8 @@ class LoginContainer extends Component {
           onSubmit={this.handleSubmit}
           inputRefCb={(e: Textfield) => (this.passwordRef = e && e.inputRef)}
           error={this.state.error}
+          rememberMe={this.state.rememberMe}
+          onRememberMeChange={this.toggleRememberMe}
         />
       </PageContent>
     )
