@@ -1,14 +1,16 @@
 // @flow
 import React from 'react'
-import { Card, CardTitle, CardText, CardActions, Button, Textfield } from 'react-mdl'
+import { Card, CardTitle, CardText, CardActions, Button, Textfield, Switch } from 'react-mdl'
 
 type Props = {
   onSubmit: () => void,
   error: ?string,
-  inputRefCb: () => Textfield
+  inputRefCb: () => Textfield,
+  rememberMe: boolean,
+  onRememberMeChange: () => void,
 }
 
-const Login = ({ inputRefCb, onSubmit, error }: Props) => (
+const Login = ({ inputRefCb, onSubmit, error, onRememberMeChange, rememberMe }: Props) => (
   <Card shadow={2}>
     <form onSubmit={onSubmit} autoComplete="on">
       <CardTitle>Sign in</CardTitle>
@@ -25,8 +27,16 @@ const Login = ({ inputRefCb, onSubmit, error }: Props) => (
           autoFocus
         />
       </CardText>
-      <CardActions border>
-        <Button colored>Sign In</Button>
+      <CardActions
+        border
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Button colored style={{ flex: '0 0 auto' }}>Sign In</Button>
+        <Switch checked={rememberMe} onChange={onRememberMeChange}>Remember</Switch>
       </CardActions>
     </form>
   </Card>

@@ -1,7 +1,7 @@
 // @flow
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Deluge from '../api/Deluge'
+import Deluge from '../lib/Deluge/Deluge'
 import { setAuthenticated } from '../actions/session'
 
 type RequireAuthProps = {
@@ -34,7 +34,7 @@ class RequireAuth extends React.Component {
       Date.now() - RequireAuth.lastAuthCheck < 15000
       && force === false
     ) {
-      console.log('Skipping auth check')
+      console.log('[RequireAuth] Skipping auth check')
       // Less than 15 seconds have passed since the last accessCheck so we're returning
       return
     }
@@ -47,14 +47,14 @@ class RequireAuth extends React.Component {
         this.props.setAuthenticated(authenticated)
 
         if (!authenticated) {
-          router.transitionTo('/login')
+          router.replace('/login')
           return
         }
 
         deluge.web.connected()
           .then((connected) => {
             if (!connected) {
-              router.transitionTo('/connection')
+              router.replace('/connection')
             }
           })
       })

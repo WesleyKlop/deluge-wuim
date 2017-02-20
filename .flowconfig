@@ -1,3 +1,4 @@
+#@formatter:off
 [ignore]
 .*fbjs
 .*babel
@@ -7,4 +8,4 @@
 [libs]
 
 [options]
-suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe

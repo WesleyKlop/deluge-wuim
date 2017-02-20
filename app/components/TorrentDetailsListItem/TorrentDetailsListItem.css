@@ -1,0 +1,23 @@
+.element {
+  display: inline-block;
+  width: 100%;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  &:not(.full-width) {
+    width: 50%;
+    flex: 1 1 50%;
+  }
+
+  &.align-right {
+    text-align: right;
+  }
+
+  > :global(.mdl-list__item-primary-content):first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

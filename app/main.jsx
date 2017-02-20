@@ -1,31 +1,35 @@
-import 'babel-polyfill'
+// @flow
 import React from 'react'
 import 'react-mdl/extra/material'
 import 'react-mdl/extra/material.css'
 import { AppContainer as HMRContainer } from 'react-hot-loader'
 import { render } from 'react-dom'
+import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import DelugeWUIM from './DelugeWUIM'
-import Deluge from './api/Deluge'
+import Deluge from './lib/Deluge'
 import { delugeLocation } from '../settings.json'
 import createAppStore from './store'
 import './main.css'
+import './assets/deluge.png'
 
 const appRoot = document.querySelector('#app')
 const deluge = new Deluge({ delugeLocation })
 const store = createAppStore(deluge)
 
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  HMRContainer.displayName = 'HMRContainer'
-  /* eslint-disable */
-  render(<HMRContainer><DelugeWUIM deluge={deluge} store={store} /></HMRContainer>, appRoot)
+const renderApp = (App: any) => render(
+  <HMRContainer>
+    <App deluge={deluge} store={store} />
+  </HMRContainer>,
+  appRoot,
+)
 
-  // HMR
-  if (module.hot) {
-    module.hot.accept('./DelugeWUIM', () => {
-      const DelugeWUIM = require('./DelugeWUIM').default
-      render(<HMRContainer><DelugeWUIM deluge={deluge} store={store} /></HMRContainer>)
-    })
-  }
+renderApp(DelugeWUIM)
+
+if (module.hot) {
+  HMRContainer.displayName = 'HMRContainer'
+  module.hot.accept('./DelugeWUIM', () => {
+    renderApp(DelugeWUIM)
+  })
 
   module.hot.accept('./reducers', () => {
     // eslint-disable-next-line global-require
@@ -33,8 +37,11 @@ if (process.env.NODE_ENV === 'development' && module.hot) {
     store.replaceReducer(nextRootReducer)
   })
 
-  /* eslint-enable */
-  if (window) window.deluge = deluge
-} else {
-  render(<DelugeWUIM deluge={deluge} store={store} />, appRoot)
+  if (typeof window === 'object') {
+    window.deluge = deluge
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  runtime.register()
 }

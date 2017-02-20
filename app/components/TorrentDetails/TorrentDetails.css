@@ -1,0 +1,79 @@
+.name {
+  margin: 0;
+  overflow: hidden;
+  font-size: 24px;
+  line-height: 1.6;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1 0 100%;
+}
+
+.sub-title {
+  width: 100%;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.67);
+  text-align: center;
+}
+
+.status-container {
+  position: relative;
+  display: flex;
+  height: 150px;
+  box-sizing: border-box;
+  padding: 8px 8px 56px;
+  background: #fff;
+  align-content: space-around;
+  flex-flow: row wrap;
+
+  :global(.mdl-progress) {
+    width: 100%;
+  }
+}
+
+.torrent-size,
+.torrent-state {
+  padding: 4px;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.54);
+  flex: 1;
+}
+
+.torrent-size {
+  text-align: right;
+}
+
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow-x: auto;
+
+  :global(.mdl-tabs__tab) {
+    overflow: visible;
+    flex: 1 0 auto;
+  }
+}
+
+.header {
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 40px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.list-container {
+  display: flex;
+  padding: 0;
+  margin: 16px 8px;
+  list-style: none;
+  background: #fff;
+  flex-flow: row wrap;
+}
+
+.header + .list-container {
+  margin: 0 8px 4px;
+}

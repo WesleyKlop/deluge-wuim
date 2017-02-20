@@ -1,0 +1,19 @@
+.card {
+  box-sizing: border-box;
+  padding: 16px;
+  margin: 16px 8px;
+  overflow-x: auto;
+  color: rgb(213, 0, 0);
+  background: rgba(213, 0, 0, 0.4);
+  border-radius: 2px;
+}
+
+.title {
+  font-size: 1.125em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.message {
+  margin: 4px 0;
+}

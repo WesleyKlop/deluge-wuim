@@ -3,23 +3,27 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 import App from '../components/App'
-import Deluge from '../api/Deluge'
-import { changeSearchValue } from '../actions'
+import Deluge from '../lib/Deluge/Deluge'
 import { setAuthenticated } from '../actions/session'
+import { rememberMe } from '../lib/Helpers'
 
 type AppContainerProps = {
   children: Helmet,
-  searchbarValue: string,
-  onSearchChange: () => void,
   authenticated: boolean,
   setAuthenticated: () => void,
   deluge: Deluge,
+  title: string,
 }
 
 class AppContainer extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   static childContextTypes = {
     showSnackbar: PropTypes.func,
+    setDrawerButton: PropTypes.func,
   }
 
   constructor() {
@@ -35,23 +39,28 @@ class AppContainer extends Component {
     snackbarActive: false,
     snackbarText: '',
     onSnackbarTimeout: null,
+    drawerButton: 'menu',
   }
 
   state: {
     snackbarActive: boolean,
     snackbarText: string,
     onSnackbarTimeout?: () => void,
+    drawerButton: string,
   }
 
   getChildContext() {
     return {
       showSnackbar: this.showSnackbar,
+      setDrawerButton: this.setDrawerButton,
     }
   }
 
   componentDidMount(): void {
     this.layout = (document.querySelector('.mdl-layout'): any).MaterialLayout
   }
+
+  setDrawerButton = drawerButton => this.setState({ drawerButton })
 
   handleSnackbarTimeout: () => void
   showSnackbar: () => void
@@ -71,9 +80,33 @@ class AppContainer extends Component {
     })
   }
 
+  handleDrawerButtonClick = (e?: Event): void => {
+    if (e !== undefined) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+
+    switch (this.state.drawerButton) {
+      case 'menu':
+        break
+      case 'arrow_back':
+        // Drawer toggles regardless of stopPropagation/preventDefault so toggle it again to
+        // close it again
+        this.toggleDrawer()
+        history.back()
+        break
+      default:
+        console.warn('Unknown drawerButton', this.state.drawerButton)
+    }
+  }
+
   signOut(): void {
-    this.props.deluge.auth.logout()
-      .then(() => this.props.setAuthenticated())
+    this.props.deluge.auth
+      .logout()
+      .then(() => {
+        this.props.setAuthenticated()
+        rememberMe(false)
+      })
     this.toggleDrawer()
   }
 
@@ -103,25 +136,25 @@ class AppContainer extends Component {
       <App
         authenticated={authenticated}
         onDrawerLinkClick={this.toggleDrawer}
-        onSearchChange={this.props.onSearchChange}
-        searchValue={this.props.searchbarValue}
         snackbarText={this.state.snackbarText}
         snackbarActive={this.state.snackbarActive}
         onSnackbarTimeout={this.handleSnackbarTimeout}
         helmet={children}
         signOut={this.signOut}
+        onDrawerButtonClick={this.handleDrawerButtonClick}
+        drawerButton={this.state.drawerButton}
+        title={this.props.title}
       />
     )
   }
 }
 
 const mapStateToProps = state => ({
-  searchbarValue: state.searchbarValue,
   authenticated: state.session.authenticated,
+  title: state.ui.title,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onSearchChange: e => dispatch(changeSearchValue(e.currentTarget.value)),
   setAuthenticated: () => dispatch(setAuthenticated(false)),
 })
 

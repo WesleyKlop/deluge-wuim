@@ -6,6 +6,12 @@
       {
         "message": "Selector should be written in lowercase with hyphens (selector-class-pattern)"
       }
+    ],
+    "no-unsupported-browser-features": [
+      true,
+      {
+        "browsers": "> 10%, last 2 firefox versions, last 2 chrome versions, last 2 safari versions, last 2 edge versions"
+      }
     ]
   }
 }
