@@ -59,7 +59,7 @@ class TorrentContainer extends Component {
   renderTorrents() {
     return this.props.torrents
       .filter(row => row.name.toLowerCase().includes(this.props.nameFilter.toLowerCase()))
-      // .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
       .map(row => (
         <TorrentItem
           key={row.hash}

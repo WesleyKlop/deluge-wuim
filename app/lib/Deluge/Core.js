@@ -172,6 +172,10 @@ class Core {
   pauseTorrent(...ids: string[]): Promise<null> {
     return this.deluge.call('core.pause_torrent', ids)
   }
+
+  removeTorrent(id: string, withFiles: boolean): Promise<boolean> {
+    return this.deluge.call('core.remove_torrent', id, withFiles)
+  }
 }
 
 export default Core
